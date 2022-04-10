@@ -5,10 +5,14 @@
  */
 package Controlador;
 
+import Modelo.Autor;
+import Modelo.Coleccion;
+import Modelo.Comic;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -58,20 +62,43 @@ public class HiloCliente extends Thread {
                     ordenRecibida = flujo_entrada.readUTF();
 
                     switch (ordenRecibida.toLowerCase()) {
-                        case "listarComicsOk" -> {
+                        case "listacomicsok" -> {
                             // Debo indicarle donde van a ser mostrados los datos, o tratar de sacar la lista a fuera del hilo
-                            GestionComics.listarSocketComics(skCliente);
+                            List<Comic> listaComics = GestionComics.listarSocketComics(skCliente);
+
+                            for (Comic comic : listaComics) {
+                                System.out.println(comic);
+                            }
+                            // Como accedo a elementos de fuera para mostrar los datos
+
+                        }
+                        case "listacoleccionesok" -> {
+                            // Debo indicarle donde van a ser mostrados los datos, o tratar de sacar la lista a fuera del hilo
+                            List<Coleccion> listaColecciones = GestionComics.listarSocketColecciones(skCliente);
+
+                            for (Coleccion coleccion : listaColecciones) {
+                                System.out.println(coleccion);
+                            }
+                            // Como accedo a elementos de fuera para mostrar los datos
+
+                        }
+                        case "listaautoresok" -> {
+                            // Debo indicarle donde van a ser mostrados los datos, o tratar de sacar la lista a fuera del hilo
+                            List<Autor> listaAutores = GestionComics.listarSocketAutor(skCliente);
+
+                            for (Autor autor : listaAutores) {
+                                System.out.println(autor);
+                            }
+                            // Como accedo a elementos de fuera para mostrar los datos
+
                         }
                         case "salirok" -> {
-                            area.setText("Saliendoooooooooooo................");
+                            // area.setText("Saliendoooooooooooo................");
 
                         }
-                        case "listaComics" -> {
-                           GestionComics.
 
-                        }
                         default -> {
-                            area.setText(area.getText() + "\n" + flujo_entrada.readUTF());
+                            // area.setText(area.getText() + "\n" + flujo_entrada.readUTF());
                         }
                     }
                 }
@@ -92,7 +119,7 @@ public class HiloCliente extends Thread {
     public void solicitarListaComic() {
 
         try {
-            flujo_salida.writeUTF("listarComics");
+            flujo_salida.writeUTF("listarcomics");
         } catch (IOException ex) {
             Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
         }

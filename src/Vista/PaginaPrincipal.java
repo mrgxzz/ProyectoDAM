@@ -7,11 +7,9 @@ package Vista;
 
 import Controlador.HiloCliente;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,21 +31,29 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form GestionCursos
      *
-     * @param con
      */
-    public PaginaPrincipal(Connection con) {
+    public PaginaPrincipal() {
+
         initComponents();
 
-        traduccion();
-
-        activarAyuda();
-
+        // traduccion();
+        //activarAyuda();
+        
         if (skCliente == null || skCliente.isClosed() || !skCliente.isConnected()) {
+            try {
+                skCliente = new Socket(HOST, 2000);
 
-            skCliente = new Socket(HOST, 2000);
+                h = new HiloCliente(skCliente, null);
+                h.start();
 
-            h = new HiloCliente(skCliente, txtAreaVisualizar);
-            h.start();
+            } catch (java.net.ConnectException ex) {
+                JOptionPane.showMessageDialog(null, "No se ha podido establecer conexión con el servidor.");
+                
+                this.dispose();
+
+            } catch (IOException ex) {
+                Logger.getLogger(PaginaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
 
@@ -67,17 +73,17 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         ComicsManager = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        btnPeliculas = new javax.swing.JButton();
+        btnComics = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        btnActores = new javax.swing.JButton();
+        btnAutores = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        btnAyuda = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        btnVerActores = new javax.swing.JButton();
-        btnVerPeliculas = new javax.swing.JButton();
-        btnReparto = new javax.swing.JButton();
+        btnInformeAutores = new javax.swing.JButton();
+        btnInformeComics = new javax.swing.JButton();
+        btnBuscador = new javax.swing.JButton();
+        btnColecciones = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         lblPanelControl = new javax.swing.JLabel();
@@ -87,12 +93,13 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de cursos del usuario");
+        setIconImages(null);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(51, 102, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 0, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(190, 513));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -122,101 +129,102 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel3.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel3.setBackground(new java.awt.Color(204, 0, 51));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        btnPeliculas.setBackground(new java.awt.Color(204, 0, 51));
-        btnPeliculas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnPeliculas.setForeground(new java.awt.Color(255, 255, 255));
-        btnPeliculas.setText("Peliculas");
-        btnPeliculas.setBorderPainted(false);
-        btnPeliculas.addActionListener(new java.awt.event.ActionListener() {
+        btnComics.setBackground(new java.awt.Color(204, 0, 51));
+        btnComics.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnComics.setForeground(new java.awt.Color(255, 255, 255));
+        btnComics.setText("Cómics");
+        btnComics.setBorderPainted(false);
+        btnComics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPeliculasActionPerformed(evt);
+                btnComicsActionPerformed(evt);
             }
         });
-        jPanel3.add(btnPeliculas, java.awt.BorderLayout.PAGE_START);
+        jPanel3.add(btnComics, java.awt.BorderLayout.PAGE_START);
 
-        jPanel5.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel5.setBackground(new java.awt.Color(204, 0, 51));
         jPanel5.setForeground(new java.awt.Color(0, 102, 255));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        btnActores.setBackground(new java.awt.Color(204, 0, 51));
-        btnActores.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnActores.setForeground(new java.awt.Color(255, 255, 255));
-        btnActores.setText("Actores");
-        btnActores.setBorderPainted(false);
-        btnActores.addActionListener(new java.awt.event.ActionListener() {
+        btnAutores.setBackground(new java.awt.Color(204, 0, 51));
+        btnAutores.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAutores.setForeground(new java.awt.Color(255, 255, 255));
+        btnAutores.setText("Autores");
+        btnAutores.setBorderPainted(false);
+        btnAutores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActoresActionPerformed(evt);
+                btnAutoresActionPerformed(evt);
             }
         });
-        jPanel5.add(btnActores, java.awt.BorderLayout.PAGE_START);
+        jPanel5.add(btnAutores, java.awt.BorderLayout.PAGE_START);
 
-        jPanel6.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel6.setBackground(new java.awt.Color(204, 0, 51));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
-        btnAyuda.setBackground(new java.awt.Color(204, 0, 51));
-        btnAyuda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnAyuda.setForeground(new java.awt.Color(255, 255, 255));
-        btnAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/signo-de-interrogacion.png"))); // NOI18N
-        btnAyuda.setBorderPainted(false);
-        btnAyuda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAyudaActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnAyuda, java.awt.BorderLayout.PAGE_END);
-
-        jPanel9.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel9.setBackground(new java.awt.Color(204, 0, 51));
         jPanel9.setLayout(new java.awt.BorderLayout());
 
-        jPanel10.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel10.setBackground(new java.awt.Color(204, 0, 51));
         jPanel10.setLayout(new java.awt.BorderLayout());
 
         jPanel11.setBackground(new java.awt.Color(204, 0, 51));
         jPanel11.setLayout(new java.awt.BorderLayout());
-        jPanel10.add(jPanel11, java.awt.BorderLayout.CENTER);
 
-        btnVerActores.setBackground(new java.awt.Color(204, 0, 51));
-        btnVerActores.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnVerActores.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerActores.setText("Ver actores");
-        btnVerActores.setBorderPainted(false);
-        btnVerActores.addActionListener(new java.awt.event.ActionListener() {
+        btnInformeAutores.setBackground(new java.awt.Color(204, 0, 51));
+        btnInformeAutores.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnInformeAutores.setForeground(new java.awt.Color(255, 255, 255));
+        btnInformeAutores.setText("Informes de autores");
+        btnInformeAutores.setBorderPainted(false);
+        btnInformeAutores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerActoresActionPerformed(evt);
+                btnInformeAutoresActionPerformed(evt);
             }
         });
-        jPanel10.add(btnVerActores, java.awt.BorderLayout.PAGE_START);
+        jPanel11.add(btnInformeAutores, java.awt.BorderLayout.PAGE_START);
+
+        jPanel10.add(jPanel11, java.awt.BorderLayout.CENTER);
+
+        btnInformeComics.setBackground(new java.awt.Color(204, 0, 51));
+        btnInformeComics.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnInformeComics.setForeground(new java.awt.Color(255, 255, 255));
+        btnInformeComics.setText("Informes de cómics");
+        btnInformeComics.setBorderPainted(false);
+        btnInformeComics.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInformeComicsActionPerformed(evt);
+            }
+        });
+        jPanel10.add(btnInformeComics, java.awt.BorderLayout.PAGE_START);
 
         jPanel9.add(jPanel10, java.awt.BorderLayout.CENTER);
 
-        btnVerPeliculas.setBackground(new java.awt.Color(204, 0, 51));
-        btnVerPeliculas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnVerPeliculas.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerPeliculas.setText("Ver peliculas");
-        btnVerPeliculas.setBorderPainted(false);
-        btnVerPeliculas.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscador.setBackground(new java.awt.Color(204, 0, 51));
+        btnBuscador.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBuscador.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscador.setText("Buscador");
+        btnBuscador.setBorderPainted(false);
+        btnBuscador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerPeliculasActionPerformed(evt);
+                btnBuscadorActionPerformed(evt);
             }
         });
-        jPanel9.add(btnVerPeliculas, java.awt.BorderLayout.PAGE_START);
+        jPanel9.add(btnBuscador, java.awt.BorderLayout.PAGE_START);
 
         jPanel6.add(jPanel9, java.awt.BorderLayout.CENTER);
 
-        btnReparto.setBackground(new java.awt.Color(204, 0, 51));
-        btnReparto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnReparto.setForeground(new java.awt.Color(255, 255, 255));
-        btnReparto.setText("Reparto");
-        btnReparto.setBorderPainted(false);
-        btnReparto.addActionListener(new java.awt.event.ActionListener() {
+        btnColecciones.setBackground(new java.awt.Color(204, 0, 51));
+        btnColecciones.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnColecciones.setForeground(new java.awt.Color(255, 255, 255));
+        btnColecciones.setText("Colecciones");
+        btnColecciones.setBorderPainted(false);
+        btnColecciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRepartoActionPerformed(evt);
+                btnColeccionesActionPerformed(evt);
             }
         });
-        jPanel6.add(btnReparto, java.awt.BorderLayout.PAGE_START);
+        jPanel6.add(btnColecciones, java.awt.BorderLayout.PAGE_START);
 
         jPanel5.add(jPanel6, java.awt.BorderLayout.CENTER);
 
@@ -280,8 +288,8 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculasActionPerformed
-        MoviesBoardPanel moviesBoard = new MoviesBoardPanel();
+    private void btnComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComicsActionPerformed
+        GestionComicsPanel moviesBoard = new GestionComicsPanel();
         moviesBoard.setSize(600, 555);
         moviesBoard.setLocation(0, 0);
 
@@ -289,10 +297,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         content.add(moviesBoard, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btnPeliculasActionPerformed
+    }//GEN-LAST:event_btnComicsActionPerformed
 
-    private void btnActoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActoresActionPerformed
-        ActorsBoardPanel boardPanel = new ActorsBoardPanel();
+    private void btnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoresActionPerformed
+        GestionAutoresPanel boardPanel = new GestionAutoresPanel();
         boardPanel.setSize(518, 491);
         boardPanel.setLocation(0, 0);
 
@@ -300,10 +308,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         content.add(boardPanel, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btnActoresActionPerformed
+    }//GEN-LAST:event_btnAutoresActionPerformed
 
-    private void btnRepartoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepartoActionPerformed
-        ActorsMoviesPanel actorsMoviesPanel = new ActorsMoviesPanel();
+    private void btnColeccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColeccionesActionPerformed
+        GestionColeccionesPanel actorsMoviesPanel = new GestionColeccionesPanel();
         actorsMoviesPanel.setSize(518, 491);
         actorsMoviesPanel.setLocation(0, 0);
 
@@ -311,10 +319,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         content.add(actorsMoviesPanel, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btnRepartoActionPerformed
+    }//GEN-LAST:event_btnColeccionesActionPerformed
 
-    private void btnVerPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPeliculasActionPerformed
-        VerPeliculasPanel verPeliculasPanel = new VerPeliculasPanel();
+    private void btnBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscadorActionPerformed
+        InformesComicsPanel verPeliculasPanel = new InformesComicsPanel();
         verPeliculasPanel.setSize(518, 491);
         verPeliculasPanel.setLocation(0, 0);
 
@@ -322,10 +330,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         content.add(verPeliculasPanel, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btnVerPeliculasActionPerformed
+    }//GEN-LAST:event_btnBuscadorActionPerformed
 
-    private void btnVerActoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActoresActionPerformed
-        VerActores verActores = new VerActores();
+    private void btnInformeComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeComicsActionPerformed
+        InformesAutoresPanel verActores = new InformesAutoresPanel();
         verActores.setSize(518, 491);
         verActores.setLocation(0, 0);
 
@@ -333,11 +341,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         content.add(verActores, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btnVerActoresActionPerformed
+    }//GEN-LAST:event_btnInformeComicsActionPerformed
 
-    private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
+    private void btnInformeAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeAutoresActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAyudaActionPerformed
+    }//GEN-LAST:event_btnInformeAutoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -384,19 +392,19 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PaginaPrincipal(null).setVisible(true);
+                new PaginaPrincipal().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ComicsManager;
-    private javax.swing.JButton btnActores;
-    private javax.swing.JButton btnAyuda;
-    private javax.swing.JButton btnPeliculas;
-    private javax.swing.JButton btnReparto;
-    private javax.swing.JButton btnVerActores;
-    private javax.swing.JButton btnVerPeliculas;
+    private javax.swing.JButton btnAutores;
+    private javax.swing.JButton btnBuscador;
+    private javax.swing.JButton btnColecciones;
+    private javax.swing.JButton btnComics;
+    private javax.swing.JButton btnInformeAutores;
+    private javax.swing.JButton btnInformeComics;
     private javax.swing.JPanel content;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -415,19 +423,19 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void activarAyuda() {
-        try {
 
+        try {
             URL url = this.getClass().getResource("/ayuda/help.hs");
 
             // Crea el HelpSet y el HelpBroker
             HelpSet helpset = new HelpSet(null, url);
             HelpBroker hb = helpset.createHelpBroker();
 
-            hb.enableHelpOnButton(btnAyuda, "gestionpeliculas", helpset);
-
+            //hb.enableHelpOnButton(btnAyuda, "gestionpeliculas", helpset);
         } catch (HelpSetException ex) {
-            Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PaginaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     private void traduccion() {
@@ -443,11 +451,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         lblBienvenida.setText(rb.getString("lblBienvenida"));
         lblPanelControl.setText(rb.getString("lblPanelControl"));
         lblSubtitulo.setText(rb.getString("lblSubtitulo"));
-        btnActores.setText(rb.getString("btnActores"));
-        btnPeliculas.setText(rb.getString("btnPeliculas"));
-        btnReparto.setText(rb.getString("btnReparto"));
-        btnVerPeliculas.setText(rb.getString("btnVerPeliculas"));
-        btnVerActores.setText(rb.getString("btnVerActores"));
+        btnAutores.setText(rb.getString("btnActores"));
+        btnComics.setText(rb.getString("btnPeliculas"));
+        btnColecciones.setText(rb.getString("btnReparto"));
+        btnBuscador.setText(rb.getString("btnVerPeliculas"));
+        btnInformeComics.setText(rb.getString("btnVerActores"));
 
     }
 

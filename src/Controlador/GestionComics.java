@@ -5,6 +5,8 @@
  */
 package Controlador;
 
+import Modelo.Autor;
+import Modelo.Coleccion;
 import Modelo.Comic;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -43,7 +45,7 @@ public class GestionComics {
             rs = sentencia.executeQuery();
             
             while (rs.next()) {
-                listaComics.add(new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5)));
+                listaComics.add(new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getBytes(5), rs.getInt(5)));
             }
 
         } catch (Exception e) {
@@ -56,6 +58,68 @@ public class GestionComics {
             }
         }
         return listaComics;
+    }
+    
+    public static List<Coleccion> cargarColecciones() {
+
+        Connection con;
+        ResultSet rs = null;
+        
+        List<Coleccion> listaColecciones = new ArrayList();
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "Select * from coleccion";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            rs = sentencia.executeQuery();
+            
+            while (rs.next()) {
+                listaColecciones.add(new Coleccion(rs.getInt(1), rs.getString(2)));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Listar coleeciones", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                
+            }
+        }
+        return listaColecciones;
+    }
+    
+    public static List<Autor> cargarAutores() {
+
+        Connection con;
+        ResultSet rs = null;
+        
+        List<Autor> listaAutores = new ArrayList();
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "Select * from autor";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            rs = sentencia.executeQuery();
+            
+            while (rs.next()) {
+                listaAutores.add(new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3)));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Listar autores", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                
+            }
+        }
+        return listaAutores;
     }
     
     /************************GESTION EN EL CLIENTE*****************************************************/
@@ -81,5 +145,25 @@ public class GestionComics {
             area.setText(area.getText() + "\n" + d.toString());
         } */
 
+    }
+    
+    public static List<Coleccion> listarSocketColecciones(Socket skCliente) throws IOException, ClassNotFoundException {
+
+        ObjectInputStream objeto_entrada = new ObjectInputStream(skCliente.getInputStream());
+
+        List<Coleccion> listaColecciones = (List<Coleccion>) objeto_entrada.readObject();
+
+        return listaColecciones;    
+
+    }
+    
+     public static List<Autor> listarSocketAutor(Socket skCliente) throws IOException, ClassNotFoundException {
+
+        ObjectInputStream objeto_entrada = new ObjectInputStream(skCliente.getInputStream());
+
+        List<Autor> listaAutores = (List<Autor>) objeto_entrada.readObject();
+
+        return listaAutores;
+      
     }
 }

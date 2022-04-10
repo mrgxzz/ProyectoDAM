@@ -49,7 +49,7 @@ public class HiloServidor extends Thread {
                 listaThread.add(hsc);
 
             } catch (java.net.SocketException s) {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error con el servidor.");
+                JOptionPane.showMessageDialog(null, "El servidor no está conectado.");
 
             } catch (IOException ex) {
                 Logger.getLogger(HiloServidor.class.getName()).log(Level.SEVERE, null, ex);

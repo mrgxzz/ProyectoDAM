@@ -5,29 +5,33 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Manu Romeo
  */
-public class Comic {
+public class Comic implements Serializable{
     private int idComic;
     private String nombreComic;
     private java.util.Date fechaAdquisicion;
     private String tapa;
+    private byte[] portada;
     private int idEstado;
 
     public Comic() {
     }
 
-    public Comic(int idComic, String nombreComic, Date fechaAdquisicion, String tapa, int idEstado) {
+    public Comic(int idComic, String nombreComic, Date fechaAdquisicion, String tapa, byte[] portada, int idEstado) {
         this.idComic = idComic;
         this.nombreComic = nombreComic;
         this.fechaAdquisicion = fechaAdquisicion;
         this.tapa = tapa;
+        this.portada = portada;
         this.idEstado = idEstado;
     }
+
 
     public int getIdComic() {
         return idComic;
@@ -69,6 +73,14 @@ public class Comic {
         this.idEstado = idEstado;
     }
 
+    public byte[] getPortada() {
+        return portada;
+    }
+
+    public void setPortada(byte[] portada) {
+        this.portada = portada;
+    }
+    
     @Override
     public String toString() {
         return "Comic{" + "idComic=" + idComic + ", nombreComic=" + nombreComic + ", fechaAdquisicion=" + fechaAdquisicion + ", tapa=" + tapa + ", idEstado=" + idEstado + '}';

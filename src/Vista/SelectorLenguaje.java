@@ -6,9 +6,12 @@
 package Vista;
 
 import java.util.Locale;
+import javax.swing.JOptionPane;
 
 /**
- * UI dedicada a la seleccion del idioma en el que va a ser visualizada toda la aplicacion.
+ * UI dedicada a la seleccion del idioma en el que va a ser visualizada toda la
+ * aplicacion.
+ *
  * @author manuelrg
  */
 public class SelectorLenguaje extends javax.swing.JFrame {
@@ -112,23 +115,31 @@ public class SelectorLenguaje extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Metodo ejecutado cuando se pulsa sobre el boton de aceptacion del idioma; cambia el Locale por defecto cambiando asi el idioma de la aplicacion.
-     * @param evt (java.awt.event.ActionEvent) 
+     * Metodo ejecutado cuando se pulsa sobre el boton de aceptacion del idioma;
+     * cambia el Locale por defecto cambiando asi el idioma de la aplicacion.
+     *
+     * @param evt (java.awt.event.ActionEvent)
      */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
         String idioma = (String) cmbIdiomas.getSelectedItem();
 
-        if (idioma.equalsIgnoreCase("Galego")) {          
-            Locale.setDefault(new Locale("gl", "ES"));       
+        if (idioma.equalsIgnoreCase("Galego")) {
+            Locale.setDefault(new Locale("gl", "ES"));
         } else {
             Locale.setDefault(new Locale("es", "ES"));
         }
+
+        PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
+
+        if (paginaPrincipal.skCliente != null) {
+            paginaPrincipal.setVisible(true);
+            
+            this.dispose();
+        }
+
         
-        PaginaPrincipal paginaPrincipal = new PaginaPrincipal(null);
-        paginaPrincipal.setVisible(true);
-        
-        this.dispose();
+
 
     }//GEN-LAST:event_btnAceptarActionPerformed
 

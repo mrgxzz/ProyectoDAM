@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Controlador.DBConnector;
 import Controlador.HiloServidor;
 import java.awt.Color;
 import java.io.IOException;
@@ -27,6 +28,12 @@ public class ServerFile extends javax.swing.JFrame {
      */
     public ServerFile() {
         initComponents();
+        
+        DBConnector.conectar();
+        
+        SelectorLenguaje selectorLenguaje = new SelectorLenguaje();
+        selectorLenguaje.setVisible(true);
+        
     }
 
     /**
@@ -41,6 +48,7 @@ public class ServerFile extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lblEstadoServidor = new javax.swing.JLabel();
+        lblServer = new javax.swing.JLabel();
         btnConectar = new javax.swing.JButton();
         btnDesconectar = new javax.swing.JButton();
         lblSeleccionaPuerto = new javax.swing.JLabel();
@@ -57,13 +65,19 @@ public class ServerFile extends javax.swing.JFrame {
         lblEstadoServidor.setForeground(new java.awt.Color(204, 0, 51));
         lblEstadoServidor.setText("APAGADO");
 
+        lblServer.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblServer.setForeground(new java.awt.Color(255, 255, 255));
+        lblServer.setText("SERVER");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(lblEstadoServidor)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblServer)
+                    .addComponent(lblEstadoServidor))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -71,7 +85,9 @@ public class ServerFile extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblEstadoServidor)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblServer)
+                .addContainerGap())
         );
 
         btnConectar.setBackground(new java.awt.Color(204, 0, 51));
@@ -232,6 +248,7 @@ public class ServerFile extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblEstadoServidor;
     private javax.swing.JLabel lblSeleccionaPuerto;
+    private javax.swing.JLabel lblServer;
     private javax.swing.JTextField txtPuertoServidor;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,8 @@
  */
 package Controlador;
 
+import Modelo.Autor;
+import Modelo.Coleccion;
 import Modelo.Comic;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -68,14 +70,38 @@ public class HiloServidorCliente extends Thread {
                         case "salir" -> {
                             flujo_salida.flush();                           
                         }
-                        case "listarComics" -> {
-                                        flujo_salida.writeUTF("listaComicsOk");
+                        case "listarcolecciones" -> {
+                                        flujo_salida.writeUTF("listacoleccionesok");
+                                        List <Coleccion> listaColecciones = GestionComics.cargarColecciones();
+
+                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
+
+                                        objeto_salida.writeObject(listaColecciones);
+                                        objeto_salida.flush();
+                                        
+                                        
+                                    }
+                        case "listarcomics" -> {
+                                        flujo_salida.writeUTF("listacomicsok");
                                         List <Comic> listaDep = GestionComics.cargarComics();
 
                                         objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
 
                                         objeto_salida.writeObject(listaDep);
                                         objeto_salida.flush();
+                                        
+                                        
+                                    }
+                        case "listarautores" -> {
+                                        flujo_salida.writeUTF("listaautoresok");
+                                        List <Autor> listaAutores = GestionComics.cargarAutores();
+
+                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
+
+                                        objeto_salida.writeObject(listaAutores);
+                                        objeto_salida.flush();
+                                        
+                                        
                                     }
                         default -> {
                             flujo_salida.flush();

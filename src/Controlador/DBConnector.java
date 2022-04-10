@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 public class DBConnector {
     private static Connection Con;
     
-    private static String DBNAME = "Comics";
+    private static String DBNAME = "comics";
     private static String PORT = "3306";
     private static String IP = "192.168.56.102";
     
