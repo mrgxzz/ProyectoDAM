@@ -6,7 +6,10 @@
 package Vista;
 
 
+import Controlador.HiloCliente;
+import Modelo.TablaComics;
 import java.util.ResourceBundle;
+import javax.swing.text.TabableView;
 
 /**
  *
@@ -27,9 +30,15 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MoviesBoardPanel
+     * @param h Class HiloCliente
      */
-    public GestionComicsPanel() {
+    public GestionComicsPanel(HiloCliente h) {
         initComponents();
+        
+        
+        h.solicitarListaComic();
+        TablaComics modeloTabla = new TablaComics(listaComics);
+        
 /*
         ArrayList<Genre> listaGeneros = Controller.DBControllerMovies.getGenreList();
 

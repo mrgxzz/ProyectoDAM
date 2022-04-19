@@ -16,23 +16,25 @@ public class TablaComics extends AbstractTableModel {
 
     public ArrayList<Comic> listaComics;
 
-    private String[] columnasTabla = {"Nombre", "Apellidos", "DNI"};
+    private final String[] columnasTabla;
 
     public TablaComics() {
         super();
+        this.columnasTabla = new String[]{"Portada", "Nombre", "Tapa", "Fecha adquisición", "Estado"};
     }
 
-    public ArrayList<Usuario> getListaUsuarios() {
-        return listaUsuarios;
+    public ArrayList<Comic> getListaComics() {
+        return listaComics;
     }
 
-    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
+    public void setListaComics(ArrayList<Comic> listaComics) {
+        this.listaComics = listaComics;
     }
 
-    public modeloTabla(ArrayList<Usuario> listaUsuarios) {
+    public TablaComics(ArrayList<Comic> listaComics) {
         super();
-        this.listaUsuarios = listaUsuarios;
+        this.columnasTabla = new String[]{"Portada", "Nombre", "Tapa", "Fecha adquisición", "Estado"};
+        this.listaComics = listaComics;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class TablaComics extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return listaUsuarios.size();
+        return listaComics.size();
     }
 
     @Override
@@ -58,24 +60,21 @@ public class TablaComics extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         // TODO Auto-generated method stub
-        if (rowIndex != -1 && listaUsuarios.size() > rowIndex) {
-            Usuario u = listaUsuarios.get(rowIndex);
+        if (rowIndex != -1 && listaComics.size() > rowIndex) {
+            Comic u = listaComics.get(rowIndex);
 
             switch (columnIndex) {
                 case 0:
-                    return u.getNombre();
+                    return u.getPortada();
                 case 1:
-                    return u.getApellidos();
+                    return u.getNombreComic();
                 case 2:
-                    return u.getDni();
+                    return u.getTapa();
                 case 3:
-                    return u.getDireccion();
+                    return u.getFechaAdquisicion();
                 case 4:
-                    return u.getFechaNacimiento();
-                case 5:
-                    return u.getUrlImagen();
-                case 6:
-                    return u.getListaRoles();
+                    return u.getIdEstado();
+               
                 default:
                     return null;
 
@@ -83,21 +82,5 @@ public class TablaComics extends AbstractTableModel {
         } else {
             return null;
         }
-    }
-
-    public ArrayList<Usuario> getListaVehiculos() {
-        return listaUsuarios;
-    }
-
-    public void setListaVehiculos(ArrayList<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
-
-    public String[] getColumnasTabla() {
-        return columnasTabla;
-    }
-
-    public void setColumnasTabla(String[] columnasTabla) {
-        this.columnasTabla = columnasTabla;
     }
 }

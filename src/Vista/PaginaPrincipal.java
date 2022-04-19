@@ -42,7 +42,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         if (skCliente == null || skCliente.isClosed() || !skCliente.isConnected()) {
             try {
                 skCliente = new Socket(HOST, 2000);
-
+                
                 h = new HiloCliente(skCliente, null);
                 h.start();
 
@@ -289,7 +289,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComicsActionPerformed
-        GestionComicsPanel moviesBoard = new GestionComicsPanel();
+        GestionComicsPanel moviesBoard = new GestionComicsPanel(h);
         moviesBoard.setSize(600, 555);
         moviesBoard.setLocation(0, 0);
 
