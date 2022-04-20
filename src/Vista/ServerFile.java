@@ -51,9 +51,6 @@ public class ServerFile extends javax.swing.JFrame {
         lblServer = new javax.swing.JLabel();
         btnConectar = new javax.swing.JButton();
         btnDesconectar = new javax.swing.JButton();
-        lblSeleccionaPuerto = new javax.swing.JLabel();
-        txtPuertoServidor = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,48 +107,26 @@ public class ServerFile extends javax.swing.JFrame {
             }
         });
 
-        lblSeleccionaPuerto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblSeleccionaPuerto.setText("Selecciona el puerto de conexión");
-
-        txtPuertoServidor.setBorder(null);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                        .addComponent(btnDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSeleccionaPuerto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtPuertoServidor, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                                    .addComponent(jSeparator1))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                .addGap(37, 37, 37)
+                .addComponent(btnDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(lblSeleccionaPuerto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPuertoServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addContainerGap(39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConectar)
-                    .addComponent(btnDesconectar))
-                .addContainerGap())
+                    .addComponent(btnDesconectar)
+                    .addComponent(btnConectar))
+                .addGap(37, 37, 37))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -169,28 +144,10 @@ public class ServerFile extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarActionPerformed
-        try {
-            
-            skServidor = new ServerSocket(Integer.parseInt(txtPuertoServidor.getText()));
-
-            System.out.println("Escuchando en el puerto " + Integer.parseInt(txtPuertoServidor.getText()));
-            lblEstadoServidor.setText("ENCENDIDO");
-            lblEstadoServidor.setForeground(Color.GREEN);
-
-            hs = new HiloServidor(skServidor);
-
-            hs.start();
-
-        } catch (IOException ex) {
-            Logger.getLogger(ServerFile.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnConectarActionPerformed
-
     private void btnDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesconectarActionPerformed
         try {
             if (!skServidor.isClosed() && skServidor != null) {
-                
+
                 skServidor.close();
                 hs.apagarServidor();
 
@@ -204,6 +161,24 @@ public class ServerFile extends javax.swing.JFrame {
             Logger.getLogger(ServerFile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDesconectarActionPerformed
+
+    private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarActionPerformed
+        try {
+
+            skServidor = new ServerSocket(2000);
+
+            System.out.println("Escuchando en el puerto " + 2000);
+            lblEstadoServidor.setText("ENCENDIDO");
+            lblEstadoServidor.setForeground(Color.GREEN);
+
+            hs = new HiloServidor(skServidor);
+
+            hs.start();
+
+        } catch (IOException ex) {
+            Logger.getLogger(ServerFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConectarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,10 +220,7 @@ public class ServerFile extends javax.swing.JFrame {
     private javax.swing.JButton btnDesconectar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblEstadoServidor;
-    private javax.swing.JLabel lblSeleccionaPuerto;
     private javax.swing.JLabel lblServer;
-    private javax.swing.JTextField txtPuertoServidor;
     // End of variables declaration//GEN-END:variables
 }
