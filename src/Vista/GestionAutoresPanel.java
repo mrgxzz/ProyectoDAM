@@ -46,30 +46,24 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         lblGestionActores = new javax.swing.JLabel();
         lblNombreActor = new javax.swing.JLabel();
         txtNombreActor = new javax.swing.JTextField();
-        lblApellidos = new javax.swing.JLabel();
-        txtApellidos = new javax.swing.JTextField();
         lblFechaNac = new javax.swing.JLabel();
         txtFechaNacimiento = new javax.swing.JTextField();
         lblFoto = new javax.swing.JLabel();
         btnSeleccionFotoActor = new javax.swing.JButton();
         btnAnadir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
-        lblIndicacionBorrarActor = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(518, 491));
 
         lblGestionActores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblGestionActores.setText("Gestión de actores");
+        lblGestionActores.setText("Gestión de autores");
 
         lblNombreActor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblNombreActor.setText("Nombre");
-
-        lblApellidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblApellidos.setText("Apellidos");
+        lblNombreActor.setText("Nombre y apellidos");
 
         lblFechaNac.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblFechaNac.setText("Fecha de nacimiento");
@@ -86,10 +80,6 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("*");
-
-        jLabel2.setText("*");
-
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,70 +87,61 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             }
         });
 
-        lblIndicacionBorrarActor.setText("* : Para eliminar un actor únicamente deben ser indicados los campos marcados.");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAnadir)
-                        .addGap(46, 46, 46))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 44, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSeleccionFotoActor)
-                                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(59, 59, 59)
-                                        .addComponent(txtNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(73, 73, 73)
-                                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblIndicacionBorrarActor))
-                        .addContainerGap(138, Short.MAX_VALUE))))
+                .addGap(71, 71, 71)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnEliminar)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAnadir)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(77, 77, 77)
+                                    .addComponent(btnSeleccionFotoActor))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNombreActor)
-                            .addComponent(txtNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblApellidos)
-                            .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)))
+                .addGap(28, 28, 28)
+                .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminar)
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreActor)
+                    .addComponent(txtNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechaNac)
                     .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -168,13 +149,9 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFoto)
                     .addComponent(btnSeleccionFotoActor))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnAnadir))
-                .addGap(18, 18, 18)
-                .addComponent(lblIndicacionBorrarActor)
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(btnAnadir)
+                .addGap(33, 33, 33))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -226,15 +203,12 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnAnadir;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnSeleccionFotoActor;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel lblApellidos;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblGestionActores;
-    private javax.swing.JLabel lblIndicacionBorrarActor;
     private javax.swing.JLabel lblNombreActor;
-    private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombreActor;
     // End of variables declaration//GEN-END:variables
@@ -263,10 +237,8 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private void activarTraduccion(ResourceBundle rb) {
 
         lblGestionActores.setText(rb.getString("lblGestionActores"));
-        lblApellidos.setText(rb.getString("lblApellidos"));
         lblFechaNac.setText(rb.getString("lblFechaNac"));
         lblFoto.setText(rb.getString("lblFoto"));
-        lblIndicacionBorrarActor.setText(rb.getString("lblIndicacionBorrarActor"));
         lblNombreActor.setText(rb.getString("lblNombreActor"));
         
         
