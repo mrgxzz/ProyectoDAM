@@ -3,7 +3,7 @@
 PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 2.0//EN" "http://java.sun.com/products/javahelp/map_2_0.dtd">
 <map version="1.0">
    <mapID target="servidor" url="paginas/Servidor.html" />
-   <mapID target="selectoridioma" url="paginas/SelectorIdioma.html" />
+   <mapID target="seleccionidioma" url="paginas/SeleccionIdioma.html" />
    <mapID target="paginaprincipal" url="paginas/PaginaPrincipal.html" />
    <mapID target="panelcomics" url="paginas/PanelComics.html" />
    <mapID target="panelcolecciones" url="paginas/PanelColecciones.html" />

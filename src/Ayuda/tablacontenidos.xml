@@ -2,6 +2,7 @@
 <toc version="1.0"> 
     <!--  categoryclosedimage="FolderClosed" categoryopenimage="FolderOpened" topicimage="ItemIco"-->
     <tocitem text="Servidor" target="servidor"/>
+    <tocitem text="Selección de idioma" target="seleccionidioma"/>
     <tocitem text="Página principal" target="paginaprincipal">
         <tocitem text="Panel gestión de cómics" target="panelcomics"/>
         <tocitem text="Panel colecciones" target="panelcolecciones"/>
