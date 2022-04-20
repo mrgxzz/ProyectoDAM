@@ -2,10 +2,10 @@
 <!DOCTYPE helpset PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp HelpSet Version 1.0//EN" "http://java.sun.com/products/javahelp/helpset_1_0.dtd">
  
 <helpset version="1.0">
-	<title>Ayuda Ejemplo JavaHelp</title>
+	<title>Ayuda Comic Manager</title>
 	<maps>
 		<!-- Pagina por defecto al mostrar la ayuda -->
-		<homeID>manual</homeID>
+		<homeID>paginaprincipal</homeID>
 		<!-- Que mapa deseamos -->
 		<mapref location="mapa.jhm"/>
 	</maps>
@@ -22,7 +22,7 @@
  	<!-- Vista de índice -->
 	<view>
 		<name>Indice</name>
-		<label>El indice</label>
+		<label>Indice</label>
 		<type>javax.help.IndexView</type>
 		<data>indice.xml</data>
 	</view>
