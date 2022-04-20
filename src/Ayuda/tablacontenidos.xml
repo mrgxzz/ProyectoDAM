@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<toc version="1.0"> 
+	<!--  categoryclosedimage="FolderClosed" categoryopenimage="FolderOpened" topicimage="ItemIco"-->
+	<tocitem text="Manual" target="manual">
+		<tocitem text="Menú" target="menu">
+			<tocitem text="Archivo" target="archivo"/>
+			<tocitem text="Editar" target="editar"/>
+			<tocitem text="Ayuda" target="ayuda"/>
+			<tocitem text="Menu secundario" target="menusecundario"/>
+			<tocitem text="Menu popup" target="menuconpopup"/>		
+			
+		</tocitem>
+		<tocitem text="Instalar" target="instalar"/>
+	</tocitem>
+</toc>
+
