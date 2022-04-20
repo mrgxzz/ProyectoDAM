@@ -322,6 +322,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnColeccionesActionPerformed
 
     private void btnBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscadorActionPerformed
+        // Buscador 
+    }//GEN-LAST:event_btnBuscadorActionPerformed
+
+    private void btnInformeComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeComicsActionPerformed
         InformesComicsPanel verPeliculasPanel = new InformesComicsPanel();
         verPeliculasPanel.setSize(518, 491);
         verPeliculasPanel.setLocation(0, 0);
@@ -330,9 +334,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         content.add(verPeliculasPanel, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btnBuscadorActionPerformed
+    }//GEN-LAST:event_btnInformeComicsActionPerformed
 
-    private void btnInformeComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeComicsActionPerformed
+    private void btnInformeAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeAutoresActionPerformed
         InformesAutoresPanel verActores = new InformesAutoresPanel();
         verActores.setSize(518, 491);
         verActores.setLocation(0, 0);
@@ -341,10 +345,6 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         content.add(verActores, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_btnInformeComicsActionPerformed
-
-    private void btnInformeAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeAutoresActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnInformeAutoresActionPerformed
 
     /**
