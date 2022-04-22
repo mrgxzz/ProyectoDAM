@@ -28,7 +28,8 @@ import javax.swing.JTextArea;
  */
 public class GestionComics {
     
-       /********** GESTION EN EL SERVIDOR *******************************/
+       /********** GESTION EN EL SERVIDOR
+     * @return  *******************************/
     public static List<Comic> cargarComics() {
 
         Connection con;

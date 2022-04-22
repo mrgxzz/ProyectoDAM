@@ -44,8 +44,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
                 skCliente = new Socket(HOST, 2000);
                 
                 h = new HiloCliente(skCliente, null);
-                h.start();
+                //h.start();
 
+               // h.solicitarListaComic();
+                
             } catch (java.net.ConnectException ex) {
                 JOptionPane.showMessageDialog(null, "No se ha podido establecer conexión con el servidor.");
                 

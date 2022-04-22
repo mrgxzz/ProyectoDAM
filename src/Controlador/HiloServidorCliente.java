@@ -44,11 +44,13 @@ public class HiloServidorCliente extends Thread {
 
             String orden = "";
 
+           
             flujo_entrada = new DataInputStream(skCliente.getInputStream());
             flujo_salida = new DataOutputStream(skCliente.getOutputStream());
             
-            ObjectInputStream objeto_entrada;
             ObjectOutputStream objeto_salida;
+            ObjectInputStream objeto_entrada;
+            
 
             do {
                 try {
@@ -83,13 +85,15 @@ public class HiloServidorCliente extends Thread {
                                     }
                         case "listarcomics" -> {
                                         flujo_salida.writeUTF("listacomicsok");
-                                        List <Comic> listaDep = GestionComics.cargarComics();
-
-                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
-
-                                        objeto_salida.writeObject(listaDep);
-                                        objeto_salida.flush();
-                                        
+                                        flujo_salida.flush();
+//                                        List <Comic> listaDep = GestionComics.cargarComics();
+//
+//                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
+//
+//                                        objeto_salida.writeObject(listaDep);
+//                                        objeto_salida.flush();
+//                                        
+                                        System.out.println("HEYYYY");
                                         
                                     }
                         case "listarautores" -> {

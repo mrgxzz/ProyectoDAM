@@ -7,9 +7,9 @@ package Vista;
 
 
 import Controlador.HiloCliente;
-import Modelo.TablaComics;
+import Modelo.Comic;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javax.swing.text.TabableView;
 
 /**
  *
@@ -36,8 +36,13 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         initComponents();
         
         
-        h.solicitarListaComic();
-        TablaComics modeloTabla = new TablaComics(listaComics);
+        ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
+        
+        for (Comic comic : listaComics) {
+            System.out.println(comic);
+        }
+        
+       // TablaComics modeloTabla = new TablaComics(listaComics);
         
 /*
         ArrayList<Genre> listaGeneros = Controller.DBControllerMovies.getGenreList();
