@@ -19,18 +19,22 @@ public class Comic implements Serializable{
     private String tapa;
     private byte[] portada;
     private int idEstado;
+    private int idAutor;
 
     public Comic() {
     }
 
-    public Comic(int idComic, String nombreComic, Date fechaAdquisicion, String tapa, byte[] portada, int idEstado) {
+    public Comic(int idComic, String nombreComic, Date fechaAdquisicion, String tapa, byte[] portada, int idEstado, int idAutor) {
         this.idComic = idComic;
         this.nombreComic = nombreComic;
         this.fechaAdquisicion = fechaAdquisicion;
         this.tapa = tapa;
         this.portada = portada;
         this.idEstado = idEstado;
+        this.idAutor = idAutor;
     }
+
+   
 
 
     public int getIdComic() {
@@ -80,6 +84,16 @@ public class Comic implements Serializable{
     public void setPortada(byte[] portada) {
         this.portada = portada;
     }
+
+    public int getIdAutor() {
+        return idAutor;
+    }
+
+    public void setIdAutor(int idAutor) {
+        this.idAutor = idAutor;
+    }
+    
+    
     
     @Override
     public String toString() {
