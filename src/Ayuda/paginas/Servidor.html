@@ -1,16 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-<header>Página principal del manual</header>
+    <head>
+        <meta charset="ISO-8859-1">
+        <title>Servidor de aplicación</title>
+    </head>
+    <body>
+        <header>Servidor</header>
 
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <div>
+            <p>
+                Los sockets son un mecanismo que nos permite establecer un enlace entre
+                dos programas que se ejecutan independientes el uno del otro
+                (generalmente un programa cliente y un programa servidor) Java por medio
+                de la librería java.net que nos provee dos clases: Socket para implementar
+                la conexión desde el lado del cliente y ServerSocket que nos permitirá manipular
+                la conexión desde el lado del servidor.<br>
+                En este caso vemos la vantana correspondiende al servidor de la aplicación que se está ejecutando.<br><br>
 
-</p>
+            </p>
+        </div>
 
-</body>
+        <div>
+            <img src="./imagenes/FormServidor_imagen.jpg"
+                 alt="Imágen del servidor de la aplicación">
+        </div>
+        
+        <div>
+            <p>
+                Como se puede observar en la imágen superior el servidor presenta dos opciones:<br>
+            </p>
+            <ol>
+                <li>Encender: Activa el servidor y posibilita el funcionamiento del resto de la aplicación</li>
+                <li>Apagar: Apaga el servidor, y deja fuera de servicio todos los procesos posibles dentro de la app de gestión.</li>
+            </ol>
+            <br><br>
+            <p>
+                Como se puede observar en la imágen inferior el servidor presenta una indicación
+                de que está activo una vez el usuario ha pulsado el botón de encendido.<br>
+            </p>
+            <img src="./imagenes/FormServidorEncendido_imagen.jpg"
+                 alt="Imágen del servidor de la aplicación activo">
+        </div>
+        
+
+
+    </body>
 </html>
