@@ -6,16 +6,23 @@
 package Vista;
 
 import Controlador.HiloCliente;
+import Modelo.Comic;
 import java.awt.BorderLayout;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,19 +45,22 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
         // traduccion();
         //activarAyuda();
-        
         if (skCliente == null || skCliente.isClosed() || !skCliente.isConnected()) {
             try {
                 skCliente = new Socket(HOST, 2000);
-                
-                h = new HiloCliente(skCliente, null);
-                //h.start();
 
-               // h.solicitarListaComic();
+                h = new HiloCliente(skCliente, null);
+
+                File imagen = new File("\"C:\\Users\\Manu Romeo\\Documents\\NetBeansProjects\\ProyectoDAM\\src\\Ayuda\\imagenes\\archivo.png\"");
+                Optional<byte[]> img = toBinary("C:\\Users\\Manu Romeo\\Documents\\NetBeansProjects\\ProyectoDAM\\src\\Ayuda\\imagenes\\archivo.png");
                 
+                h.anhadirComic(new Comic(1, "PRUEBA", new Date(), "Blanda", img.get(), 2, 1));
+                
+                
+            
             } catch (java.net.ConnectException ex) {
                 JOptionPane.showMessageDialog(null, "No se ha podido establecer conexión con el servidor.");
-                
+
                 this.dispose();
 
             } catch (IOException ex) {
@@ -423,6 +433,19 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblPanelControl;
     private javax.swing.JLabel lblSubtitulo;
     // End of variables declaration//GEN-END:variables
+
+    public static Optional<byte[]> toBinary(String path) {
+        int len = path.split("\\.").length;
+        String ext = path.split("\\.")[len - 1];
+        try {
+            BufferedImage img = ImageIO.read(new File(path));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(img, ext, baos);
+            return Optional.of(baos.toByteArray());
+        } catch (IOException e) {
+            return Optional.empty();
+        }
+    }
 
     private void activarAyuda() {
 

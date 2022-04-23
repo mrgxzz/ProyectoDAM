@@ -142,6 +142,29 @@ public class HiloCliente {
         return null;
 
     }
+    
+    public int anhadirComic(Comic comic) {
+
+        // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
+        
+        try {
+            // ¿QUE HAGO PARA AÑADIR? ESCRIBO EL OBJETO?
+            System.out.println("AÑADIENDO");
+            flujo_salida.writeUTF("anhadircomic");
+            GestionComics.anhadirComic(comic);
+            String datos = flujo_enter.readUTF();
+            
+            System.out.println("HE LEIDO -> " + datos);
+            //return (List<Comic>) flujo_entrada.readObject();
+            
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
+    }
 
     public void solicitarNumUsuarios() {
 

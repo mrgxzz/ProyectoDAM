@@ -39,7 +39,7 @@ public class GestionComics {
     /**
      * ******** GESTION EN EL SERVIDOR
      *
-     * @return  ******************************
+     * @return ******************************
      */
     public static List<Comic> cargarComics() {
 
@@ -134,10 +134,9 @@ public class GestionComics {
         return listaAutores;
     }
 
-    public static List<Comic> anhadirComic(Comic comic) {
+    public static int anhadirComic(Comic comic) {
 
         Connection con;
-        ResultSet rs = null;
 
         try {
 
@@ -149,28 +148,19 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, comic.getNombreComic());
-            sentencia.setDate(2, (Date) comic.getFechaAdquisicion());
+            sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()) );
             sentencia.setString(3, comic.getTapa());
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
             sentencia.setBytes(6, comic.getPortada());
 
-            rs = sentencia.executeQuery();
-
-            while (rs.next()) {
-                listaComics.add(new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getBytes(5), rs.getInt(5)));
-            }
+            return sentencia.executeUpdate();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "ListarEmpleados", JOptionPane.OK_OPTION);
-        } finally {
-            try {
-                rs.close();
-            } catch (SQLException ex) {
-
-            }
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
         }
-        return listaComics;
+
+        return 0;
     }
 
     private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
@@ -192,7 +182,8 @@ public class GestionComics {
     }
 
     /**
-     * **********************GESTION EN EL CLIENTE****************************************************
+     * **********************GESTION EN EL
+     * CLIENTE****************************************************
      */
     /**
      *
