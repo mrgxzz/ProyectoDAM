@@ -55,7 +55,7 @@ public class GestionComics {
                 listaComics.add(new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getBytes(5), rs.getInt(5), rs.getInt(6)));
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de cómics", JOptionPane.OK_OPTION);
         } finally {
             try {
@@ -90,7 +90,7 @@ public class GestionComics {
                 listaColecciones.add(new Coleccion(rs.getInt(1), rs.getString(2)));
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de colecciones", JOptionPane.OK_OPTION);
         } finally {
             try {
@@ -121,7 +121,7 @@ public class GestionComics {
                 listaAutores.add(new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3)));
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de autores", JOptionPane.OK_OPTION);
         } finally {
             try {
@@ -154,7 +154,7 @@ public class GestionComics {
                 return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getBytes(5), rs.getInt(6), rs.getInt(7));
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Buscar un cómic", JOptionPane.OK_OPTION);
         } finally {
             try {
@@ -187,7 +187,7 @@ public class GestionComics {
                 return new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3));
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Buscar un autor", JOptionPane.OK_OPTION);
         } finally {
             try {
@@ -222,7 +222,32 @@ public class GestionComics {
 
             return sentencia.executeUpdate();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
+        }
+
+        return 0;
+    }
+    
+    public static int anhadirAutor(Autor autor) {
+
+        Connection con;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "INSERT INTO autor (nombre, fechaNac)"
+                    + "VALUES (?, ?)";
+
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setString(1, autor.getNombre());
+            sentencia.setDate(2, new java.sql.Date(autor.getFechaNac().getTime()) );
+
+            return sentencia.executeUpdate();
+
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
         }
 
