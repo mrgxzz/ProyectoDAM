@@ -14,21 +14,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 
 /**
  *
@@ -36,12 +32,11 @@ import javax.swing.JTextArea;
  */
 public class GestionComics {
 
-    /**
-     * ******** GESTION EN EL SERVIDOR
-     *
-     * @return ******************************
+    /***
+     * Método para obtener todos los cómics añadidos en la BD
+     * @return List(Comic) Devuelve una lista cargada a través de una consulta a la BD con objetos de la clase cómic  
      */
-    public static List<Comic> cargarComics() {
+    public static List<Comic> getListaComics() {
 
         Connection con;
         ResultSet rs = null;
@@ -61,7 +56,7 @@ public class GestionComics {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "ListarEmpleados", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de cómics", JOptionPane.OK_OPTION);
         } finally {
             try {
                 rs.close();
@@ -72,7 +67,11 @@ public class GestionComics {
         return listaComics;
     }
 
-    public static List<Coleccion> cargarColecciones() {
+    /**
+     * Método para obtener todos las colecciones añadidas en la BD
+     * @return List(Coleccion) Devuelve una lista cargada a través de una consulta a la BD con objetos de la clase colección
+     */
+    public static List<Coleccion> getListaColecciones() {
 
         Connection con;
         ResultSet rs = null;
@@ -92,7 +91,7 @@ public class GestionComics {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Listar coleeciones", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de colecciones", JOptionPane.OK_OPTION);
         } finally {
             try {
                 rs.close();
@@ -103,7 +102,7 @@ public class GestionComics {
         return listaColecciones;
     }
 
-    public static List<Autor> cargarAutores() {
+    public static List<Autor> getListaAutores() {
 
         Connection con;
         ResultSet rs = null;
@@ -123,7 +122,7 @@ public class GestionComics {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Listar autores", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de autores", JOptionPane.OK_OPTION);
         } finally {
             try {
                 rs.close();
@@ -133,6 +132,73 @@ public class GestionComics {
         }
         return listaAutores;
     }
+    
+    public static Comic getComic(int idComic) {
+
+        Connection con;
+        ResultSet rs = null;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "SELECT * FROM comic WHERE idComic = ?";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setInt(1, idComic);
+            
+            rs = sentencia.executeQuery();
+            
+
+            if (rs.next()) {
+                return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getBytes(5), rs.getInt(6), rs.getInt(7));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Buscar un cómic", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+
+            }
+        }
+        return null;
+    }
+    
+    public static Autor getAutor(int idAutor) {
+
+        Connection con;
+        ResultSet rs = null;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "SELECT * FROM autor WHERE idAutor = ?";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setInt(1, idAutor);
+            
+            rs = sentencia.executeQuery();
+            
+
+            if (rs.next()) {
+                return new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Buscar un autor", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+
+            }
+        }
+        return null;
+    }
+
 
     public static int anhadirComic(Comic comic) {
 
