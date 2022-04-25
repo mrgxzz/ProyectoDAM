@@ -8,6 +8,7 @@ package Controlador;
 import Modelo.Autor;
 import Modelo.Coleccion;
 import Modelo.Comic;
+import Modelo.Estado;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -119,6 +120,37 @@ public class GestionComics {
 
             while (rs.next()) {
                 listaAutores.add(new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3)));
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de autores", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+
+            }
+        }
+        return listaAutores;
+    }
+    
+    public static List<Estado> getListaEstado() {
+
+        Connection con;
+        ResultSet rs = null;
+
+        List<Estado> listaEstado = new ArrayList();
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "SELECT * FROM estado";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            rs = sentencia.executeQuery();
+
+            while (rs.next()) {
+                listaEstado.add(new Estado(rs.getInt(1), rs.getString(2)));
             }
 
         } catch (SQLException e) {

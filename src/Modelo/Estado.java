@@ -11,12 +11,12 @@ package Modelo;
  */
 public class Estado {
     private int idEstado;
-    private int estado;
+    private String estado;
 
     public Estado() {
     }
 
-    public Estado(int idEstado, int estado) {
+    public Estado(int idEstado, String estado) {
         this.idEstado = idEstado;
         this.estado = estado;
     }
@@ -29,11 +29,11 @@ public class Estado {
         this.idEstado = idEstado;
     }
 
-    public int getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
     

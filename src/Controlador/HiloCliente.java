@@ -6,7 +6,6 @@
 package Controlador;
 
 import Modelo.Autor;
-import Modelo.Coleccion;
 import Modelo.Comic;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -15,9 +14,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 /**
@@ -217,5 +213,27 @@ return GestionComics.eliminarComic(idComic);
 //        return null;
 
     }
+    
+    public List<Estado> solicitarListaEstado() {
+
+        // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
+//        try {
+//            System.out.println("SOLICITANDO");
+//            flujo_salida.writeUTF("listarautores");
+
+           return GestionComics.getListaEstado();
+
+//            String datos = flujo_enter.readUTF();
+//
+//            System.out.println("HE LEIDO -> " + datos);
+//            //return (List<Comic>) flujo_entrada.readObject();
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+
+    }
+    
 
 }
