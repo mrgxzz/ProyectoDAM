@@ -300,7 +300,7 @@ public class GestionComics {
         return 0;
     }
     
-    private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
+    public static Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         Iterator readers = ImageIO.getImageReadersByFormatName("jpeg");
