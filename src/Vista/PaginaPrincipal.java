@@ -51,10 +51,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
                 h = new HiloCliente(skCliente, null);
 
-                File imagen = new File("\"C:\\Users\\Manu Romeo\\Documents\\NetBeansProjects\\ProyectoDAM\\src\\Ayuda\\imagenes\\archivo.png\"");
-                Optional<byte[]> img = toBinary("C:\\Users\\Manu Romeo\\Documents\\NetBeansProjects\\ProyectoDAM\\src\\Ayuda\\imagenes\\archivo.png");
-                
-                h.anhadirComic(new Comic(1, "PRUEBA", new Date(), "Blanda", img.get(), 2, 1));
+//                File imagen = new File("\"C:\\Users\\Manu Romeo\\Documents\\NetBeansProjects\\ProyectoDAM\\src\\Ayuda\\imagenes\\archivo.png\"");
+//                Optional<byte[]> img = toBinary("C:\\Users\\Manu Romeo\\Documents\\NetBeansProjects\\ProyectoDAM\\src\\Ayuda\\imagenes\\archivo.png");
+//                
+//                h.anhadirComic(new Comic(1, "PRUEBA", new Date(), "Blanda", img.get(), 2, 1));
                 
                 
             
