@@ -106,6 +106,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de cursos del usuario");
         setIconImages(null);
+        setPreferredSize(new java.awt.Dimension(705, 513));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -277,7 +278,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
                     .addGroup(contentLayout.createSequentialGroup()
                         .addComponent(lblBienvenida)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lblSubtitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
+                    .addComponent(lblSubtitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE))
                 .addContainerGap())
         );
         contentLayout.setVerticalGroup(
@@ -287,7 +288,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
                 .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSubtitulo)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(302, Short.MAX_VALUE))
         );
 
         jPanel7.add(content, java.awt.BorderLayout.CENTER);
