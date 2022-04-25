@@ -253,6 +253,29 @@ public class GestionComics {
 
         return 0;
     }
+    
+    public static int eliminarComic(int idComic) {
+
+        Connection con;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "DELETE FROM comic WHERE idComic = ?";
+
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setInt(1, idComic);
+          
+            return sentencia.executeUpdate();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
+        }
+
+        return 0;
+    }
 
     private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
 
