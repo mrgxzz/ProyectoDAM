@@ -6,6 +6,7 @@
 package Vista;
 
 import Controlador.HiloCliente;
+import Modelo.Autor;
 import Modelo.Comic;
 import Modelo.TablaComics;
 import java.util.ArrayList;
@@ -159,8 +160,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     txtAutor.setText("Autor");
 
-    cmbAutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
     txtPortada.setText("Portada");
 
     btnPortada.setText(". . .");
@@ -237,7 +236,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                 .addComponent(txtPortada)
                 .addComponent(btnPortada)
                 .addComponent(btnAnhadirComic))
-            .addContainerGap(26, Short.MAX_VALUE))
+            .addContainerGap(24, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
 
