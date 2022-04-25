@@ -173,6 +173,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     btnPortada.setText(". . .");
 
     btnAnhadirComic.setText("Añadir");
+    btnAnhadirComic.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnAnhadirComicActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -247,6 +252,10 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             .addContainerGap(35, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAnhadirComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnhadirComicActionPerformed
+        Comic c = new Comic(WIDTH, puntuacion05, fechaAdquisicion, fechaFormato, portada, WIDTH, WIDTH)
+    }//GEN-LAST:event_btnAnhadirComicActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

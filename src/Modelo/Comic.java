@@ -33,6 +33,15 @@ public class Comic implements Serializable{
         this.idEstado = idEstado;
         this.idAutor = idAutor;
     }
+    
+     public Comic(String nombreComic, Date fechaAdquisicion, String tapa, byte[] portada, int idEstado, int idAutor) {
+        this.nombreComic = nombreComic;
+        this.fechaAdquisicion = fechaAdquisicion;
+        this.tapa = tapa;
+        this.portada = portada;
+        this.idEstado = idEstado;
+        this.idAutor = idAutor;
+    }
 
    
 
