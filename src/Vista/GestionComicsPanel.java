@@ -50,6 +50,12 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             cmbAutor.addItem(autor);
         }
         
+        ArrayList<Estado> listaEstados = (ArrayList<Estado>)h.solicitarListaEstado();
+        
+        for (Estado estado : listaEstados) {
+            cmbEstado.addItem(estado);
+        }
+        
         
 
         /*
