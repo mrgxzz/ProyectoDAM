@@ -5,9 +5,9 @@
  */
 package Vista;
 
-
 import Controlador.HiloCliente;
 import Modelo.Comic;
+import Modelo.TablaComics;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -30,21 +30,18 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MoviesBoardPanel
+     *
      * @param h Class HiloCliente
      */
     public GestionComicsPanel(HiloCliente h) {
         initComponents();
-        
-        
+
         ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
-        
-        for (Comic comic : listaComics) {
-            System.out.println(comic);
-        }
-        
-       // TablaComics modeloTabla = new TablaComics(listaComics);
-        
-/*
+
+        TablaComics modeloTabla = new TablaComics(listaComics);
+        tablaComics.setModel(modeloTabla);
+
+        /*
         ArrayList<Genre> listaGeneros = Controller.DBControllerMovies.getGenreList();
 
         for (Genre genero : listaGeneros) {
@@ -54,7 +51,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         traduccion();
 
         activarAyuda();
-*/
+         */
         // ¿Llega con hacer el set locale en la pantalla de seleccion de idioma y despues hacer el get bundle sin especificar idioma?
     }
 
@@ -69,7 +66,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
         lblGestionComics = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaComics = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
@@ -78,7 +75,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         lblGestionComics.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblGestionComics.setText("Gestión de cómics");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaComics.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -89,7 +86,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tablaComics);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -119,8 +116,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblGestionComics;
+    private javax.swing.JTable tablaComics;
     // End of variables declaration//GEN-END:variables
 
     /*
@@ -139,7 +136,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-*/
+     */
     private void traduccion() {
 
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
@@ -151,7 +148,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private void activarTraduccion(ResourceBundle rb) {
 
         lblGestionComics.setText(rb.getString("lblGestionPeliculas"));
-        
 
         camposObligatorios = rb.getString("camposObligatorios");
         peliculaEliminada = rb.getString("peliculaEliminada");
