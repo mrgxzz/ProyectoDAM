@@ -303,7 +303,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
     private void btnComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComicsActionPerformed
         GestionComicsPanel moviesBoard = new GestionComicsPanel(h);
-        moviesBoard.setSize(600, 555);
+        moviesBoard.setSize(700, 655);
         moviesBoard.setLocation(0, 0);
 
         content.removeAll();
