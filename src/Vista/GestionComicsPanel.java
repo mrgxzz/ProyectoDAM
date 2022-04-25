@@ -8,6 +8,7 @@ package Vista;
 import Controlador.HiloCliente;
 import Modelo.Autor;
 import Modelo.Comic;
+import Modelo.Estado;
 import Modelo.TablaComics;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -165,8 +166,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     lblEstado.setText("Estado");
 
-    cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
     txtAutor.setText("Autor");
 
     txtPortada.setText("Portada");
@@ -245,7 +244,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                 .addComponent(txtPortada)
                 .addComponent(btnPortada)
                 .addComponent(btnAnhadirComic))
-            .addContainerGap(24, Short.MAX_VALUE))
+            .addContainerGap(35, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -254,7 +253,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnAnhadirComic;
     private javax.swing.JButton btnPortada;
     private javax.swing.JComboBox<Autor> cmbAutor;
-    private javax.swing.JComboBox<String> cmbEstado;
+    private javax.swing.JComboBox<Estado> cmbEstado;
     private datechooser.beans.DateChooserCombo dateChooserCombo;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAnhadir;
