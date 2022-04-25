@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelo.Autor;
 import Modelo.Comic;
+import Modelo.Estado;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
