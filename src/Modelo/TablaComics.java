@@ -5,7 +5,11 @@
  */
 package Modelo;
 
+import Controlador.GestionComics;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -61,23 +65,27 @@ public class TablaComics extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         // TODO Auto-generated method stub
         if (rowIndex != -1 && listaComics.size() > rowIndex) {
-            Comic u = listaComics.get(rowIndex);
-
-            switch (columnIndex) {
-                case 0:
-                    return u.getPortada();
-                case 1:
-                    return u.getNombreComic();
-                case 2:
-                    return u.getTapa();
-                case 3:
-                    return u.getFechaAdquisicion();
-                case 4:
-                    return u.getIdEstado();
-               
-                default:
-                    return null;
-
+            try {
+                Comic u = listaComics.get(rowIndex);
+                
+                switch (columnIndex) {
+                    case 0:
+                        return GestionComics.getImage(u.getPortada(), true);
+                    case 1:
+                        return u.getNombreComic();
+                    case 2:
+                        return u.getTapa();
+                    case 3:
+                        return u.getFechaAdquisicion();
+                    case 4:
+                        return u.getIdEstado();
+                        
+                    default:
+                        return null;
+                        
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(TablaComics.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             return null;
