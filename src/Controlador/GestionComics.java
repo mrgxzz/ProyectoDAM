@@ -162,7 +162,7 @@ public class GestionComics {
 
             }
         }
-        return listaAutores;
+        return listaEstado;
     }
     
     public static Comic getComic(int idComic) {
