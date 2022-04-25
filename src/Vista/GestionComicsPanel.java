@@ -254,7 +254,14 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnhadirComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnhadirComicActionPerformed
-        Comic c = new Comic(WIDTH, puntuacion05, fechaAdquisicion, fechaFormato, portada, WIDTH, WIDTH)
+        
+        Autor autor = (Autor) cmbAutor.getSelectedItem();
+        Estado estado = (Estado) cmbEstado.getSelectedItem();
+        
+
+        Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), new byte[5], estado.getIdEstado(), autor.getIdAutor());
+        
+        System.out.println(c);
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
 
 
