@@ -144,42 +144,77 @@ public class HiloCliente {
 
     public int solicitarEliminarComic(int idComic) {
 
-        // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
-        try {
-            // ¿QUE HAGO PARA AÑADIR? ESCRIBO EL OBJETO?
-            System.out.println("ELIMINANDO");
-            flujo_salida.writeUTF("eliminarcomic");
-            GestionComics.eliminarComic(idComic);
-            String datos = flujo_enter.readUTF();
-
-            System.out.println("HE LEIDO -> " + datos);
-            //return (List<Comic>) flujo_entrada.readObject();
-
-        } catch (IOException ex) {
-            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return 0;
-
+        // ¿QUE HAGO PARA AÑADIR? ESCRIBO EL OBJETO?
+//            System.out.println("ELIMINANDO");
+//            flujo_salida.writeUTF("eliminarcomic");
+return GestionComics.eliminarComic(idComic);
+//            String datos = flujo_enter.readUTF();
+//
+//            System.out.println("HE LEIDO -> " + datos);
+//return (List<Comic>) flujo_entrada.readObject();
+        
     }
 
-    public List<Comic> solicitarListaAutores() {
+    public List<Autor> solicitarListaAutores() {
 
         // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
-        try {
-            System.out.println("SOLICITANDO");
-            flujo_salida.writeUTF("listarautores");
+//        try {
+//            System.out.println("SOLICITANDO");
+//            flujo_salida.writeUTF("listarautores");
 
-            GestionComics.getListaAutores();
+           return GestionComics.getListaAutores();
 
-            String datos = flujo_enter.readUTF();
+//            String datos = flujo_enter.readUTF();
+//
+//            System.out.println("HE LEIDO -> " + datos);
+//            //return (List<Comic>) flujo_entrada.readObject();
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
 
-            System.out.println("HE LEIDO -> " + datos);
-            //return (List<Comic>) flujo_entrada.readObject();
+    }
+    
+    public int solicitarAnhadirAutor(Autor autor) {
 
-        } catch (IOException ex) {
-            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
+//        try {
+//            System.out.println("SOLICITANDO");
+//            flujo_salida.writeUTF("listarautores");
+
+           return GestionComics.anhadirAutor(autor);
+
+//            String datos = flujo_enter.readUTF();
+//
+//            System.out.println("HE LEIDO -> " + datos);
+//            //return (List<Comic>) flujo_entrada.readObject();
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+
+    }
+    
+    public int solicitarEliminarAutor(int idAutor) {
+
+        // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
+//        try {
+//            System.out.println("SOLICITANDO");
+//            flujo_salida.writeUTF("listarautores");
+
+           return GestionComics.eliminarAutor(idAutor);
+
+//            String datos = flujo_enter.readUTF();
+//
+//            System.out.println("HE LEIDO -> " + datos);
+//            //return (List<Comic>) flujo_entrada.readObject();
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
 
     }
 
