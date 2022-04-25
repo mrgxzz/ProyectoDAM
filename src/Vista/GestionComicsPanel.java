@@ -36,11 +36,20 @@ public class GestionComicsPanel extends javax.swing.JPanel {
      */
     public GestionComicsPanel(HiloCliente h) {
         initComponents();
+        
 
         ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
         TablaComics modeloTabla = new TablaComics(listaComics);
         tablaComics.setModel(modeloTabla);
+        
+        ArrayList<Autor> listaAutores = (ArrayList<Autor>)h.solicitarListaAutores();
+        
+        for (Autor autor : listaAutores) {
+            cmbAutor.addItem(autor);
+        }
+        
+        
 
         /*
         ArrayList<Genre> listaGeneros = Controller.DBControllerMovies.getGenreList();
