@@ -90,5 +90,6 @@ public class TablaComics extends AbstractTableModel {
         } else {
             return null;
         }
+        return null;
     }
 }
