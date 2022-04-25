@@ -271,12 +271,35 @@ public class GestionComics {
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Eliminar comic", JOptionPane.OK_OPTION);
         }
 
         return 0;
     }
 
+    public static int eliminarAutor(int idAutor) {
+
+        Connection con;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "DELETE FROM autor WHERE idAutor = ?";
+
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setInt(1, idAutor);
+          
+            return sentencia.executeUpdate();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Eliminar autor", JOptionPane.OK_OPTION);
+        }
+
+        return 0;
+    }
+    
     private Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
