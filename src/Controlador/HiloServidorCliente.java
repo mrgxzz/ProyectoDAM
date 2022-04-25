@@ -74,12 +74,12 @@ public class HiloServidorCliente extends Thread {
                         }
                         case "listarcolecciones" -> {
                                         flujo_salida.writeUTF("listacoleccionesok");
-                                        List <Coleccion> listaColecciones = GestionComics.cargarColecciones();
-
-                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
-
-                                        objeto_salida.writeObject(listaColecciones);
-                                        objeto_salida.flush();
+                                        //List <Coleccion> listaColecciones = GestionComics.cargarColecciones();
+//
+//                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
+//
+//                                        objeto_salida.writeObject(listaColecciones);
+//                                        objeto_salida.flush();
                                         
                                         
                                     }
@@ -112,13 +112,13 @@ public class HiloServidorCliente extends Thread {
                                     }
                         case "listarautores" -> {
                                         flujo_salida.writeUTF("listaautoresok");
-                                        List <Autor> listaAutores = GestionComics.cargarAutores();
-
-                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
-
-                                        objeto_salida.writeObject(listaAutores);
-                                        objeto_salida.flush();
-                                        
+//                                        List <Autor> listaAutores = GestionComics.cargarAutores();
+//
+//                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
+//
+//                                        objeto_salida.writeObject(listaAutores);
+//                                        objeto_salida.flush();
+//                                        
                                         
                                     }
                         default -> {
