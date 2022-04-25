@@ -95,7 +95,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
-        setPreferredSize(new java.awt.Dimension(518, 491));
+        setPreferredSize(new java.awt.Dimension(700, 635));
 
         lblGestionComics.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblGestionComics.setText("Gestión de cómics");
