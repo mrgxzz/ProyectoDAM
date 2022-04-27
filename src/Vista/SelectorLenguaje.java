@@ -136,7 +136,7 @@ public class SelectorLenguaje extends javax.swing.JFrame {
             paginaPrincipal.setVisible(true);
             
             this.dispose();
-       // }
+        }
 
         
 
