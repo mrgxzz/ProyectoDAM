@@ -6,18 +6,7 @@
 package Vista;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 
 /**
@@ -31,15 +20,11 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
      */
     public InformesAutoresPanel() {
         initComponents();
+
+        ArrayList<Autor> listaAutores = 
+        
+        
 /*
-        ArrayList<Actor> listaActores = Controller.DBControllerMovies.getActorsList();
-        txtVerActores.setText("");
-
-        for (Actor actor : listaActores) {
-            txtVerActores.append(actor.toString() + "\n");
-            cmbActor.addItem(actor);
-        }
-
         traduccion();
 */
     }

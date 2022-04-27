@@ -313,7 +313,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComicsActionPerformed
 
     private void btnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoresActionPerformed
-        GestionAutoresPanel boardPanel = new GestionAutoresPanel();
+        GestionAutoresPanel boardPanel = new GestionAutoresPanel(h);
         boardPanel.setSize(518, 491);
         boardPanel.setLocation(0, 0);
 
@@ -324,7 +324,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAutoresActionPerformed
 
     private void btnColeccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColeccionesActionPerformed
-        GestionColeccionesPanel actorsMoviesPanel = new GestionColeccionesPanel();
+        GestionColeccionesPanel actorsMoviesPanel = new GestionColeccionesPanel(h);
         actorsMoviesPanel.setSize(518, 491);
         actorsMoviesPanel.setLocation(0, 0);
 
@@ -339,7 +339,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscadorActionPerformed
 
     private void btnInformeComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeComicsActionPerformed
-        InformesComicsPanel verPeliculasPanel = new InformesComicsPanel();
+        InformesComicsPanel verPeliculasPanel = new InformesComicsPanel(h);
         verPeliculasPanel.setSize(518, 491);
         verPeliculasPanel.setLocation(0, 0);
 
@@ -350,7 +350,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInformeComicsActionPerformed
 
     private void btnInformeAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeAutoresActionPerformed
-        InformesAutoresPanel verActores = new InformesAutoresPanel();
+        InformesAutoresPanel verActores = new InformesAutoresPanel(h);
         verActores.setSize(518, 491);
         verActores.setLocation(0, 0);
 
