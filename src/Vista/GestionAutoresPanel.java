@@ -7,9 +7,14 @@ package Vista;
 
 
 import Controlador.HiloCliente;
+import Modelo.Autor;
+import Modelo.Comic;
+import Modelo.TablaAutores;
+import Modelo.TablaComics;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
@@ -28,11 +33,17 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     
     /**
      * Creates new form MoviesBoardPanel
+     * @param h
      */
     public GestionAutoresPanel(HiloCliente h) {
         initComponents();
         
-        traduccion();
+        ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
+
+        TablaAutores modeloTabla = new TablaAutores(listaAutores);
+        tablaAutores.setModel(modeloTabla);
+        
+        //traduccion();
     }
 
     /**
@@ -54,7 +65,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         btnAnadir = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaAutores = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -89,7 +100,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaAutores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -100,7 +111,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaAutores);
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -223,11 +234,11 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSeleccionFotoActor;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblGestionActores;
     private javax.swing.JLabel lblNombreActor;
+    private javax.swing.JTable tablaAutores;
     private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombreActor;
     // End of variables declaration//GEN-END:variables
