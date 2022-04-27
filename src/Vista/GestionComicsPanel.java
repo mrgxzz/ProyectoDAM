@@ -285,6 +285,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File fichero = fileChooser.getSelectedFile();
+            
+            txtPortada.setText(fichero.getPath());
            
 }
     }//GEN-LAST:event_btnPortadaActionPerformed
