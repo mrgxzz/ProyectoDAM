@@ -10,8 +10,10 @@ import Modelo.Autor;
 import Modelo.Comic;
 import Modelo.Estado;
 import Modelo.TablaComics;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -37,26 +39,23 @@ public class GestionComicsPanel extends javax.swing.JPanel {
      */
     public GestionComicsPanel(HiloCliente h) {
         initComponents();
-        
 
         ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
         TablaComics modeloTabla = new TablaComics(listaComics);
         tablaComics.setModel(modeloTabla);
-        
-        ArrayList<Autor> listaAutores = (ArrayList<Autor>)h.solicitarListaAutores();
-        
+
+        ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
+
         for (Autor autor : listaAutores) {
             cmbAutor.addItem(autor);
         }
-        
-        ArrayList<Estado> listaEstados = (ArrayList<Estado>)h.solicitarListaEstado();
-        
+
+        ArrayList<Estado> listaEstados = (ArrayList<Estado>) h.solicitarListaEstado();
+
         for (Estado estado : listaEstados) {
             cmbEstado.addItem(estado);
         }
-        
-        
 
         /*
         ArrayList<Genre> listaGeneros = Controller.DBControllerMovies.getGenreList();
@@ -98,6 +97,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         txtPortada = new javax.swing.JLabel();
         btnPortada = new javax.swing.JButton();
         btnAnhadirComic = new javax.swing.JButton();
+        txtRutaImagen = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
@@ -177,6 +177,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     txtPortada.setText("Portada");
 
     btnPortada.setText(". . .");
+    btnPortada.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnPortadaActionPerformed(evt);
+        }
+    });
 
     btnAnhadirComic.setText("Añadir");
     btnAnhadirComic.addActionListener(new java.awt.event.ActionListener() {
@@ -194,32 +199,34 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(48, 48, 48)
                     .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTítulo)
-                            .addComponent(lblFechaAdquisicion)
-                            .addComponent(lblTapa)
-                            .addComponent(lblEstado)
-                            .addComponent(txtAutor)
-                            .addComponent(txtPortada))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTapa)
-                            .addComponent(dateChooserCombo, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                            .addComponent(txtTitulo)
-                            .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPortada))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAnhadirComic))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblAnhadir)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-            .addContainerGap(34, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(32, 32, 32)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblAnhadir)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(57, 57, 57)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnAnhadirComic)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblTítulo)
+                                .addComponent(lblFechaAdquisicion)
+                                .addComponent(lblTapa)
+                                .addComponent(lblEstado)
+                                .addComponent(txtAutor)
+                                .addComponent(txtPortada))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtTapa)
+                                .addComponent(dateChooserCombo, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                .addComponent(txtTitulo)
+                                .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtRutaImagen))))
+                    .addGap(17, 17, 17)
+                    .addComponent(btnPortada)))
+            .addContainerGap(216, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,21 +261,33 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(txtPortada)
                 .addComponent(btnPortada)
-                .addComponent(btnAnhadirComic))
-            .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(35, 35, 35)
+            .addComponent(btnAnhadirComic)
+            .addContainerGap(72, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnhadirComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnhadirComicActionPerformed
-        
+
         Autor autor = (Autor) cmbAutor.getSelectedItem();
         Estado estado = (Estado) cmbEstado.getSelectedItem();
-        
 
         Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), new byte[5], estado.getIdEstado(), autor.getIdAutor());
-        
+
         System.out.println(c);
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
+
+    private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
+        
+        JFileChooser fileChooser = new JFileChooser();
+        int seleccion = fileChooser.showOpenDialog(txtPortada);
+        
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File fichero = fileChooser.getSelectedFile();
+           
+}
+    }//GEN-LAST:event_btnPortadaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -287,6 +306,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private javax.swing.JTable tablaComics;
     private javax.swing.JLabel txtAutor;
     private javax.swing.JLabel txtPortada;
+    private javax.swing.JTextField txtRutaImagen;
     private javax.swing.JTextField txtTapa;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
