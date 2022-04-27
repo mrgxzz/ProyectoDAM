@@ -6,6 +6,7 @@
 package Vista;
 
 
+import Controlador.HiloCliente;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -28,7 +29,7 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
     /**
      * Creates new form MoviesBoardPanel
      */
-    public GestionColeccionesPanel() {
+    public GestionColeccionesPanel(HiloCliente h) {
         initComponents();
         
        // traduccion();

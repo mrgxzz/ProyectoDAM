@@ -6,6 +6,7 @@
 package Vista;
 
 
+import Controlador.HiloCliente;
 import java.util.ResourceBundle;
 
 
@@ -18,7 +19,7 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
     /**
      * Creates new form MoviesBoardPanel
      */
-    public InformesAutoresPanel() {
+    public InformesAutoresPanel(HiloCliente h) {
         initComponents();
 
         ArrayList<Autor> listaAutores = 

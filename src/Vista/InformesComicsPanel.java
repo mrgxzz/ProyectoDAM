@@ -6,6 +6,7 @@
 package Vista;
 
 
+import Controlador.HiloCliente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -23,7 +24,7 @@ public class InformesComicsPanel extends javax.swing.JPanel {
     /**
      * Creates new form MoviesBoardPanel
      */
-    public InformesComicsPanel() {
+    public InformesComicsPanel(HiloCliente h) {
         initComponents();
 
         /*
