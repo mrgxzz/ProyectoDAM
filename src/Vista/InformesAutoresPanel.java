@@ -20,6 +20,7 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MoviesBoardPanel
+     * @param h
      */
     public InformesAutoresPanel(HiloCliente h) {
         initComponents();

@@ -98,6 +98,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         btnPortada = new javax.swing.JButton();
         btnAnhadirComic = new javax.swing.JButton();
         txtRutaImagen = new javax.swing.JTextField();
+        btnBorrarComic = new javax.swing.JButton();
+        btnModificarComic = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
@@ -190,6 +192,20 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         }
     });
 
+    btnBorrarComic.setText("Borrar");
+    btnBorrarComic.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnBorrarComicActionPerformed(evt);
+        }
+    });
+
+    btnModificarComic.setText("Modificar");
+    btnModificarComic.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            btnModificarComicActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
@@ -203,7 +219,12 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                     .addGap(32, 32, 32)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblAnhadir)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnBorrarComic)
+                                .addComponent(btnModificarComic)))))
                 .addGroup(layout.createSequentialGroup()
                     .addGap(57, 57, 57)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -226,7 +247,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                                 .addComponent(txtRutaImagen))))
                     .addGap(17, 17, 17)
                     .addComponent(btnPortada)))
-            .addContainerGap(216, Short.MAX_VALUE))
+            .addContainerGap(131, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,7 +255,12 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             .addContainerGap()
             .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(btnModificarComic)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnBorrarComic)))
             .addGap(18, 18, 18)
             .addComponent(lblAnhadir)
             .addGap(18, 18, 18)
@@ -291,9 +317,19 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 }
     }//GEN-LAST:event_btnPortadaActionPerformed
 
+    private void btnBorrarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarComicActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBorrarComicActionPerformed
+
+    private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarComicActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnhadirComic;
+    private javax.swing.JButton btnBorrarComic;
+    private javax.swing.JButton btnModificarComic;
     private javax.swing.JButton btnPortada;
     private javax.swing.JComboBox<Autor> cmbAutor;
     private javax.swing.JComboBox<Estado> cmbEstado;
