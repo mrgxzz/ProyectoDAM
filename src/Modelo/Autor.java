@@ -52,7 +52,7 @@ public class Autor implements Serializable{
 
     @Override
     public String toString() {
-        return "Autor{" + "idAutor=" + idAutor + ", nombre=" + nombre + ", fechaNac=" + fechaNac + '}';
+        return nombre;
     }
     
     
