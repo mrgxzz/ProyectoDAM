@@ -67,7 +67,7 @@ public class TablaAutores extends AbstractTableModel {
                 case 0:
                     return u.getNombre();
                 case 1:
-                    return u.getFechaNac();
+                    return u.getFechaNac().toString();
          
                 default:
                     return null;
