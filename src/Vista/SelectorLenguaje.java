@@ -132,10 +132,10 @@ public class SelectorLenguaje extends javax.swing.JFrame {
 
         PaginaPrincipal paginaPrincipal = new PaginaPrincipal();
 
-        //if (paginaPrincipal.skCliente != null) {
+        if (paginaPrincipal.skCliente != null) {
             paginaPrincipal.setVisible(true);
             
-         //   this.dispose();
+            this.dispose();
        // }
 
         
