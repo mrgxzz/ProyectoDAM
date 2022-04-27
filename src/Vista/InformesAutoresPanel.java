@@ -7,6 +7,8 @@ package Vista;
 
 
 import Controlador.HiloCliente;
+import Modelo.Autor;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
@@ -22,7 +24,12 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
     public InformesAutoresPanel(HiloCliente h) {
         initComponents();
 
-        ArrayList<Autor> listaAutores = 
+        ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
+        
+        for (Autor autor : listaAutores) {
+            cmbAutor.addItem(autor);
+        }
+        
         
         
 /*
