@@ -102,6 +102,12 @@ public class Comic implements Serializable{
         this.idAutor = idAutor;
     }
     
+    public String fromCSV(String csv){
+        
+        String[] datos = csv.split(";");
+        
+    }
+    
     
     
     @Override
