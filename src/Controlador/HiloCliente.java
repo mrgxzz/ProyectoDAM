@@ -121,14 +121,11 @@ public class HiloCliente {
     public List<Comic> solicitarListaComic() {
 
         try {
-            //    System.out.println("PIDIENDO");
-            flujo_salida.writeUTF("listarcomics");
-            //return GestionComics.getListaComics();
 
-//            String datos = flujo_enter.readUTF();
-//
-//            System.out.println("HE LEIDO -> " + datos);
+            flujo_salida.writeUTF("listarcomics");
+
             return (List<Comic>) objectInputStream.readObject();
+
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
