@@ -48,8 +48,8 @@ public class HiloServidorCliente extends Thread {
             flujo_entrada = new DataInputStream(skCliente.getInputStream());
             flujo_salida = new DataOutputStream(skCliente.getOutputStream());
             
-            ObjectOutputStream objeto_salida;
-            ObjectInputStream objeto_entrada;
+            ObjectOutputStream objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
+            ObjectInputStream objeto_entrada = new ObjectInputStream(skCliente.getInputStream());
             
 
             do {

@@ -335,7 +335,7 @@ public class GestionComics {
     public static Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-        Iterator readers = ImageIO.getImageReadersByFormatName("jpeg");
+        Iterator readers = ImageIO.getImageReadersByFormatName("png");
         ImageReader reader = (ImageReader) readers.next();
         Object source = bis; // File or InputStream
         ImageInputStream iis = ImageIO.createImageInputStream(source);

@@ -29,7 +29,7 @@ public class HiloCliente {
 
     DataOutputStream flujo_salida;
     ObjectOutputStream objectOutputStream;
-    ObjectInputStream flujo_entrada;
+    ObjectInputStream objectInputStream;
     DataInputStream flujo_enter;
 
     public HiloCliente(Socket skCliente, String orden, JTextArea txtAreaVisualizar) throws IOException {
@@ -39,8 +39,8 @@ public class HiloCliente {
         this.txtArea = txtAreaVisualizar;
         flujo_salida = new DataOutputStream(skCliente.getOutputStream());
         flujo_enter = new DataInputStream(skCliente.getInputStream());
-//        objectOutputStream = new  ObjectOutputStream(skCliente.getOutputStream());
-//        flujo_entrada = new  ObjectInputStream(skCliente.getInputStream());
+        objectOutputStream = new  ObjectOutputStream(skCliente.getOutputStream());
+        objectInputStream = new  ObjectInputStream(skCliente.getInputStream());
 
     }
 
@@ -49,8 +49,8 @@ public class HiloCliente {
         this.txtArea = txtAreaVisualizar;
         flujo_salida = new DataOutputStream(skCliente.getOutputStream());
         flujo_enter = new DataInputStream(skCliente.getInputStream());
-//        objectOutputStream = new ObjectOutputStream(skCliente.getOutputStream());
-//        flujo_entrada = new ObjectInputStream(skCliente.getInputStream());
+        objectOutputStream = new ObjectOutputStream(skCliente.getOutputStream());
+        objectInputStream = new ObjectInputStream(skCliente.getInputStream());
     }
 
 //    @Override

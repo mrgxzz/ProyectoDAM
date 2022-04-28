@@ -5,8 +5,10 @@
         <group>
             <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/GestionComicsPanel.java</file>
             <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/Comic.java</file>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/GestionColeccionesPanel.java</file>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/PaginaPrincipal.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Controlador/GestionComics.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/TablaAutores.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/Estado.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/TablaComics.java</file>
         </group>
     </open-files>
 </project-private>
