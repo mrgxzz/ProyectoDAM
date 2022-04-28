@@ -5,11 +5,13 @@
  */
 package Utiles;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Manu Romeo
  */
-public class PeticionServidor {
+public class PeticionServidor implements Serializable{
     private String peticion;
     private Object objeto;
 
@@ -39,7 +41,7 @@ public class PeticionServidor {
 
     @Override
     public String toString() {
-        return "PeticionServidor{" + "peticion=" + peticion + ", objeto=" + objeto.toString() + '}';
+        return "PeticionServidor{" + "peticion=" + peticion + ", objeto=" + objeto + '}';
     }
     
     
