@@ -32,6 +32,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private String peliculaEliminada;
     private String noExistePelicula;
 
+    HiloCliente h;
+    
     /**
      * Creates new form MoviesBoardPanel
      *
@@ -40,6 +42,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     public GestionComicsPanel(HiloCliente h) {
         initComponents();
 
+        this.h = h;
+        
         ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
         TablaComics modeloTabla = new TablaComics(listaComics);
@@ -301,7 +305,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
         Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), new byte[5], estado.getIdEstado(), autor.getIdAutor());
 
-        System.out.println(c);
+        h.solicitarAnhadirComic(c);
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
 
     private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
