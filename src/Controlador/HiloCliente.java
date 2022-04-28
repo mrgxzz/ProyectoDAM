@@ -132,15 +132,22 @@ public class HiloCliente {
         return null;
     }
 
-    public int solicitarAnhadirComic(Comic comic) {
+    public int solicitarAnhadirComic(String idComic, String nombre, String fecha, String tapa, String portada, String idEstado, String idAutor ) {
 
-        // ¿QUE HAGO PARA AÑADIR? ESCRIBO EL OBJETO?
+        try {
+            // ¿QUE HAGO PARA AÑADIR? ESCRIBO EL OBJETO?
 //            System.out.println("AÑADIENDO");
-//            flujo_salida.writeUTF("anhadircomic");
-        return GestionComics.anhadirComic(comic);
+            flujo_salida.writeUTF("anhadircomic;");
+            return (int)objectInputStream.readObject();
 //      String datos = flujo_enter.readUTF();
 
 //      System.out.println("HE LEIDO -> " + datos);
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
     public int solicitarEliminarComic(int idComic) {
