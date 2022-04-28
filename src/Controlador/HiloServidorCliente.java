@@ -14,6 +14,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.net.Socket;
 import java.util.Date;
 import java.util.List;
@@ -98,7 +99,7 @@ public class HiloServidorCliente extends Thread {
                             int result = GestionComics.anhadirComic((Comic) orden.getObjeto());
                             
                             objeto_salida.writeInt(result);
-                            objeto_salida.close();
+                            
                             objeto_salida.flush();
 //                                        
                             System.out.println("HEYYYY");
