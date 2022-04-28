@@ -123,7 +123,7 @@ public class HiloCliente {
 
         try {
 
-            flujo_salida.writeUTF("listarcomics");
+            objectOutputStream.writeObject(new PeticionServidor("listarcomics", null));
 
             return (List<Comic>) objectInputStream.readObject();
 
