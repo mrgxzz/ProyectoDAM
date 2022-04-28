@@ -84,14 +84,12 @@ public class HiloServidorCliente extends Thread {
                                         
                                     }
                         case "listarcomics" -> {
-                                        flujo_salida.writeUTF("listacomicsok");
-                                        flujo_salida.flush();
-//                                        List <Comic> listaDep = GestionComics.cargarComics();
-//
-//                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
-//
-//                                        objeto_salida.writeObject(listaDep);
-//                                        objeto_salida.flush();
+//                                        flujo_salida.writeUTF("listacomicsok");
+//                                        flujo_salida.flush();
+                                        List <Comic> listaComics = GestionComics.getListaComics();
+                                      
+                                        objeto_salida.writeObject(listaComics);
+                                        objeto_salida.flush();
 //                                        
                                         System.out.println("HEYYYY");
                                         
