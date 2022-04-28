@@ -8,6 +8,7 @@ package Controlador;
 import Modelo.Autor;
 import Modelo.Comic;
 import Modelo.Estado;
+import Utiles.PeticionServidor;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -132,16 +133,14 @@ public class HiloCliente {
         return null;
     }
 
-    public int solicitarAnhadirComic(String idComic, String nombre, String fecha, String tapa, String portada, String idEstado, String idAutor ) {
+    public int solicitarAnhadirComic(Comic comic) {
 
         try {
-            // ¿QUE HAGO PARA AÑADIR? ESCRIBO EL OBJETO?
-//            System.out.println("AÑADIENDO");
-            flujo_salida.writeUTF("anhadircomic;");
-            return (int)objectInputStream.readObject();
-//      String datos = flujo_enter.readUTF();
 
-//      System.out.println("HE LEIDO -> " + datos);
+            objectOutputStream.writeObject(new PeticionServidor("anhadirComic", comic));
+            // flujo_salida.writeUTF("anhadircomic;");
+            return (int) objectInputStream.readObject();
+
         } catch (IOException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

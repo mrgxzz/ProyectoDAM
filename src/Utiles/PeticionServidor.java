@@ -36,6 +36,12 @@ public class PeticionServidor {
     public void setObjeto(Object objeto) {
         this.objeto = objeto;
     }
+
+    @Override
+    public String toString() {
+        return "PeticionServidor{" + "peticion=" + peticion + ", objeto=" + objeto.toString() + '}';
+    }
+    
     
     
 }

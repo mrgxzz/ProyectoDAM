@@ -8,6 +8,7 @@ package Controlador;
 import Modelo.Autor;
 import Modelo.Coleccion;
 import Modelo.Comic;
+import Utiles.PeticionServidor;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class HiloServidorCliente extends Thread {
 
         try {
 
-            String orden = "";
+            PeticionServidor orden = null;
 
             flujo_entrada = new DataInputStream(skCliente.getInputStream());
             flujo_salida = new DataOutputStream(skCliente.getOutputStream());
@@ -52,14 +53,15 @@ public class HiloServidorCliente extends Thread {
             do {
                 try {
                     System.out.println("Escuchando");
-                    orden = flujo_entrada.readUTF();
+                    orden = (PeticionServidor) objeto_entrada.readObject();
                     System.out.println("Orden: " + orden);
 
                     String[] cadena = skCliente.getRemoteSocketAddress().toString().split(":");
 
                     //Atendemos al cliente
-                    switch (orden.toLowerCase().trim()) {
+                    switch (orden.getPeticion().toLowerCase()) {
                         case "hora" -> {
+                            
                             // La linea de abajo es lo que se le manda de vuelta al cliente
                             flujo_salida.writeUTF(new Date().toInstant().toString());
                         }
@@ -90,15 +92,11 @@ public class HiloServidorCliente extends Thread {
 
                         }
                         case "anhadircomic" -> {
-                            flujo_salida.writeUTF("anhadircomicok");
-                            flujo_salida.flush();
-
-//                                        List <Comic> listaDep = GestionComics.cargarComics();
-//
-//                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
-//
-//                                        objeto_salida.writeObject(listaDep);
-//                                        objeto_salida.flush();
+//                            flujo_salida.writeUTF("anhadircomicok");
+//                            flujo_salida.flush();
+                                               
+                            GestionComics.anhadirComic((Comic) orden.getObjeto());
+                            objeto_salida.flush();
 //                                        
                             System.out.println("HEYYYY");
 
@@ -127,9 +125,11 @@ public class HiloServidorCliente extends Thread {
                     Thread.currentThread().interrupt();
 
                     break;
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } while (!orden.equalsIgnoreCase("Salir"));
+            } while (!orden.getPeticion().equalsIgnoreCase("Salir"));
 
             JOptionPane.showMessageDialog(null, "El cliente se ha desconectado.");
         } catch (IOException ex) {
