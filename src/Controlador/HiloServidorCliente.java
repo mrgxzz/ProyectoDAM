@@ -98,6 +98,7 @@ public class HiloServidorCliente extends Thread {
                             int result = GestionComics.anhadirComic((Comic) orden.getObjeto());
                             
                             objeto_salida.writeInt(result);
+                            objeto_salida.close();
                             objeto_salida.flush();
 //                                        
                             System.out.println("HEYYYY");
