@@ -114,17 +114,34 @@ public class HiloServidorCliente extends Thread {
                             objeto_salida.flush();
                         }
                         
-                        case "listarautores" -> {
-                            flujo_salida.writeUTF("listaautoresok");
-//                                        List <Autor> listaAutores = GestionComics.cargarAutores();
-//
-//                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
-//
-//                                        objeto_salida.writeObject(listaAutores);
-//                                        objeto_salida.flush();
-//                                        
-
+                         case "anhadirautor" -> {
+    
+                            int result = GestionComics.anhadirAutor((Autor) orden.getObjeto());
+                            
+                            objeto_salida.writeInt(result);
+                            
+                            objeto_salida.flush();
                         }
+                        
+                        case "borrarautor" -> {
+    
+                            int result = GestionComics.eliminarAutor((int) orden.getObjeto());
+                         
+                            objeto_salida.writeInt(result);
+                            
+                            objeto_salida.flush();
+                        }
+                        
+                        case "getcomic" -> {
+    
+                            Comic comic = GestionComics.getComic((int) orden.getObjeto());
+                            
+                            objeto_salida.writeObject(comic);
+                            
+                            objeto_salida.flush();
+                        }
+                        
+           
                         default -> {
                             flujo_salida.flush();
                             flujo_salida.writeUTF("\nID Cliente -> " + cadena[1] + "\nMultiples peticiones del mismo ID cliente ");
