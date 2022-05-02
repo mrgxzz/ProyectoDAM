@@ -56,69 +56,6 @@ public class HiloCliente {
         objectInputStream = new ObjectInputStream(skCliente.getInputStream());
     }
 
-//    @Override
-//    public void run() {
-//        String ordenRecibida;
-//
-//        if (skCliente != null) {
-//
-////            try {
-//                //Tareas del cliente
-//                while (true) {
-//                    //   flujo_salida.writeUTF(orden);
-//
-////                    ordenRecibida = flujo_entrada.readUTF();
-////
-////                    switch (ordenRecibida.toLowerCase()) {
-////                        case "listacomicsok" -> {
-////                             Debo indicarle donde van a ser mostrados los datos, o tratar de sacar la lista a fuera del hilo
-////                            List<Comic> listaComics = GestionComics.listarSocketComics(skCliente);
-////
-////                          
-////                        }
-////                        case "listacoleccionesok" -> {
-////                             Debo indicarle donde van a ser mostrados los datos, o tratar de sacar la lista a fuera del hilo
-////                            List<Coleccion> listaColecciones = GestionComics.listarSocketColecciones(skCliente);
-////
-////                            for (Coleccion coleccion : listaColecciones) {
-////                                System.out.println(coleccion);
-////                            }
-////                             Como accedo a elementos de fuera para mostrar los datos
-////
-////                        }
-////                        case "listaautoresok" -> {
-////                             Debo indicarle donde van a ser mostrados los datos, o tratar de sacar la lista a fuera del hilo
-////                            List<Autor> listaAutores = GestionComics.listarSocketAutor(skCliente);
-////
-////                            for (Autor autor : listaAutores) {
-////                                System.out.println(autor);
-////                            }
-////                             Como accedo a elementos de fuera para mostrar los datos
-////
-////                        }
-////                        case "salirok" -> {
-////                             area.setText("Saliendoooooooooooo................");
-////
-////                        }
-////
-////                        default -> {
-////                             area.setText(area.getText() + "\n" + flujo_entrada.readUTF());
-////                        }
-////                    }
-//                }
-//                //Escribimos primero la instruccion que queremos
-//
-////            } catch (IOException ex) {
-////                Thread.currentThread().interrupt();
-////                Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
-////            } catch (ClassNotFoundException ex) {
-////                Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
-////            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "No está conectado", "Aplicacion", JOptionPane.INFORMATION_MESSAGE);
-//        }
-//
-//    }
     public List<Comic> solicitarListaComic() {
 
         try {
@@ -151,14 +88,7 @@ public class HiloCliente {
 
     public int solicitarEliminarComic(int idComic) {
 
-        // ¿QUE HAGO PARA AÑADIR? ESCRIBO EL OBJETO?
-//            System.out.println("ELIMINANDO");
-//            flujo_salida.writeUTF("eliminarcomic");
-        return GestionComics.eliminarComic(idComic);
-//            String datos = flujo_enter.readUTF();
-//
-//            System.out.println("HE LEIDO -> " + datos);
-//return (List<Comic>) flujo_entrada.readObject();
+        objectOutputStream.writeObject(new PeticionServidor("borrarcomic", idComic));
 
     }
 

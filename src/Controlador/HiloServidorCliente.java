@@ -61,14 +61,7 @@ public class HiloServidorCliente extends Thread {
 
                     //Atendemos al cliente
                     switch (orden.getPeticion().toLowerCase()) {
-                        case "hora" -> {
-                            
-                            // La linea de abajo es lo que se le manda de vuelta al cliente
-                            flujo_salida.writeUTF(new Date().toInstant().toString());
-                        }
-                        case "usuarios" -> {
-                            flujo_salida.writeUTF("Numero de clientes conectados: " + HiloServidor.contadorClientes);
-                        }
+                        
                         case "salir" -> {
                             flujo_salida.flush();
                         }
@@ -82,6 +75,17 @@ public class HiloServidorCliente extends Thread {
 //                                        objeto_salida.flush();
 
                         }
+                        
+                        case "listarautores" -> {
+
+                            List<Autor> listaAutores = GestionComics.getListaAutores();
+
+                            objeto_salida.writeObject(listaAutores);
+                            objeto_salida.flush();
+
+
+                        }
+                        
                         case "listarcomics" -> {
 
                             List<Comic> listaComics = GestionComics.getListaComics();
@@ -93,18 +97,23 @@ public class HiloServidorCliente extends Thread {
 
                         }
                         case "anhadircomic" -> {
-//                            flujo_salida.writeUTF("anhadircomicok");
-//                            flujo_salida.flush();
-                                               
+    
                             int result = GestionComics.anhadirComic((Comic) orden.getObjeto());
                             
                             objeto_salida.writeInt(result);
                             
                             objeto_salida.flush();
-//                                        
-                            System.out.println("HEYYYY");
-
                         }
+                        
+                        case "borrarcomic" -> {
+    
+                            int result = GestionComics.eliminarComic((int) orden.getObjeto());
+                            
+                            objeto_salida.writeInt(result);
+                            
+                            objeto_salida.flush();
+                        }
+                        
                         case "listarautores" -> {
                             flujo_salida.writeUTF("listaautoresok");
 //                                        List <Autor> listaAutores = GestionComics.cargarAutores();
