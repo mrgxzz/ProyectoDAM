@@ -5,11 +5,13 @@
  */
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Manu Romeo
  */
-public class Estado {
+public class Estado implements Serializable{
     private int idEstado;
     private String estado;
 
