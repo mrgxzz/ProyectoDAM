@@ -141,6 +141,15 @@ public class HiloServidorCliente extends Thread {
                             objeto_salida.flush();
                         }
                         
+                        case "getautor" -> {
+    
+                            Autor autor = GestionComics.getAutor((int) orden.getObjeto());
+                            
+                            objeto_salida.writeObject(autor);
+                            
+                            objeto_salida.flush();
+                        }
+                        
            
                         default -> {
                             flujo_salida.flush();
