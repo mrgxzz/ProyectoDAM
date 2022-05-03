@@ -88,7 +88,20 @@ public class HiloCliente {
 
     public int solicitarEliminarComic(int idComic) {
 
-        objectOutputStream.writeObject(new PeticionServidor("borrarcomic", idComic));
+        try {
+            
+            objectOutputStream.writeObject(new PeticionServidor("borrarcomic", idComic));
+            
+            return (int) objectInputStream.readObject();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
+        
 
     }
 
