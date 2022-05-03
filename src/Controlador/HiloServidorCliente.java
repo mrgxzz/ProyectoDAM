@@ -8,6 +8,7 @@ package Controlador;
 import Modelo.Autor;
 import Modelo.Coleccion;
 import Modelo.Comic;
+import Modelo.Estado;
 import Utiles.PeticionServidor;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -92,10 +93,21 @@ public class HiloServidorCliente extends Thread {
 
                             objeto_salida.writeObject(listaComics);
                             objeto_salida.flush();
-//                                        
+                                        
                             System.out.println("HEYYYY");
 
                         }
+                        
+                        case "listarestados" -> {
+
+                            List<Estado> listaEstados = GestionComics.getListaEstado();
+
+                            objeto_salida.writeObject(listaEstados);
+                            objeto_salida.flush();
+                                       
+
+                        }
+                        
                         case "anhadircomic" -> {
     
                             int result = GestionComics.anhadirComic((Comic) orden.getObjeto());
