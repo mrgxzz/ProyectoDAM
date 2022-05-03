@@ -69,7 +69,7 @@ public class InformesComicsPanel extends javax.swing.JPanel {
 
         VerInformePeliculas.setBackground(new java.awt.Color(0, 102, 204));
         VerInformePeliculas.setForeground(new java.awt.Color(255, 255, 255));
-        VerInformePeliculas.setText("Ver informe de peliculas");
+        VerInformePeliculas.setText("Ver informe de cómics");
         VerInformePeliculas.setBorderPainted(false);
         VerInformePeliculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,7 +79,7 @@ public class InformesComicsPanel extends javax.swing.JPanel {
 
         VerInformePeliculasGenero.setBackground(new java.awt.Color(0, 102, 204));
         VerInformePeliculasGenero.setForeground(new java.awt.Color(255, 255, 255));
-        VerInformePeliculasGenero.setText("Ver informe de peliculas por genero");
+        VerInformePeliculasGenero.setText("Ver informe de cómics por colección");
         VerInformePeliculasGenero.setBorderPainted(false);
         VerInformePeliculasGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,7 +94,7 @@ public class InformesComicsPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(VerInformePeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)

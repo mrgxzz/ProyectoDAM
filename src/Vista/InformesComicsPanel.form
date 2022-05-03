@@ -26,7 +26,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="VerInformePeliculas" min="-2" pref="196" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="475" max="-2" attributes="0"/>
@@ -81,7 +81,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ver informe de peliculas"/>
+        <Property name="text" type="java.lang.String" value="Ver informe de c&#xf3;mics"/>
         <Property name="borderPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -96,7 +96,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ver informe de peliculas por genero"/>
+        <Property name="text" type="java.lang.String" value="Ver informe de c&#xf3;mics por colecci&#xf3;n"/>
         <Property name="borderPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
