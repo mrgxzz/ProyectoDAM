@@ -322,22 +322,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
             txtRutaImagen.setText(fichero.getPath());
 
-            try ( FileInputStream fis = new FileInputStream(fichero)) {
-
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
-                    baos.write(buffer, 0, dataLength);
-                }
-                byte[] imageBytes = baos.toByteArray();
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
-                return;
-            }
-           
-            
-            
-           
         }
     }//GEN-LAST:event_btnPortadaActionPerformed
 
@@ -390,6 +374,29 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         }
     }
      */
+    private byte[] toByteArray(File file) {
+
+        try ( FileInputStream fis = new FileInputStream(file)) {
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
+                baos.write(buffer, 0, dataLength);
+            }
+            
+            byte[] imageBytes = baos.toByteArray();
+            
+            return imageBytes;
+            
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            
+        }
+        
+        return null;
+
+    }
+
     private void traduccion() {
 
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
