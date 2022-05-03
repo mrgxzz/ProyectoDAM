@@ -295,11 +295,17 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private void btnAnhadirComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnhadirComicActionPerformed
 
         Autor autor = (Autor) cmbAutor.getSelectedItem();
-        Estado estado = (Estado) cmbEstado.getSelectedItem();
-
+        Estado estado = (Estado) cmbEstado.getSelectedItem();   
+        
         Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), imagen, estado.getIdEstado(), autor.getIdAutor());
 
-        h.solicitarAnhadirComic(c);
+        int result = h.solicitarAnhadirComic(c);
+        
+        if (result == 1) {
+            JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
+        }
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
 
     private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
