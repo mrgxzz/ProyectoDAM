@@ -10,10 +10,14 @@ import Modelo.Autor;
 import Modelo.Comic;
 import Modelo.Estado;
 import Modelo.TablaComics;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,7 +37,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private String noExistePelicula;
 
     HiloCliente h;
-    
+
     /**
      * Creates new form MoviesBoardPanel
      *
@@ -43,7 +47,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         initComponents();
 
         this.h = h;
-        
+
         ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
         TablaComics modeloTabla = new TablaComics(listaComics);
@@ -98,7 +102,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         cmbEstado = new javax.swing.JComboBox<>();
         txtAutor = new javax.swing.JLabel();
         cmbAutor = new javax.swing.JComboBox<>();
-        txtPortada = new javax.swing.JLabel();
+        lblPortada = new javax.swing.JLabel();
         btnPortada = new javax.swing.JButton();
         btnAnhadirComic = new javax.swing.JButton();
         txtRutaImagen = new javax.swing.JTextField();
@@ -180,7 +184,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     txtAutor.setText("Autor");
 
-    txtPortada.setText("Portada");
+    lblPortada.setText("Portada");
 
     btnPortada.setText(". . .");
     btnPortada.addActionListener(new java.awt.event.ActionListener() {
@@ -240,7 +244,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                                 .addComponent(lblTapa)
                                 .addComponent(lblEstado)
                                 .addComponent(txtAutor)
-                                .addComponent(txtPortada))
+                                .addComponent(lblPortada))
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtTapa)
@@ -289,7 +293,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                 .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtPortada)
+                .addComponent(lblPortada)
                 .addComponent(btnPortada)
                 .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(35, 35, 35)
@@ -309,16 +313,32 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
 
     private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
-        
+
         JFileChooser fileChooser = new JFileChooser();
-        int seleccion = fileChooser.showOpenDialog(txtPortada);
-        
+        int seleccion = fileChooser.showOpenDialog(lblPortada);
+
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File fichero = fileChooser.getSelectedFile();
-            
-            txtPortada.setText(fichero.getPath());
+
+            txtRutaImagen.setText(fichero.getPath());
+
+            try ( FileInputStream fis = new FileInputStream(fichero)) {
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
+                    baos.write(buffer, 0, dataLength);
+                }
+                byte[] imageBytes = baos.toByteArray();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+                return;
+            }
            
-}
+            
+            
+           
+        }
     }//GEN-LAST:event_btnPortadaActionPerformed
 
     private void btnBorrarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarComicActionPerformed
@@ -343,11 +363,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblFechaAdquisicion;
     private javax.swing.JLabel lblGestionComics;
+    private javax.swing.JLabel lblPortada;
     private javax.swing.JLabel lblTapa;
     private javax.swing.JLabel lblTítulo;
     private javax.swing.JTable tablaComics;
     private javax.swing.JLabel txtAutor;
-    private javax.swing.JLabel txtPortada;
     private javax.swing.JTextField txtRutaImagen;
     private javax.swing.JTextField txtTapa;
     private javax.swing.JTextField txtTitulo;
