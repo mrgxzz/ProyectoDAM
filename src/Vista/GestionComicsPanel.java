@@ -321,6 +321,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             File fichero = fileChooser.getSelectedFile();
 
             txtRutaImagen.setText(fichero.getPath());
+            
+            byte[] imagen = toByteArray(fichero);
 
         }
     }//GEN-LAST:event_btnPortadaActionPerformed
