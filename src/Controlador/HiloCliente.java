@@ -89,19 +89,18 @@ public class HiloCliente {
     public int solicitarEliminarComic(int idComic) {
 
         try {
-            
+
             objectOutputStream.writeObject(new PeticionServidor("borrarcomic", idComic));
-            
+
             return (int) objectInputStream.readObject();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return 0;
-        
 
     }
 
@@ -126,21 +125,17 @@ public class HiloCliente {
 
     public int solicitarAnhadirAutor(Autor autor) {
 
-        // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
-//        try {
-//            System.out.println("SOLICITANDO");
-//            flujo_salida.writeUTF("listarautores");
-        return GestionComics.anhadirAutor(autor);
+        try {
+            objectOutputStream.writeObject(new PeticionServidor("anhadirautor", autor));
 
-//            String datos = flujo_enter.readUTF();
-//
-//            System.out.println("HE LEIDO -> " + datos);
-//            //return (List<Comic>) flujo_entrada.readObject();
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
+            return (int) objectInputStream.readObject();
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
     }
 
     public int solicitarEliminarAutor(int idAutor) {
