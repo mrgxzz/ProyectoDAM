@@ -154,21 +154,18 @@ public class HiloCliente {
 
     public List<Estado> solicitarListaEstado() {
 
-        // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
-//        try {
-//            System.out.println("SOLICITANDO");
-//            flujo_salida.writeUTF("listarautores");
-        return GestionComics.getListaEstado();
-
-//            String datos = flujo_enter.readUTF();
-//
-//            System.out.println("HE LEIDO -> " + datos);
-//            //return (List<Comic>) flujo_entrada.readObject();
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
+        try {
+            objectOutputStream.writeObject(new PeticionServidor("listarestados", null));
+            
+            return (List<Estado>) objectInputStream.readObject();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        
     }
 
 }
