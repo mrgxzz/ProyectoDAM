@@ -106,21 +106,18 @@ public class HiloCliente {
 
     public List<Autor> solicitarListaAutores() {
 
-        // LLAMAR DESDE AQUI LLAMAR A CARGAR COMICS Y ASI PUEDO SEGUIR AVANZANDO
-//        try {
-//            System.out.println("SOLICITANDO");
-//            flujo_salida.writeUTF("listarautores");
-        return GestionComics.getListaAutores();
+        try {
+            objectOutputStream.writeObject(new PeticionServidor("listarautores", null));
+            
+            return (List<Autor>) objectInputStream.readObject();
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+       
 
-//            String datos = flujo_enter.readUTF();
-//
-//            System.out.println("HE LEIDO -> " + datos);
-//            //return (List<Comic>) flujo_entrada.readObject();
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(HiloServidorCliente.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
     }
 
     public int solicitarAnhadirAutor(Autor autor) {
