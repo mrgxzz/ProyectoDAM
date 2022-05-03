@@ -25,18 +25,8 @@ import javax.swing.JOptionPane;
  */
 public class GestionComicsPanel extends javax.swing.JPanel {
 
-    private String camposObligatorios;
-    private String peliculaExistente;
-    private String puntuacionNumerico;
-    private String duracionNumerico;
-    private String peliculaAnadida;
-    private String fechaFormato;
-    private String puntuacion05;
-
-    private String peliculaEliminada;
-    private String noExistePelicula;
-
     HiloCliente h;
+    byte[] imagen;
 
     /**
      * Creates new form MoviesBoardPanel
@@ -307,7 +297,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         Autor autor = (Autor) cmbAutor.getSelectedItem();
         Estado estado = (Estado) cmbEstado.getSelectedItem();
 
-        Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), new byte[5], estado.getIdEstado(), autor.getIdAutor());
+        Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), imagen, estado.getIdEstado(), autor.getIdAutor());
 
         h.solicitarAnhadirComic(c);
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
@@ -322,7 +312,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
             txtRutaImagen.setText(fichero.getPath());
             
-            byte[] imagen = toByteArray(fichero);
+            imagen = toByteArray(fichero);
 
         }
     }//GEN-LAST:event_btnPortadaActionPerformed
@@ -409,16 +399,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     private void activarTraduccion(ResourceBundle rb) {
 
-        lblGestionComics.setText(rb.getString("lblGestionPeliculas"));
-
-        camposObligatorios = rb.getString("camposObligatorios");
-        peliculaEliminada = rb.getString("peliculaEliminada");
-        peliculaExistente = rb.getString("peliculaExistente");
-        peliculaAnadida = rb.getString("peliculaAnadida");
-        fechaFormato = rb.getString("fechaFormato");
-        noExistePelicula = rb.getString("noExistePelicula");
-        puntuacion05 = rb.getString("puntuacion05");
-        duracionNumerico = rb.getString("duracionNumerico");
+        
 
     }
 
