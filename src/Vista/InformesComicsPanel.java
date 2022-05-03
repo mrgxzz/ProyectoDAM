@@ -55,9 +55,8 @@ public class InformesComicsPanel extends javax.swing.JPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         txtVerPeliculas = new javax.swing.JTextArea();
-        VerInformePeliculas = new javax.swing.JButton();
-        VerInformePeliculasGenero = new javax.swing.JButton();
-        lblGenero = new javax.swing.JLabel();
+        VerInformeComics = new javax.swing.JButton();
+        VerInformeComicsColeccion = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
@@ -67,27 +66,25 @@ public class InformesComicsPanel extends javax.swing.JPanel {
         txtVerPeliculas.setRows(5);
         jScrollPane2.setViewportView(txtVerPeliculas);
 
-        VerInformePeliculas.setBackground(new java.awt.Color(0, 102, 204));
-        VerInformePeliculas.setForeground(new java.awt.Color(255, 255, 255));
-        VerInformePeliculas.setText("Ver informe de cómics");
-        VerInformePeliculas.setBorderPainted(false);
-        VerInformePeliculas.addActionListener(new java.awt.event.ActionListener() {
+        VerInformeComics.setBackground(new java.awt.Color(0, 102, 204));
+        VerInformeComics.setForeground(new java.awt.Color(255, 255, 255));
+        VerInformeComics.setText("Ver informe de cómics");
+        VerInformeComics.setBorderPainted(false);
+        VerInformeComics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerInformePeliculasActionPerformed(evt);
+                VerInformeComicsActionPerformed(evt);
             }
         });
 
-        VerInformePeliculasGenero.setBackground(new java.awt.Color(0, 102, 204));
-        VerInformePeliculasGenero.setForeground(new java.awt.Color(255, 255, 255));
-        VerInformePeliculasGenero.setText("Ver informe de cómics por colección");
-        VerInformePeliculasGenero.setBorderPainted(false);
-        VerInformePeliculasGenero.addActionListener(new java.awt.event.ActionListener() {
+        VerInformeComicsColeccion.setBackground(new java.awt.Color(0, 102, 204));
+        VerInformeComicsColeccion.setForeground(new java.awt.Color(255, 255, 255));
+        VerInformeComicsColeccion.setText("Ver informe de cómics por colección");
+        VerInformeComicsColeccion.setBorderPainted(false);
+        VerInformeComicsColeccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerInformePeliculasGeneroActionPerformed(evt);
+                VerInformeComicsColeccionActionPerformed(evt);
             }
         });
-
-        lblGenero.setText("Género:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -96,12 +93,9 @@ public class InformesComicsPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(VerInformePeliculas, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(VerInformeComics, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(VerInformePeliculasGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblGenero)))
+                    .addComponent(VerInformeComicsColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -110,16 +104,14 @@ public class InformesComicsPanel extends javax.swing.JPanel {
                 .addGap(41, 41, 41)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(VerInformePeliculas)
+                .addComponent(VerInformeComics)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(VerInformePeliculasGenero)
-                    .addComponent(lblGenero))
+                .addComponent(VerInformeComicsColeccion)
                 .addContainerGap(180, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void VerInformePeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformePeliculasActionPerformed
+    private void VerInformeComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeComicsActionPerformed
        /* String informe = "./src/Informes/InformePeliculas.jrxml";
 
         try {
@@ -138,9 +130,9 @@ public class InformesComicsPanel extends javax.swing.JPanel {
         } catch (Exception e) {
         }
 */
-    }//GEN-LAST:event_VerInformePeliculasActionPerformed
+    }//GEN-LAST:event_VerInformeComicsActionPerformed
 
-    private void VerInformePeliculasGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformePeliculasGeneroActionPerformed
+    private void VerInformeComicsColeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeComicsColeccionActionPerformed
        /* String informe = "./src/Informes/InformePeliculasGenero.jrxml";
 
         try {
@@ -171,14 +163,13 @@ public class InformesComicsPanel extends javax.swing.JPanel {
         } catch (Exception e) {
         }
 */
-    }//GEN-LAST:event_VerInformePeliculasGeneroActionPerformed
+    }//GEN-LAST:event_VerInformeComicsColeccionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton VerInformePeliculas;
-    private javax.swing.JButton VerInformePeliculasGenero;
+    private javax.swing.JButton VerInformeComics;
+    private javax.swing.JButton VerInformeComicsColeccion;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblGenero;
     private javax.swing.JTextArea txtVerPeliculas;
     // End of variables declaration//GEN-END:variables
 
@@ -192,8 +183,8 @@ public class InformesComicsPanel extends javax.swing.JPanel {
 
     private void activarTraduccion(ResourceBundle rb) {
 
-        VerInformePeliculas.setText(rb.getString("VerInformePeliculas"));
-        VerInformePeliculasGenero.setText(rb.getString("VerInformePeliculasGenero"));
+        VerInformeComics.setText(rb.getString("VerInformePeliculas"));
+        VerInformeComicsColeccion.setText(rb.getString("VerInformePeliculasGenero"));
         
 
     }
