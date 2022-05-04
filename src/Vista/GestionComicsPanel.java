@@ -303,6 +303,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         
         if (result == 1) {
             JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+            
+            imagen = null;
         } else {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
         }
