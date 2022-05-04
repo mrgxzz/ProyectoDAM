@@ -207,7 +207,7 @@ public class GestionComics {
 
             con = DBConnector.getConexion();
 
-            String consulta = "SELECT * FROM autor WHERE idAutor = ?";
+            String consulta = "SELECT * FROM autor WHERE nombre = ?";
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setInt(1, idAutor);
