@@ -167,5 +167,21 @@ public class HiloCliente {
         return null;
         
     }
+    
+    public Comic solicitarGetComic(int idComic) {
+
+        try {
+            objectOutputStream.writeObject(new PeticionServidor("getComic", idComic));
+            
+            return (Comic) objectInputStream.readObject();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        
+    }
 
 }
