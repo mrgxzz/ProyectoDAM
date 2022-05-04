@@ -37,6 +37,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private String actorNoExiste;
     
     HiloCliente h;
+    byte[] imagen = null;
     
     /**
      * Creates new form MoviesBoardPanel
@@ -240,7 +241,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
        
 
-        Autor autor = new Autor(txtNombreAutor.getText(), imagen);
+        Autor autor = new Autor(txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime());
         
         if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
@@ -250,15 +251,15 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Ya existe un autor con el mismo nombre y apellidos asociado.");
             } else {
 
-                int result = h.solicitarAnhadirComic(c);
+                int result = h.solicitarAnhadirAutor(autor);
 
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+                    JOptionPane.showMessageDialog(null, "El autor ha sido creado correctamente.");
 
                     imagen = null;
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del autor.");
                 }
 
             }
