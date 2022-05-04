@@ -183,5 +183,21 @@ public class HiloCliente {
         return null;
         
     }
+    
+    public Comic solicitarGetAutor(int idAutor) {
+
+        try {
+            objectOutputStream.writeObject(new PeticionServidor("getautor", idAutor));
+            
+            return (Autor) objectInputStream.readObject();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        
+    }
 
 }
