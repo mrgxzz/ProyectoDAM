@@ -171,7 +171,7 @@ public class HiloCliente {
     public Comic solicitarGetComic(int idComic) {
 
         try {
-            objectOutputStream.writeObject(new PeticionServidor("getComic", idComic));
+            objectOutputStream.writeObject(new PeticionServidor("getcomic", idComic));
             
             return (Comic) objectInputStream.readObject();
             
