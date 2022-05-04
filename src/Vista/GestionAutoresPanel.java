@@ -12,6 +12,10 @@ import Modelo.Comic;
 import Modelo.Estado;
 import Modelo.TablaAutores;
 import Modelo.TablaComics;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -236,7 +240,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
        
 
-        Autor autor = new Autor(WIDTH, actorBorrado, fechaNac)
+        Autor autor = new Autor(txtNombreAutor.getText(), imagen);
         
         if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
@@ -321,6 +325,29 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
 
         activarTraduccion(rb);
+
+    }
+    
+    private byte[] toByteArray(File file) {
+
+        try ( FileInputStream fis = new FileInputStream(file)) {
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
+                baos.write(buffer, 0, dataLength);
+            }
+
+            byte[] imageBytes = baos.toByteArray();
+
+            return imageBytes;
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+
+        }
+
+        return null;
 
     }
 
