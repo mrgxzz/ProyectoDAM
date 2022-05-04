@@ -56,17 +56,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         }
 
         /*
-        ArrayList<Genre> listaGeneros = Controller.DBControllerMovies.getGenreList();
-
-        for (Genre genero : listaGeneros) {
-            cmbGenero.addItem(genero);
-        }
-
+        
         traduccion();
 
         activarAyuda();
          */
-        // ¿Llega con hacer el set locale en la pantalla de seleccion de idioma y despues hacer el get bundle sin especificar idioma?
     }
 
     /**
