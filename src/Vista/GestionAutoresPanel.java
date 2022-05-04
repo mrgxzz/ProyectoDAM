@@ -71,7 +71,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
-        setPreferredSize(new java.awt.Dimension(518, 491));
+        setPreferredSize(new java.awt.Dimension(700, 635));
 
         lblGestionActores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblGestionActores.setText("Gestión de autores");
@@ -179,7 +179,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(73, Short.MAX_VALUE))
+                    .addContainerGap(89, Short.MAX_VALUE))
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
@@ -193,7 +193,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                                 .addComponent(txtFotoAutor)
                                 .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)))
                         .addComponent(btnAnadir))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 13, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSeleccionFotoActor)
                     .addGap(129, 129, 129))))
     );
