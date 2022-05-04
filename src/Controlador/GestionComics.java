@@ -174,7 +174,7 @@ public class GestionComics {
 
             con = DBConnector.getConexion();
 
-            String consulta = "SELECT * FROM comic WHERE idComic = ?";
+            String consulta = "SELECT * FROM comic WHERE nombre = ?";
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setInt(1, idComic);
