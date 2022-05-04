@@ -299,19 +299,25 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
         Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), imagen, estado.getIdEstado(), autor.getIdAutor());
 
-        if (h.solicitarGetComic(c.getNombreComic()) != null) {
-            JOptionPane.showMessageDialog(null, "Ya existe un comic con el mismo nombre asociado.");
+        if (txtTitulo.getText().isBlank() || txtTapa.getText().isBlank() || txtRutaImagen.getText().isBlank() || txtAutor.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
 
-            int result = h.solicitarAnhadirComic(c);
-
-            if (result == 1) {
-                JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
-
-                imagen = null;
-                
+            if (h.solicitarGetComic(c.getNombreComic()) != null) {
+                JOptionPane.showMessageDialog(null, "Ya existe un comic con el mismo nombre asociado.");
             } else {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
+
+                int result = h.solicitarAnhadirComic(c);
+
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+
+                    imagen = null;
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
+                }
+
             }
 
         }
