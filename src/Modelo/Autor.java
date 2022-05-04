@@ -25,6 +25,11 @@ public class Autor implements Serializable{
         this.nombre = nombre;
         this.fechaNac = fechaNac;
     }
+    
+    public Autor(String nombre, Date fechaNac) {
+        this.nombre = nombre;
+        this.fechaNac = fechaNac;
+    }
 
     public int getIdAutor() {
         return idAutor;

@@ -9,6 +9,7 @@ package Vista;
 import Controlador.HiloCliente;
 import Modelo.Autor;
 import Modelo.Comic;
+import Modelo.Estado;
 import Modelo.TablaAutores;
 import Modelo.TablaComics;
 import java.time.LocalDate;
@@ -31,12 +32,16 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private String actorBorrado;
     private String actorNoExiste;
     
+    HiloCliente h;
+    
     /**
      * Creates new form MoviesBoardPanel
      * @param h
      */
     public GestionAutoresPanel(HiloCliente h) {
         initComponents();
+        
+        this.h = h;
         
         ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
 
@@ -57,7 +62,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
         lblGestionActores = new javax.swing.JLabel();
         lblNombreActor = new javax.swing.JLabel();
-        txtNombreActor = new javax.swing.JTextField();
+        txtNombreAutor = new javax.swing.JTextField();
         lblFechaNac = new javax.swing.JLabel();
         lblFoto = new javax.swing.JLabel();
         btnSeleccionFotoActor = new javax.swing.JButton();
@@ -189,7 +194,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtNombreActor)
+                                .addComponent(txtNombreAutor)
                                 .addComponent(txtFotoAutor)
                                 .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)))
                         .addComponent(btnAnadir))
@@ -213,7 +218,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblNombreActor)
-                        .addComponent(txtNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(28, 28, 28)
                     .addComponent(lblFechaNac))
                 .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -229,27 +234,33 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
-       /* Actor actor = Controller.DBControllerMovies.getActor(txtNombreActor.getText(), txtApellidos.getText());
+       
 
-        if (txtNombreActor.getText().isBlank() || txtApellidos.getText().isBlank() || txtFechaNacimiento.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, camposObligatorios);
+        Autor autor = new Autor(WIDTH, actorBorrado, fechaNac)
+        
+        if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
 
-            if (actor != null) {
-                JOptionPane.showMessageDialog(null, actorYaExiste);
+            if (h.solicitarGetAutor(txtNombreAutor.getText()) != null) {
+                JOptionPane.showMessageDialog(null, "Ya existe un autor con el mismo nombre y apellidos asociado.");
             } else {
 
-                String fecha = txtFechaNacimiento.getText();
+                int result = h.solicitarAnhadirComic(c);
 
-                if (validarFecha(fecha)) {
-                    Controller.DBControllerMovies.insertActor(txtNombreActor.getText(), txtApellidos.getText(), fecha, "foto");
-                    JOptionPane.showMessageDialog(null, actorAnadido);
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+
+                    imagen = null;
+
                 } else {
-                    JOptionPane.showMessageDialog(null, fechaFormato);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
                 }
+
             }
+
         }
-*/
+
 
     }//GEN-LAST:event_btnAnadirActionPerformed
 
@@ -289,7 +300,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblNombreActor;
     private javax.swing.JTable tablaAutores;
     private javax.swing.JTextField txtFotoAutor;
-    private javax.swing.JTextField txtNombreActor;
+    private javax.swing.JTextField txtNombreAutor;
     // End of variables declaration//GEN-END:variables
 
     public static boolean validarFecha(String fechaIntroducida) {
