@@ -299,6 +299,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         
         Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), imagen, estado.getIdEstado(), autor.getIdAutor());
 
+        
+        
         int result = h.solicitarAnhadirComic(c);
         
         if (result == 1) {
