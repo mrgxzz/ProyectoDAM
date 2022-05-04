@@ -184,7 +184,7 @@ public class HiloCliente {
         
     }
     
-    public Comic solicitarGetAutor(int idAutor) {
+    public Autor solicitarGetAutor(int idAutor) {
 
         try {
             objectOutputStream.writeObject(new PeticionServidor("getautor", idAutor));
