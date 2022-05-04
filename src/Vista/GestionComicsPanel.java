@@ -299,7 +299,9 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         
         Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), imagen, estado.getIdEstado(), autor.getIdAutor());
 
-        
+        if (h.solicitarGetComic(c.getIdComic()) != null) {
+            JOptionPane.showMessageDialog(null, "Ya existe un comic");
+        }
         
         int result = h.solicitarAnhadirComic(c);
         
