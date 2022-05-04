@@ -295,23 +295,28 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private void btnAnhadirComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnhadirComicActionPerformed
 
         Autor autor = (Autor) cmbAutor.getSelectedItem();
-        Estado estado = (Estado) cmbEstado.getSelectedItem();   
-        
+        Estado estado = (Estado) cmbEstado.getSelectedItem();
+
         Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), imagen, estado.getIdEstado(), autor.getIdAutor());
 
         if (h.solicitarGetComic(c.getNombreComic()) != null) {
-            JOptionPane.showMessageDialog(null, "Ya existe un comic");
-        }
-        
-        int result = h.solicitarAnhadirComic(c);
-        
-        if (result == 1) {
-            JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
-            
-            imagen = null;
+            JOptionPane.showMessageDialog(null, "Ya existe un comic con el mismo nombre asociado.");
         } else {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
+
+            int result = h.solicitarAnhadirComic(c);
+
+            if (result == 1) {
+                JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+
+                imagen = null;
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
+            }
+
         }
+
+
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
 
     private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
@@ -323,7 +328,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             File fichero = fileChooser.getSelectedFile();
 
             txtRutaImagen.setText(fichero.getPath());
-            
+
             imagen = toByteArray(fichero);
 
         }
@@ -387,16 +392,16 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
                 baos.write(buffer, 0, dataLength);
             }
-            
+
             byte[] imageBytes = baos.toByteArray();
-            
+
             return imageBytes;
-            
+
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
-            
+
         }
-        
+
         return null;
 
     }
@@ -410,8 +415,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }
 
     private void activarTraduccion(ResourceBundle rb) {
-
-        
 
     }
 
