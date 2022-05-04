@@ -168,10 +168,10 @@ public class HiloCliente {
         
     }
     
-    public Comic solicitarGetComic(int idComic) {
+    public Comic solicitarGetComic(String nomComic) {
 
         try {
-            objectOutputStream.writeObject(new PeticionServidor("getcomic", idComic));
+            objectOutputStream.writeObject(new PeticionServidor("getcomic", nomComic));
             
             return (Comic) objectInputStream.readObject();
             
@@ -184,10 +184,10 @@ public class HiloCliente {
         
     }
     
-    public Autor solicitarGetAutor(int idAutor) {
+    public Autor solicitarGetAutor(String nomAutor) {
 
         try {
-            objectOutputStream.writeObject(new PeticionServidor("getautor", idAutor));
+            objectOutputStream.writeObject(new PeticionServidor("getautor", nomAutor));
             
             return (Autor) objectInputStream.readObject();
             
