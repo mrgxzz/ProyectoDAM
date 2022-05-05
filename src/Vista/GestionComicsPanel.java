@@ -336,6 +336,9 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     private void btnBorrarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarComicActionPerformed
         Comic comic = (Comic) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), tablaComics.getSelectedColumn());
+        
+        h.solicitarEliminarComic(comic);
+        
     }//GEN-LAST:event_btnBorrarComicActionPerformed
 
     private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed

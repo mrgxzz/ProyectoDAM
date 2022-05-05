@@ -86,11 +86,11 @@ public class HiloCliente {
         return 0;
     }
 
-    public int solicitarEliminarComic(int idComic) {
+    public int solicitarEliminarComic(String nomComic) {
 
         try {
 
-            objectOutputStream.writeObject(new PeticionServidor("borrarcomic", idComic));
+            objectOutputStream.writeObject(new PeticionServidor("borrarcomic", nomComic));
 
             return (int) objectInputStream.readObject();
 
