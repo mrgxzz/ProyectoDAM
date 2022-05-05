@@ -135,10 +135,10 @@ public class HiloCliente {
 
     }
 
-    public int solicitarEliminarAutor(int idAutor) {
+    public int solicitarEliminarAutor(String nomAutor) {
 
         try {
-            objectOutputStream.writeObject(new PeticionServidor("borrarautor", idAutor));
+            objectOutputStream.writeObject(new PeticionServidor("borrarautor", nomAutor));
 
             return (int) objectInputStream.readObject();
         } catch (IOException ex) {
