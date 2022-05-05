@@ -258,7 +258,7 @@ public class GestionComics {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
         }
 
-        return 0;
+        return -1;
     }
     
     public static int anhadirAutor(Autor autor) {
