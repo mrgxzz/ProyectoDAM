@@ -317,7 +317,7 @@ public class GestionComics {
 
             con = DBConnector.getConexion();
 
-            String consulta = "DELETE FROM autor WHERE idAutor = ?";
+            String consulta = "DELETE FROM autor WHERE nombre = ?";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
