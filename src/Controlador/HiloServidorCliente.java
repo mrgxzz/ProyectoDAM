@@ -155,7 +155,7 @@ public class HiloServidorCliente extends Thread {
                         
                         case "getautor" -> {
     
-                            Autor autor = GestionComics.getAutor((int) orden.getObjeto());
+                            Autor autor = GestionComics.getAutor((String) orden.getObjeto());
                             
                             objeto_salida.writeObject(autor);
                             

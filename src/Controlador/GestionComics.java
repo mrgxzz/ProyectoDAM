@@ -198,7 +198,7 @@ public class GestionComics {
         return null;
     }
     
-    public static Autor getAutor(int idAutor) {
+    public static Autor getAutor(String nomAutor) {
 
         Connection con;
         ResultSet rs = null;
@@ -210,7 +210,7 @@ public class GestionComics {
             String consulta = "SELECT * FROM autor WHERE nombre = ?";
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
-            sentencia.setInt(1, idAutor);
+            sentencia.setString(1, nomAutor);
             
             rs = sentencia.executeQuery();
             
