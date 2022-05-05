@@ -76,11 +76,9 @@ public class HiloCliente {
 
             objectOutputStream.writeObject(new PeticionServidor("anhadirComic", comic));
             // flujo_salida.writeUTF("anhadircomic;");
-            return (int) objectInputStream.readObject();
+            return objectInputStream.readInt();
 
         } catch (IOException ex) {
-            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
@@ -92,11 +90,9 @@ public class HiloCliente {
 
             objectOutputStream.writeObject(new PeticionServidor("borrarcomic", nomComic));
 
-            return (int) objectInputStream.readObject();
+            return objectInputStream.readInt();
 
         } catch (IOException ex) {
-            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -125,10 +121,8 @@ public class HiloCliente {
         try {
             objectOutputStream.writeObject(new PeticionServidor("anhadirautor", autor));
 
-            return (int) objectInputStream.readObject();
+            return objectInputStream.readInt();
         } catch (IOException ex) {
-            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
@@ -140,10 +134,8 @@ public class HiloCliente {
         try {
             objectOutputStream.writeObject(new PeticionServidor("borrarautor", nomAutor));
 
-            return (int) objectInputStream.readObject();
+            return objectInputStream.readInt();
         } catch (IOException ex) {
-            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
