@@ -119,7 +119,7 @@ public class HiloServidorCliente extends Thread {
                         
                         case "borrarcomic" -> {
     
-                            int result = GestionComics.eliminarComic((int) orden.getObjeto());
+                            int result = GestionComics.eliminarComic((String) orden.getObjeto());
                             
                             objeto_salida.writeInt(result);
                             
@@ -137,7 +137,7 @@ public class HiloServidorCliente extends Thread {
                         
                         case "borrarautor" -> {
     
-                            int result = GestionComics.eliminarAutor((int) orden.getObjeto());
+                            int result = GestionComics.eliminarAutor((String) orden.getObjeto());
                          
                             objeto_salida.writeInt(result);
                             
