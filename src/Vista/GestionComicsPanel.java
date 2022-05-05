@@ -335,13 +335,13 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPortadaActionPerformed
 
     private void btnBorrarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarComicActionPerformed
-        Comic comic = (Comic) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), tablaComics.getSelectedColumn());
+        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
 
         int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
-                + "cómic con título: " + comic.getNombreComic() + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
+                + "cómic con título: " + nomComic + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
 
         if (opt == JOptionPane.YES_OPTION) {
-            int result = h.solicitarEliminarComic(comic.getNombreComic());
+            int result = h.solicitarEliminarComic(nomComic);
 
             if (result > 0 ) {
                 JOptionPane.showMessageDialog(null, "El cómic ha sido eliminado correctamente.");
