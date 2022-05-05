@@ -146,7 +146,7 @@ public class HiloServidorCliente extends Thread {
                         
                         case "getcomic" -> {
     
-                            Comic comic = GestionComics.getComic((int) orden.getObjeto());
+                            Comic comic = GestionComics.getComic((String) orden.getObjeto());
                             
                             objeto_salida.writeObject(comic);
                             

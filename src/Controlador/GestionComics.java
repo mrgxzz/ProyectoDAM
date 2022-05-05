@@ -165,7 +165,7 @@ public class GestionComics {
         return listaEstado;
     }
     
-    public static Comic getComic(int idComic) {
+    public static Comic getComic(String nomComic) {
 
         Connection con;
         ResultSet rs = null;
@@ -177,7 +177,7 @@ public class GestionComics {
             String consulta = "SELECT * FROM comic WHERE nombre = ?";
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
-            sentencia.setInt(1, idComic);
+            sentencia.setString(1, nomComic);
             
             rs = sentencia.executeQuery();
             
