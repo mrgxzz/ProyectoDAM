@@ -286,7 +286,7 @@ public class GestionComics {
         return 0;
     }
     
-    public static int eliminarComic(int idComic) {
+    public static int eliminarComic(String nomComic) {
 
         Connection con;
 
@@ -294,11 +294,11 @@ public class GestionComics {
 
             con = DBConnector.getConexion();
 
-            String consulta = "DELETE FROM comic WHERE idComic = ?";
+            String consulta = "DELETE FROM comic WHERE nombre = ?";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
-            sentencia.setInt(1, idComic);
+            sentencia.setString(1, nomComic);
           
             return sentencia.executeUpdate();
 
