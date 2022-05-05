@@ -309,7 +309,7 @@ public class GestionComics {
         return 0;
     }
 
-    public static int eliminarAutor(int idAutor) {
+    public static int eliminarAutor(String nomAutor) {
 
         Connection con;
 
@@ -321,7 +321,7 @@ public class GestionComics {
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
-            sentencia.setInt(1, idAutor);
+            sentencia.setString(1, nomAutor);
           
             return sentencia.executeUpdate();
 
