@@ -350,6 +350,12 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
             if (result > 0) {
                 JOptionPane.showMessageDialog(null, "El cómic ha sido eliminado correctamente.");
+
+                ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
+
+                TablaComics modeloTabla = new TablaComics(listaComics);
+                tablaComics.setModel(modeloTabla);
+
             } else {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el borrado del cómic.");
             }
