@@ -69,7 +69,16 @@ public class TablaComics extends AbstractTableModel {
             Comic u = listaComics.get(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return new ImageIcon(GestionComics.getImage(u.getPortada()));
+                    try {
+
+                    ImageIcon image = new ImageIcon(GestionComics.getImage(u.getPortada()));
+
+                    return image;
+
+                } catch (Exception e) {
+                    return null;
+                }
+
                 case 1:
                     return u.getNombreComic();
                 case 2:
@@ -78,14 +87,14 @@ public class TablaComics extends AbstractTableModel {
                     return u.getFechaAdquisicion();
                 case 4:
                     return u.getIdEstado();
-                    
+
                 default:
                     return null;
-                    
+
             }
         } else {
             return null;
         }
-        
+
     }
 }
