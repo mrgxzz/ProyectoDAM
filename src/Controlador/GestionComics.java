@@ -64,7 +64,13 @@ public class GestionComics {
             rs = sentencia.executeQuery();
 
             while (rs.next()) {
-                listaComics.add(new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getBytes(5), rs.getInt(5), rs.getInt(6)));
+                
+                java.sql.Blob blob = rs.getBlob(5);
+                
+                int blobLength = (int) blob.length();
+                byte[] blobAsBytes = blob.getBytes(1, blobLength);
+                
+                listaComics.add(new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), blobAsBytes, rs.getInt(5), rs.getInt(6)));
             }
 
         } catch (SQLException e) {
