@@ -9,6 +9,7 @@ import Modelo.Autor;
 import Modelo.Coleccion;
 import Modelo.Comic;
 import Modelo.Estado;
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -194,7 +195,13 @@ public class GestionComics {
             rs = sentencia.executeQuery();
 
             if (rs.next()) {
-                return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getBytes(5), rs.getInt(6), rs.getInt(7));
+
+                java.sql.Blob blob = rs.getBlob(5);
+                
+                int blobLength = (int) blob.length();
+                byte[] blobAsBytes = blob.getBytes(1, blobLength);
+
+                return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), blobAsBytes, rs.getInt(6), rs.getInt(7));
             }
 
         } catch (SQLException e) {
@@ -344,14 +351,15 @@ public class GestionComics {
     public static BufferedImage getImage(byte[] bytes) {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-        
+
         try {
-            return ImageIO.read(bis);
-            
+            BufferedImage newImage = ImageIO.read(bis);
+            return newImage;
+
         } catch (IOException ex) {
             Logger.getLogger(GestionComics.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
+        }
+
         return null;
 
     }

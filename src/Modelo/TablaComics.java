@@ -76,6 +76,8 @@ public class TablaComics extends AbstractTableModel {
                     return image;
 
                 } catch (Exception e) {
+                    System.out.println("ERROR");
+
                     return null;
                 }
 
