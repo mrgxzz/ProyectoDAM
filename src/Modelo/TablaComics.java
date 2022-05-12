@@ -65,31 +65,26 @@ public class TablaComics extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         // TODO Auto-generated method stub
         if (rowIndex != -1 && listaComics.size() > rowIndex) {
-            try {
-                Comic u = listaComics.get(rowIndex);
-                
-                switch (columnIndex) {
-                    case 0:
-                        return GestionComics.getImage(u.getPortada(), true);
-                    case 1:
-                        return u.getNombreComic();
-                    case 2:
-                        return u.getTapa();
-                    case 3:
-                        return u.getFechaAdquisicion();
-                    case 4:
-                        return u.getIdEstado();
-                        
-                    default:
-                        return null;
-                        
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(TablaComics.class.getName()).log(Level.SEVERE, null, ex);
+            Comic u = listaComics.get(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    return GestionComics.getImage(u.getPortada());
+                case 1:
+                    return u.getNombreComic();
+                case 2:
+                    return u.getTapa();
+                case 3:
+                    return u.getFechaAdquisicion();
+                case 4:
+                    return u.getIdEstado();
+                    
+                default:
+                    return null;
+                    
             }
         } else {
             return null;
         }
-        return null;
+        
     }
 }
