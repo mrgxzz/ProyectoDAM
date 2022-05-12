@@ -10,7 +10,10 @@ import Modelo.Coleccion;
 import Modelo.Comic;
 import Modelo.Estado;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -21,10 +24,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,9 +40,12 @@ import javax.swing.JOptionPane;
  */
 public class GestionComics {
 
-    /***
+    /**
+     * *
      * Método para obtener todos los cómics añadidos en la BD
-     * @return List(Comic) Devuelve una lista cargada a través de una consulta a la BD con objetos de la clase cómic  
+     *
+     * @return List(Comic) Devuelve una lista cargada a través de una consulta a
+     * la BD con objetos de la clase cómic
      */
     public static List<Comic> getListaComics() {
 
@@ -70,7 +80,9 @@ public class GestionComics {
 
     /**
      * Método para obtener todos las colecciones añadidas en la BD
-     * @return List(Coleccion) Devuelve una lista cargada a través de una consulta a la BD con objetos de la clase colección
+     *
+     * @return List(Coleccion) Devuelve una lista cargada a través de una
+     * consulta a la BD con objetos de la clase colección
      */
     public static List<Coleccion> getListaColecciones() {
 
@@ -133,7 +145,7 @@ public class GestionComics {
         }
         return listaAutores;
     }
-    
+
     public static List<Estado> getListaEstado() {
 
         Connection con;
@@ -164,7 +176,7 @@ public class GestionComics {
         }
         return listaEstado;
     }
-    
+
     public static Comic getComic(String nomComic) {
 
         Connection con;
@@ -178,9 +190,8 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, nomComic);
-            
+
             rs = sentencia.executeQuery();
-            
 
             if (rs.next()) {
                 return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getBytes(5), rs.getInt(6), rs.getInt(7));
@@ -197,7 +208,7 @@ public class GestionComics {
         }
         return null;
     }
-    
+
     public static Autor getAutor(String nomAutor) {
 
         Connection con;
@@ -211,9 +222,8 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, nomAutor);
-            
+
             rs = sentencia.executeQuery();
-            
 
             if (rs.next()) {
                 return new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3));
@@ -231,7 +241,6 @@ public class GestionComics {
         return null;
     }
 
-
     public static int anhadirComic(Comic comic) {
 
         Connection con;
@@ -246,7 +255,7 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, comic.getNombreComic());
-            sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()) );
+            sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()));
             sentencia.setString(3, comic.getTapa());
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
@@ -260,7 +269,7 @@ public class GestionComics {
 
         return -1;
     }
-    
+
     public static int anhadirAutor(Autor autor) {
 
         Connection con;
@@ -275,7 +284,7 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, autor.getNombre());
-            sentencia.setDate(2, new java.sql.Date(autor.getFechaNac().getTime()) );
+            sentencia.setDate(2, new java.sql.Date(autor.getFechaNac().getTime()));
 
             return sentencia.executeUpdate();
 
@@ -285,7 +294,7 @@ public class GestionComics {
 
         return 0;
     }
-    
+
     public static int eliminarComic(String nomComic) {
 
         Connection con;
@@ -299,7 +308,7 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, nomComic);
-          
+
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
@@ -322,7 +331,7 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, nomAutor);
-          
+
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
@@ -331,7 +340,22 @@ public class GestionComics {
 
         return 0;
     }
-    
+
+    public static BufferedImage getImage(byte[] bytes) {
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+        
+        try {
+            return ImageIO.read(bis);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(GestionComics.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        return null;
+
+    }
+
     public static Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
