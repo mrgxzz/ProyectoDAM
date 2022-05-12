@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -68,7 +69,7 @@ public class TablaComics extends AbstractTableModel {
             Comic u = listaComics.get(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return GestionComics.getImage(u.getPortada());
+                    return new ImageIcon(GestionComics.getImage(u.getPortada()));
                 case 1:
                     return u.getNombreComic();
                 case 2:
