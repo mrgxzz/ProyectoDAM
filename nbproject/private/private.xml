@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Utiles/PeticionServidor.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Controlador/GestionComics.java</file>
             <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/GestionComicsPanel.java</file>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/GestionAutoresPanel.java</file>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/Autor.java</file>
             <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Controlador/HiloCliente.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/TablaComics.java</file>
             <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Controlador/HiloServidorCliente.java</file>
         </group>
     </open-files>
