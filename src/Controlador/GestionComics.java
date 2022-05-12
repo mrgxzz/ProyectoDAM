@@ -267,12 +267,15 @@ public class GestionComics {
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
+            
+            java.sql.Blob b = new javax.sql.rowset.serial.SerialBlob(comic.getPortada());
+            
             sentencia.setString(1, comic.getNombreComic());
             sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()));
             sentencia.setString(3, comic.getTapa());
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
-            sentencia.setBytes(6, comic.getPortada());
+            sentencia.setBlob(6, b);
 
             return sentencia.executeUpdate();
 
