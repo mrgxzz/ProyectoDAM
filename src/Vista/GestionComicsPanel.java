@@ -378,6 +378,12 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             txtTitulo.setText(comic.getNombreComic());
             dateChooserCombo.setSelectedDate(UtilMethods.toCalendar(comic.getFechaAdquisicion()));
             txtTapa.setText(comic.getTapa());
+            
+//            cmbEstado.setSelectedItem();
+//            cmbAutor.setSelectedItem();
+
+
+            
 
         } else {
 
