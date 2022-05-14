@@ -366,7 +366,35 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBorrarComicActionPerformed
 
     private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed
-        // TODO add your handling code here:
+        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
+
+        Comic comic = h.solicitarGetComic(nomComic); 
+        
+           if (comic != null) {
+               
+               txtTitulo.setText(comic.getNombreComic());
+               txtTapa.setText(comic.getTapa());
+               
+               
+            } else {
+
+                int result = h.solicitarAnhadirComic(c);
+
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+
+                    imagen = null;
+
+                    ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
+
+                    TablaComics modeloTabla = new TablaComics(listaComics);
+                    tablaComics.setModel(modeloTabla);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
+                }
+
+            }
     }//GEN-LAST:event_btnModificarComicActionPerformed
 
 
