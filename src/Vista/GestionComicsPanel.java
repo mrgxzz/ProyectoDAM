@@ -10,11 +10,14 @@ import Modelo.Autor;
 import Modelo.Comic;
 import Modelo.Estado;
 import Modelo.TablaComics;
+import Utiles.UtilMethods;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -368,33 +371,19 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed
         String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
 
-        Comic comic = h.solicitarGetComic(nomComic); 
-        
-           if (comic != null) {
-               
-               txtTitulo.setText(comic.getNombreComic());
-               txtTapa.setText(comic.getTapa());
-               
-               
-            } else {
+        Comic comic = h.solicitarGetComic(nomComic);
 
-                int result = h.solicitarAnhadirComic(c);
+        if (comic != null) {
 
-                if (result == 1) {
-                    JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+            txtTitulo.setText(comic.getNombreComic());
+            dateChooserCombo.setSelectedDate(UtilMethods.toCalendar(comic.getFechaAdquisicion()));
+            txtTapa.setText(comic.getTapa());
 
-                    imagen = null;
+        } else {
 
-                    ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
+            JOptionPane.showMessageDialog(null, "No existe ningún cómic con ese nombre asociado");
 
-                    TablaComics modeloTabla = new TablaComics(listaComics);
-                    tablaComics.setModel(modeloTabla);
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
-                }
-
-            }
+        }
     }//GEN-LAST:event_btnModificarComicActionPerformed
 
 
@@ -420,6 +409,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtTapa;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
+
+   
 
     /*
     private void activarAyuda() {
