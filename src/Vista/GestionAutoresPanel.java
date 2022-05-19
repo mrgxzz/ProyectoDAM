@@ -11,6 +11,7 @@ import Modelo.Comic;
 import Modelo.Estado;
 import Modelo.TablaAutores;
 import Modelo.TablaComics;
+import Utiles.UtilMethods;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -294,7 +295,21 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 1);
+
+        Autor autor = h.solicitarGetAutor(nomAutor);
+
+        if (autor != null) {
+
+            txtNombreAutor.setText(nomAutor);
+            dateChooserFechaNac.setSelectedDate(UtilMethods.toCalendar(autor.getFechaNac()));
+            // Author image URL
+            
+        } else {
+
+            JOptionPane.showMessageDialog(null, "No existe ningún autor con ese nombre asociado");
+
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
 
