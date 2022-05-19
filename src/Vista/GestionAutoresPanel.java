@@ -305,6 +305,8 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             dateChooserFechaNac.setSelectedDate(UtilMethods.toCalendar(autor.getFechaNac()));
             // Author image URL
             
+            // DATABASE UPDATE AUTHOR
+            
         } else {
 
             JOptionPane.showMessageDialog(null, "No existe ningún autor con ese nombre asociado");
