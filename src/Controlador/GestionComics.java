@@ -9,6 +9,7 @@ import Modelo.Autor;
 import Modelo.Coleccion;
 import Modelo.Comic;
 import Modelo.Estado;
+import java.sql.Blob;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -268,7 +271,7 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             
-            java.sql.Blob b = new javax.sql.rowset.serial.SerialBlob(comic.getPortada());
+            Blob b = new javax.sql.rowset.serial.SerialBlob(comic.getPortada());
             
             sentencia.setString(1, comic.getNombreComic());
             sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()));
@@ -276,6 +279,7 @@ public class GestionComics {
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
             sentencia.setBlob(6, b);
+          
 
             return sentencia.executeUpdate();
 
