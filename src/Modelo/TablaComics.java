@@ -72,18 +72,10 @@ public class TablaComics extends AbstractTableModel {
             Comic u = listaComics.get(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    
-                    try {
 
                     ImageIcon image = new ImageIcon(GestionComics.getImage(u.getPortada()));
 
                     return new JLabel(image);
-
-                } catch (Exception e) {
-            
-                    System.out.println("ERROR");
-
-                }
 
                 case 1:
                     return u.getNombreComic();
