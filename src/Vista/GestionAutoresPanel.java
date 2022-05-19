@@ -5,7 +5,6 @@
  */
 package Vista;
 
-
 import Controlador.HiloCliente;
 import Modelo.Autor;
 import Modelo.Comic;
@@ -28,6 +27,7 @@ import javax.swing.JOptionPane;
  * @author Manu Romeo
  */
 public class GestionAutoresPanel extends javax.swing.JPanel {
+
     private String camposObligatorios;
     private String camposMarcados;
     private String fechaFormato;
@@ -35,24 +35,25 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private String actorAnadido;
     private String actorBorrado;
     private String actorNoExiste;
-    
+
     HiloCliente h;
     byte[] imagen = null;
-    
+
     /**
      * Creates new form MoviesBoardPanel
+     *
      * @param h
      */
     public GestionAutoresPanel(HiloCliente h) {
         initComponents();
-        
+
         this.h = h;
-        
+
         ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
 
         TablaAutores modeloTabla = new TablaAutores(listaAutores);
         tablaAutores.setModel(modeloTabla);
-        
+
         //traduccion();
     }
 
@@ -237,10 +238,9 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
-       
 
         Autor autor = new Autor(txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime());
-        
+
         if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
@@ -268,21 +268,29 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-      /*  Actor actor = Controller.DBControllerMovies.getActor(txtNombreActor.getText(), txtApellidos.getText());
 
-        if (txtNombreActor.getText().isBlank() || txtApellidos.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, camposMarcados);
-        } else {
-            if (actor != null) {
+        String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 1);
 
-                Controller.DBControllerMovies.deleteActor(txtNombreActor.getText(), txtApellidos.getText());
+        int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
+                + "autor con nombre: " + nomAutor + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
 
-                JOptionPane.showMessageDialog(null, actorBorrado);
+        if (opt == JOptionPane.YES_OPTION) {
+            int result = h.solicitarEliminarAutor(nomAutor);
+
+            if (result > 0) {
+                JOptionPane.showMessageDialog(null, "El autor ha sido eliminado correctamente.");
+
+                ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
+
+                TablaAutores modeloTabla = new TablaAutores(listaAutores);
+                tablaAutores.setModel(modeloTabla);
+
             } else {
-                JOptionPane.showMessageDialog(null, actorNoExiste);
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el borrado del autor.");
             }
+
         }
-*/
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -318,7 +326,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         }
 
     }
-    
+
     private void traduccion() {
 
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
@@ -326,7 +334,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         activarTraduccion(rb);
 
     }
-    
+
     private byte[] toByteArray(File file) {
 
         try ( FileInputStream fis = new FileInputStream(file)) {
@@ -356,11 +364,10 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         lblFechaNac.setText(rb.getString("lblFechaNac"));
         lblFoto.setText(rb.getString("lblFoto"));
         lblNombreActor.setText(rb.getString("lblNombreActor"));
-        
-        
+
         btnAnadir.setText(rb.getString("btnAñadir"));
         btnEliminar.setText(rb.getString("btnEliminar"));
-        
+
         camposObligatorios = rb.getString("camposObligatorios");
         camposMarcados = rb.getString("camposMarcados");
         actorYaExiste = rb.getString("actorYaExiste");
@@ -368,8 +375,6 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         fechaFormato = rb.getString("fechaFormato");
         actorNoExiste = rb.getString("actorNoExiste");
         actorBorrado = rb.getString("actorBorrado");
-        
-        
 
     }
 
