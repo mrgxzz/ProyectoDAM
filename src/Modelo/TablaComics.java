@@ -8,8 +8,10 @@ package Modelo;
 import Controlador.GestionComics;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
@@ -75,9 +77,10 @@ public class TablaComics extends AbstractTableModel {
 
                     ImageIcon image = new ImageIcon(GestionComics.getImage(u.getPortada()));
 
-                    return new JLabel(image);
+                    return image;
 
                 } catch (Exception e) {
+            
                     System.out.println("ERROR");
 
                 }
@@ -99,5 +102,13 @@ public class TablaComics extends AbstractTableModel {
             return null;
         }
 
+    }
+
+    private static final int ICONS_COLUMN = 0;
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return columnIndex == ICONS_COLUMN ? Icon.class
+                : super.getColumnClass(columnIndex);
     }
 }
