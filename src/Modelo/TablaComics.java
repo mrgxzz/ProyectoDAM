@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -69,11 +70,12 @@ public class TablaComics extends AbstractTableModel {
             Comic u = listaComics.get(rowIndex);
             switch (columnIndex) {
                 case 0:
+                    
                     try {
 
                     ImageIcon image = new ImageIcon(GestionComics.getImage(u.getPortada()));
 
-                    return image;
+                    return new JLabel(image);
 
                 } catch (Exception e) {
                     System.out.println("ERROR");
