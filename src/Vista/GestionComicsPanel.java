@@ -10,6 +10,7 @@ import Modelo.Autor;
 import Modelo.Comic;
 import Modelo.Estado;
 import Modelo.TablaComics;
+import Utiles.TableRenderer;
 import Utiles.UtilMethods;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -44,6 +45,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
         TablaComics modeloTabla = new TablaComics(listaComics);
+        tablaComics.setDefaultRenderer(Object.class, new TableRenderer());
         tablaComics.setModel(modeloTabla);
 
         ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
@@ -314,6 +316,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                     ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
                     TablaComics modeloTabla = new TablaComics(listaComics);
+                    tablaComics.setDefaultRenderer(Object.class, new TableRenderer());
                     tablaComics.setModel(modeloTabla);
 
                 } else {
@@ -378,13 +381,9 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             txtTitulo.setText(comic.getNombreComic());
             dateChooserCombo.setSelectedDate(UtilMethods.toCalendar(comic.getFechaAdquisicion()));
             txtTapa.setText(comic.getTapa());
-            
+
 //            cmbEstado.setSelectedItem();
 //            cmbAutor.setSelectedItem();
-
-
-            
-
         } else {
 
             JOptionPane.showMessageDialog(null, "No existe ningún cómic con ese nombre asociado");
@@ -415,8 +414,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtTapa;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
-
-   
 
     /*
     private void activarAyuda() {
