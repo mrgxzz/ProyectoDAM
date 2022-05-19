@@ -77,7 +77,7 @@ public class TablaComics extends AbstractTableModel {
 
                     ImageIcon image = new ImageIcon(GestionComics.getImage(u.getPortada()));
 
-                    return image;
+                    return new JLabel(image);
 
                 } catch (Exception e) {
             
