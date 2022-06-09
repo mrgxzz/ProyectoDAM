@@ -43,9 +43,6 @@ public class Comic implements Serializable{
         this.idAutor = idAutor;
     }
 
-   
-
-
     public int getIdComic() {
         return idComic;
     }
