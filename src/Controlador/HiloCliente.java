@@ -83,6 +83,19 @@ public class HiloCliente {
         }
         return 0;
     }
+    
+      public int solicitarUpdateComic(Comic comic) {
+
+        try {
+
+            objectOutputStream.writeObject(new PeticionServidor("updateComic", comic));
+            return objectInputStream.readInt();
+
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 
     public int solicitarEliminarComic(String nomComic) {
 
@@ -120,6 +133,19 @@ public class HiloCliente {
 
         try {
             objectOutputStream.writeObject(new PeticionServidor("anhadirautor", autor));
+
+            return objectInputStream.readInt();
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
+    }
+    
+    public int solicitarUpdateAutor(Autor autor) {
+
+        try {
+            objectOutputStream.writeObject(new PeticionServidor("updateautor", autor));
 
             return objectInputStream.readInt();
         } catch (IOException ex) {
@@ -182,6 +208,22 @@ public class HiloCliente {
             objectOutputStream.writeObject(new PeticionServidor("getautor", nomAutor));
             
             return (Autor) objectInputStream.readObject();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        
+    }
+    
+    public Estado solicitarGetEstado(int idEstado) {
+
+        try {
+            objectOutputStream.writeObject(new PeticionServidor("getestado", idEstado));
+            
+            return (Estado) objectInputStream.readObject();
             
         } catch (IOException ex) {
             Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);

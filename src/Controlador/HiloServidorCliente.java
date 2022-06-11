@@ -65,12 +65,7 @@ public class HiloServidorCliente extends Thread {
                         }
                         case "listarcolecciones" -> {
                             flujo_salida.writeUTF("listacoleccionesok");
-                            //List <Coleccion> listaColecciones = GestionComics.cargarColecciones();
-//
-//                                        objeto_salida = new ObjectOutputStream(skCliente.getOutputStream());
-//
-//                                        objeto_salida.writeObject(listaColecciones);
-//                                        objeto_salida.flush();
+               
 
                         }
                         
@@ -81,7 +76,6 @@ public class HiloServidorCliente extends Thread {
                             objeto_salida.writeObject(listaAutores);
                             objeto_salida.flush();
 
-
                         }
                         
                         case "listarcomics" -> {
@@ -90,8 +84,7 @@ public class HiloServidorCliente extends Thread {
 
                             objeto_salida.writeObject(listaComics);
                             objeto_salida.flush();
-                                        
-                            System.out.println("HEYYYY");
+                   
 
                         }
                         
@@ -123,6 +116,15 @@ public class HiloServidorCliente extends Thread {
                             objeto_salida.flush();
                         }
                         
+                        case "updatecomic" -> {
+    
+                            int result = GestionComics.updateComic((Comic) orden.getObjeto());
+                            
+                            objeto_salida.writeInt(result);
+                            
+                            objeto_salida.flush();
+                        }
+                        
                          case "anhadirautor" -> {
     
                             int result = GestionComics.anhadirAutor((Autor) orden.getObjeto());
@@ -136,6 +138,15 @@ public class HiloServidorCliente extends Thread {
     
                             int result = GestionComics.eliminarAutor((String) orden.getObjeto());
                          
+                            objeto_salida.writeInt(result);
+                            
+                            objeto_salida.flush();
+                        }
+                        
+                        case "updateautor" -> {
+    
+                            int result = GestionComics.updateAutor((Autor) orden.getObjeto());
+                            
                             objeto_salida.writeInt(result);
                             
                             objeto_salida.flush();
@@ -155,6 +166,15 @@ public class HiloServidorCliente extends Thread {
                             Autor autor = GestionComics.getAutor((String) orden.getObjeto());
                             
                             objeto_salida.writeObject(autor);
+                            
+                            objeto_salida.flush();
+                        }
+                        
+                          case "getestado" -> {
+    
+                            Estado estado = GestionComics.getEstado((int) orden.getObjeto());
+                            
+                            objeto_salida.writeObject(estado);
                             
                             objeto_salida.flush();
                         }
