@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformePeliculas" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapterMovieDB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEFF0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#D8D8D8"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="idGenero" class="java.lang.Integer">
+		<parameterDescription><![CDATA[Parametro de filtro de peliculas por genero]]></parameterDescription>
+	</parameter>
+	<parameter name="ID_ACTOR" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT pelicula.* FROM pelicula INNER JOIN pelicula_actor
+	ON pelicula_actor.idPelicula = pelicula.idPelicula
+	WHERE pelicula_actor.idActor =  $P{ID_ACTOR} ]]>
+	</queryString>
+	<field name="idPelicula" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idPelicula"/>
+		<property name="com.jaspersoft.studio.field.label" value="idPelicula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="titulo"/>
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="sinopsis" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sinopsis"/>
+		<property name="com.jaspersoft.studio.field.label" value="sinopsis"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="puntuacion" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="puntuacion"/>
+		<property name="com.jaspersoft.studio.field.label" value="puntuacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="duracionMinutos" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="duracionMinutos"/>
+		<property name="com.jaspersoft.studio.field.label" value="duracionMinutos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="fechaEstreno" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fechaEstreno"/>
+		<property name="com.jaspersoft.studio.field.label" value="fechaEstreno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="fotoPortada" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="fotoPortada"/>
+		<property name="com.jaspersoft.studio.field.label" value="fotoPortada"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<field name="idGenero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idGenero"/>
+		<property name="com.jaspersoft.studio.field.label" value="idGenero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pelicula"/>
+	</field>
+	<title>
+		<band height="99" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="80" width="556" height="1" uuid="806ce5df-1219-4876-ae0c-ca7405b1f246">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="415" y="10" width="50" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="465" y="10" width="84" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="370" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Informe de películas por actor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="205" height="15" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde"/>
+				<text><![CDATA[Manuel Romeo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="205" height="15" uuid="b96f7183-44f8-43ad-ba60-43d8fbf50b6e"/>
+				<text><![CDATA[Proyecto Desenvolvemento de Interfaces]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="41" width="100" height="30" uuid="1c494097-c289-45af-9eaa-e451f56065da"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="56" width="210" height="20" uuid="0a27e3e6-455d-4431-9acf-75bd99a50a33"/>
+				<textFieldExpression><![CDATA["Películas con ID actor: " + $P{ID_ACTOR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement x="10" y="0" width="100" height="20" uuid="c024edf1-0a9a-4942-8648-6ea511e1acc5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="49274bdc-389e-4036-bc32-13fd206d6b49"/>
+				</reportElement>
+				<text><![CDATA[Título]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="-1" width="100" height="20" uuid="46068d1e-5ce6-42cc-bdbe-ebb6e9028a3c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d83cf329-e218-42e6-bec9-ab3382e98b30"/>
+				</reportElement>
+				<text><![CDATA[Puntuación ( / 5)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="100" height="20" uuid="3aeb92e8-bf60-4246-be75-ba031c7cea89">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee71e79f-8c66-4717-a5c2-7933d30ddabc"/>
+				</reportElement>
+				<text><![CDATA[Duración (min.)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="100" height="20" uuid="551f3e57-c8ee-44d1-adc1-2c8eb061cfb2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="735348ed-fa20-4a31-8602-d52c146eccfb"/>
+				</reportElement>
+				<text><![CDATA[Fecha de estreno]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="85">
+			<textField>
+				<reportElement x="10" y="0" width="100" height="30" uuid="6ac64ae9-584f-47a8-9a8e-c0d17e87c865">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="49274bdc-389e-4036-bc32-13fd206d6b49"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="0" width="100" height="30" uuid="ac725baf-bc1d-425e-a58c-534c12b465b4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d83cf329-e218-42e6-bec9-ab3382e98b30"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{puntuacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="100" height="30" uuid="cbee6cad-ef1e-465d-b0ca-00a06d93721b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee71e79f-8c66-4717-a5c2-7933d30ddabc"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{duracionMinutos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="100" height="30" uuid="771a423d-a57b-411e-b9cb-ded5de0ce3a7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="735348ed-fa20-4a31-8602-d52c146eccfb"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{fechaEstreno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="30" width="460" height="30" uuid="6cab3f1a-d7a9-4861-aee4-f16894de0c73">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1ca23d75-a8ce-4856-a028-26a382e8db08"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{sinopsis}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="60">
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="-10" y="15" width="556" height="30" backcolor="#E6E8E9" uuid="36aa233d-4305-48e6-974a-1bbf89bb3c8f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="9" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Manuel Romeo Garcia - DAM2 2022]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>
