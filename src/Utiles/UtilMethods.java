@@ -62,12 +62,12 @@ public class UtilMethods {
         File image = fileChooser.getSelectedFile();
         try {
             if (ImageIO.read(image) == null) {
-                throw new SelectedFileIsNotImageException();
+                //throw new SelectedFileIsNotImageException();
             }
         } catch (IOException e) {
-            throw new SelectedFileIsNotImageException();
+            //throw new SelectedFileIsNotImageException();
         }
-        byte[] imageBytes;
+        byte[] imageBytes = null;
         try ( FileInputStream fis = new FileInputStream(image)) {
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -77,7 +77,7 @@ public class UtilMethods {
             }
             imageBytes = baos.toByteArray();
         } catch (IOException e) {
-            throw new ImageCouldNotBeLoadedException();
+            //throw new ImageCouldNotBeLoadedException();
         }
         return imageBytes; 
     }
