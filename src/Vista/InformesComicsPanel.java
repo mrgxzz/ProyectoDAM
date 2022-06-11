@@ -7,6 +7,7 @@ package Vista;
 
 
 import Controlador.HiloCliente;
+import Modelo.Autor;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -53,20 +54,17 @@ public class InformesComicsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtVerPeliculas = new javax.swing.JTextArea();
         VerInformeComics = new javax.swing.JButton();
         VerInformeComicsColeccion = new javax.swing.JButton();
+        lblGeneracionInformesComics = new javax.swing.JLabel();
+        cmbColeccion = new javax.swing.JComboBox<>();
+        lblColeccion = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(518, 491));
 
-        txtVerPeliculas.setColumns(20);
-        txtVerPeliculas.setRows(5);
-        jScrollPane2.setViewportView(txtVerPeliculas);
-
-        VerInformeComics.setBackground(new java.awt.Color(0, 102, 204));
+        VerInformeComics.setBackground(new java.awt.Color(204, 0, 0));
         VerInformeComics.setForeground(new java.awt.Color(255, 255, 255));
         VerInformeComics.setText("Ver informe de cómics");
         VerInformeComics.setBorderPainted(false);
@@ -76,7 +74,7 @@ public class InformesComicsPanel extends javax.swing.JPanel {
             }
         });
 
-        VerInformeComicsColeccion.setBackground(new java.awt.Color(0, 102, 204));
+        VerInformeComicsColeccion.setBackground(new java.awt.Color(204, 0, 0));
         VerInformeComicsColeccion.setForeground(new java.awt.Color(255, 255, 255));
         VerInformeComicsColeccion.setText("Ver informe de cómics por colección");
         VerInformeComicsColeccion.setBorderPainted(false);
@@ -86,28 +84,42 @@ public class InformesComicsPanel extends javax.swing.JPanel {
             }
         });
 
+        lblGeneracionInformesComics.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblGeneracionInformesComics.setText("Generación de informes: Cómics");
+
+        lblColeccion.setText("Colección:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblGeneracionInformesComics)
                     .addComponent(VerInformeComics, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(VerInformeComicsColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(VerInformeComicsColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblColeccion)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(lblGeneracionInformesComics)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(VerInformeComics)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(VerInformeComicsColeccion)
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblColeccion)
+                        .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(VerInformeComicsColeccion))
+                .addGap(36, 36, 36))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -169,8 +181,9 @@ public class InformesComicsPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton VerInformeComics;
     private javax.swing.JButton VerInformeComicsColeccion;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea txtVerPeliculas;
+    private javax.swing.JComboBox<Autor> cmbColeccion;
+    private javax.swing.JLabel lblColeccion;
+    private javax.swing.JLabel lblGeneracionInformesComics;
     // End of variables declaration//GEN-END:variables
 
      private void traduccion() {
