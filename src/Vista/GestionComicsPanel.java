@@ -372,7 +372,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBorrarComicActionPerformed
 
     private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed
-        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
+     /*   String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
 
         Comic comic = h.solicitarGetComic(nomComic);
 
@@ -382,13 +382,17 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             dateChooserCombo.setSelectedDate(UtilMethods.toCalendar(comic.getFechaAdquisicion()));
             txtTapa.setText(comic.getTapa());
 
+            int idEstado = comic.getIdEstado();
+            
+            Estado estado = h.solicitarGetEstado(idEstado);
+            
 //            cmbEstado.setSelectedItem();
 //            cmbAutor.setSelectedItem();
         } else {
 
             JOptionPane.showMessageDialog(null, "No existe ningún cómic con ese nombre asociado");
 
-        }
+        }*/
     }//GEN-LAST:event_btnModificarComicActionPerformed
 
 
