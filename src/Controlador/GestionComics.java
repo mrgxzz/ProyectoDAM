@@ -250,6 +250,38 @@ public class GestionComics {
         }
         return null;
     }
+    
+     public static Estado getEstado(int idEstado) {
+
+        Connection con;
+        ResultSet rs = null;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "SELECT * FROM estado WHERE idEstado = ?";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setInt(1, idEstado);
+
+            rs = sentencia.executeQuery();
+
+            if (rs.next()) {
+                return new Estado(rs.getInt(1), rs.getString(2));
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Buscar un estado", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+
+            }
+        }
+        return null;
+    }
 
     public static int anhadirComic(Comic comic) {
 
@@ -304,6 +336,67 @@ public class GestionComics {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
+        }
+
+        return 0;
+    }
+    
+    public static int updateAutor(Autor autor) {
+
+        Connection con;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "UPDATE autor SET nombre = ?, fechaNac = ? "
+                    + "WHERE idAutor = ?";
+
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setString(1, autor.getNombre());
+            sentencia.setDate(2, new java.sql.Date(autor.getFechaNac().getTime()));
+            
+            sentencia.setInt(3, autor.getIdAutor());
+
+            return sentencia.executeUpdate();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar autor", JOptionPane.OK_OPTION);
+        }
+
+        return 0;
+    }
+    
+    public static int updateComic(Comic comic) {
+
+        Connection con;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "UPDATE comic SET nombre = ?, fechaAdquisicion = ?,"
+                    + "tapa = ?, idEstado = ?, isAutor = ?, portada = ? "
+                    + "WHERE idComic = ?";
+
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            Blob b = new javax.sql.rowset.serial.SerialBlob(comic.getPortada());
+            
+            sentencia.setString(1, comic.getNombreComic());
+            sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()));
+            sentencia.setString(3, comic.getTapa());
+            sentencia.setInt(4, comic.getIdEstado());
+            sentencia.setInt(5, comic.getIdAutor());
+            sentencia.setBlob(6, b);
+            
+            sentencia.setInt(7, comic.getIdComic());
+
+            return sentencia.executeUpdate();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar comic", JOptionPane.OK_OPTION);
         }
 
         return 0;
@@ -389,49 +482,4 @@ public class GestionComics {
 
     }
 
-    /**
-     * **********************GESTION EN EL
-     * CLIENTE****************************************************
-     */
-    /**
-     *
-     * @param skCliente
-     * @return
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    public static List<Comic> listarSocketComics(Socket skCliente) throws IOException, ClassNotFoundException {
-
-        ObjectInputStream objeto_entrada = new ObjectInputStream(skCliente.getInputStream());
-
-        List<Comic> listaComics = (List<Comic>) objeto_entrada.readObject();
-
-        return listaComics;
-
-        /*area.setText("");
-        for (Departamentos d : listaDepartamentos) {
-            //System.out.println(d.toString());
-            area.setText(area.getText() + "\n" + d.toString());
-        } */
-    }
-
-    public static List<Coleccion> listarSocketColecciones(Socket skCliente) throws IOException, ClassNotFoundException {
-
-        ObjectInputStream objeto_entrada = new ObjectInputStream(skCliente.getInputStream());
-
-        List<Coleccion> listaColecciones = (List<Coleccion>) objeto_entrada.readObject();
-
-        return listaColecciones;
-
-    }
-
-    public static List<Autor> listarSocketAutor(Socket skCliente) throws IOException, ClassNotFoundException {
-
-        ObjectInputStream objeto_entrada = new ObjectInputStream(skCliente.getInputStream());
-
-        List<Autor> listaAutores = (List<Autor>) objeto_entrada.readObject();
-
-        return listaAutores;
-
-    }
 }
