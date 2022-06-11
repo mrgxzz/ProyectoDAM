@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -305,6 +306,9 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             dateChooserFechaNac.setSelectedDate(UtilMethods.toCalendar(autor.getFechaNac()));
             // Author image URL
             
+            JDialog modAutor = new ModificarAutorDialog(null, true, autor, h);
+            
+            h.solicitarUpdateAutor(autor);
             // DATABASE UPDATE AUTHOR
             
         } else {
