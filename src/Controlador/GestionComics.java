@@ -14,6 +14,8 @@ import java.sql.Blob;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -67,7 +69,8 @@ public class GestionComics {
                 int blobLength = (int) blob.length();
                 byte[] blobAsBytes = blob.getBytes(1, blobLength);
                 
-                listaComics.add(new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), blobAsBytes, rs.getInt(5), rs.getInt(6)));
+                Comic comic = new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6), blobAsBytes, rs.getString(8));
+                listaComics.add(comic);
             }
 
         } catch (SQLException e) {
@@ -135,7 +138,7 @@ public class GestionComics {
             rs = sentencia.executeQuery();
 
             while (rs.next()) {
-                listaAutores.add(new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3)));
+                listaAutores.add(new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getBytes(4), rs.getString(5)));
             }
 
         } catch (SQLException e) {
@@ -204,7 +207,7 @@ public class GestionComics {
                 int blobLength = (int) blob.length();
                 byte[] blobAsBytes = blob.getBytes(1, blobLength);
 
-                return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), blobAsBytes, rs.getInt(6), rs.getInt(7));
+                return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6), blobAsBytes, rs.getString(8));
             }
 
         } catch (SQLException e) {
@@ -236,7 +239,7 @@ public class GestionComics {
             rs = sentencia.executeQuery();
 
             if (rs.next()) {
-                return new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3));
+                return new Autor(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getBytes(4), rs.getString(5));
             }
 
         } catch (SQLException e) {
@@ -291,26 +294,30 @@ public class GestionComics {
 
             con = DBConnector.getConexion();
 
-            String consulta = "INSERT INTO comic (nombre, fechaAdquisicion, tapa, idEstado, idAutor, portada)"
-                    + "VALUES (?,?,?,?,?,?)";
+            String consulta = "INSERT INTO comic (nombre, fechaAdquisicion, tapa, idEstado, idAutor, portada, urlPortada)"
+                    + "VALUES (?,?,?,?,?,?,?)";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
-            
-            Blob b = new javax.sql.rowset.serial.SerialBlob(comic.getPortada());
+            FileInputStream archivoPortada;
             
             sentencia.setString(1, comic.getNombreComic());
             sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()));
             sentencia.setString(3, comic.getTapa());
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
-            sentencia.setBlob(6, b);
-          
+            
+            archivoPortada = new FileInputStream(comic.getUrlPortada());
+            
+            sentencia.setBinaryStream(6, archivoPortada);
+            sentencia.setString(7, comic.getUrlPortada());
 
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GestionComics.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return -1;
@@ -377,26 +384,29 @@ public class GestionComics {
             con = DBConnector.getConexion();
 
             String consulta = "UPDATE comic SET nombre = ?, fechaAdquisicion = ?,"
-                    + "tapa = ?, idEstado = ?, isAutor = ?, portada = ? "
+                    + "tapa = ?, idEstado = ?, isAutor = ?, portada = ?, urlPortada = ? "
                     + "WHERE idComic = ?";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
-            Blob b = new javax.sql.rowset.serial.SerialBlob(comic.getPortada());
+            FileInputStream archivoPortada;
             
             sentencia.setString(1, comic.getNombreComic());
             sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()));
             sentencia.setString(3, comic.getTapa());
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
-            sentencia.setBlob(6, b);
+            archivoPortada = new FileInputStream(comic.getUrlPortada());
             
-            sentencia.setInt(7, comic.getIdComic());
+            sentencia.setBinaryStream(6, archivoPortada);
+            sentencia.setString(7, comic.getUrlPortada());
 
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar comic", JOptionPane.OK_OPTION);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GestionComics.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return 0;
