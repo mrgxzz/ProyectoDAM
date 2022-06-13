@@ -30,13 +30,10 @@ import javax.swing.JOptionPane;
  */
 public class GestionAutoresPanel extends javax.swing.JPanel {
 
-    private String camposObligatorios;
-    private String camposMarcados;
-    private String fechaFormato;
-    private String actorYaExiste;
-    private String actorAnadido;
-    private String actorBorrado;
-    private String actorNoExiste;
+    private String lblGestion;
+    private String lblNombre;
+    private String lblFechaNacimiento;
+    private String btnAñadir;
 
     HiloCliente h;
     byte[] imagen = null;
@@ -56,7 +53,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         TablaAutores modeloTabla = new TablaAutores(listaAutores);
         tablaAutores.setModel(modeloTabla);
 
-        //traduccion();
+        traduccion();
     }
 
     /**
@@ -68,8 +65,8 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblGestionActores = new javax.swing.JLabel();
-        lblNombreActor = new javax.swing.JLabel();
+        lblGestionAutores = new javax.swing.JLabel();
+        lblNombreAutor = new javax.swing.JLabel();
         txtNombreAutor = new javax.swing.JTextField();
         lblFechaNac = new javax.swing.JLabel();
         lblFoto = new javax.swing.JLabel();
@@ -84,13 +81,13 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
-        setPreferredSize(new java.awt.Dimension(700, 635));
+        setPreferredSize(new java.awt.Dimension(795, 700));
 
-        lblGestionActores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblGestionActores.setText("Gestión de autores");
+        lblGestionAutores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblGestionAutores.setText("Gestión de autores");
 
-        lblNombreActor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblNombreActor.setText("Nombre y apellidos");
+        lblNombreAutor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNombreAutor.setText("Nombre y apellidos");
 
         lblFechaNac.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblFechaNac.setText("Fecha de nacimiento");
@@ -189,14 +186,14 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblGestionAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -206,13 +203,13 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                         .addComponent(btnAnadir))
                     .addGap(18, 18, 18)
                     .addComponent(btnSeleccionFotoActor)))
-            .addContainerGap(177, Short.MAX_VALUE))
+            .addContainerGap(212, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addGap(28, 28, 28)
-            .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lblGestionAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -223,7 +220,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblNombreActor)
+                        .addComponent(lblNombreAutor)
                         .addComponent(txtNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(28, 28, 28)
                     .addComponent(lblFechaNac))
@@ -235,17 +232,17 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 .addComponent(txtFotoAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(31, 31, 31)
             .addComponent(btnAnadir)
-            .addContainerGap(160, Short.MAX_VALUE))
+            .addContainerGap(153, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
 
-        Autor autor = new Autor(txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime());
-
         if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
+
+            Autor autor = new Autor(txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime(), imagen, txtFotoAutor.getText());
 
             if (h.solicitarGetAutor(txtNombreAutor.getText()) != null) {
                 JOptionPane.showMessageDialog(null, "Ya existe un autor con el mismo nombre y apellidos asociado.");
@@ -305,12 +302,12 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             txtNombreAutor.setText(nomAutor);
             dateChooserFechaNac.setSelectedDate(UtilMethods.toCalendar(autor.getFechaNac()));
             // Author image URL
-            
+
             JDialog modAutor = new ModificarAutorDialog(null, true, autor, h);
-            
+
             h.solicitarUpdateAutor(autor);
             // DATABASE UPDATE AUTHOR
-            
+
         } else {
 
             JOptionPane.showMessageDialog(null, "No existe ningún autor con ese nombre asociado");
@@ -328,8 +325,8 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblFoto;
-    private javax.swing.JLabel lblGestionActores;
-    private javax.swing.JLabel lblNombreActor;
+    private javax.swing.JLabel lblGestionAutores;
+    private javax.swing.JLabel lblNombreAutor;
     private javax.swing.JTable tablaAutores;
     private javax.swing.JTextField txtFotoAutor;
     private javax.swing.JTextField txtNombreAutor;
@@ -381,22 +378,19 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
     private void activarTraduccion(ResourceBundle rb) {
 
-        lblGestionActores.setText(rb.getString("lblGestionActores"));
+        lblGestionAutores.setText(rb.getString("lblGestionAutores"));
+        lblNombreAutor.setText(rb.getString("lblNombreAutor"));
         lblFechaNac.setText(rb.getString("lblFechaNac"));
-        lblFoto.setText(rb.getString("lblFoto"));
-        lblNombreActor.setText(rb.getString("lblNombreActor"));
 
         btnAnadir.setText(rb.getString("btnAñadir"));
-        btnEliminar.setText(rb.getString("btnEliminar"));
 
-        camposObligatorios = rb.getString("camposObligatorios");
-        camposMarcados = rb.getString("camposMarcados");
-        actorYaExiste = rb.getString("actorYaExiste");
-        actorAnadido = rb.getString("actorAnadido");
-        fechaFormato = rb.getString("fechaFormato");
-        actorNoExiste = rb.getString("actorNoExiste");
-        actorBorrado = rb.getString("actorBorrado");
-
+//        camposObligatorios = rb.getString("camposObligatorios");
+//        camposMarcados = rb.getString("camposMarcados");
+//        actorYaExiste = rb.getString("actorYaExiste");
+//        actorAnadido = rb.getString("actorAnadido");
+//        fechaFormato = rb.getString("fechaFormato");
+//        actorNoExiste = rb.getString("actorNoExiste");
+//        actorBorrado = rb.getString("actorBorrado");
     }
 
 }

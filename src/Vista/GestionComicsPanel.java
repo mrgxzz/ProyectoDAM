@@ -12,6 +12,7 @@ import Modelo.Estado;
 import Modelo.TablaComics;
 import Utiles.TableRenderer;
 import Utiles.UtilMethods;
+import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,8 +21,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -44,7 +47,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
         ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
-        TablaComics modeloTabla = new TablaComics(listaComics);
+        TablaComics modeloTabla = new TablaComics(listaComics, h);
         tablaComics.setDefaultRenderer(Object.class, new TableRenderer());
         tablaComics.setModel(modeloTabla);
 
@@ -60,12 +63,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             cmbEstado.addItem(estado);
         }
 
-        /*
-        
         traduccion();
-
-        activarAyuda();
-         */
     }
 
     /**
@@ -97,6 +95,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         txtRutaImagen = new javax.swing.JTextField();
         btnBorrarComic = new javax.swing.JButton();
         btnModificarComic = new javax.swing.JButton();
+        lblFoto = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
@@ -219,9 +218,9 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnModificarComic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnBorrarComic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnBorrarComic, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnModificarComic)))))
                 .addGroup(layout.createSequentialGroup()
                     .addGap(57, 57, 57)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -242,8 +241,13 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                                 .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtRutaImagen))))
-                    .addGap(17, 17, 17)
-                    .addComponent(btnPortada)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(17, 17, 17)
+                            .addComponent(btnPortada))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(43, 43, 43)
+                            .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
             .addContainerGap(119, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
@@ -261,33 +265,36 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             .addGap(18, 18, 18)
             .addComponent(lblAnhadir)
             .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lblTítulo)
-                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(dateChooserCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(lblFechaAdquisicion))
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtTapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(lblTapa))
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lblEstado)
-                .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtAutor)
-                .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lblPortada)
-                .addComponent(btnPortada)
-                .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(35, 35, 35)
-            .addComponent(btnAnhadirComic)
-            .addContainerGap(72, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTítulo)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(dateChooserCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFechaAdquisicion))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtTapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTapa))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEstado)
+                        .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtAutor)
+                        .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblPortada)
+                        .addComponent(btnPortada)
+                        .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(35, 35, 35)
+                    .addComponent(btnAnhadirComic))
+                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(132, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -296,11 +303,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         Autor autor = (Autor) cmbAutor.getSelectedItem();
         Estado estado = (Estado) cmbEstado.getSelectedItem();
 
-        Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), imagen, estado.getIdEstado(), autor.getIdAutor());
-
         if (txtTitulo.getText().isBlank() || txtTapa.getText().isBlank() || txtRutaImagen.getText().isBlank() || txtAutor.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
+
+            Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), estado.getIdEstado(), autor.getIdAutor(), imagen, lblPortada.getText());
 
             if (h.solicitarGetComic(c.getNombreComic()) != null) {
                 JOptionPane.showMessageDialog(null, "Ya existe un comic con el mismo nombre asociado.");
@@ -315,7 +322,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
                     ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
-                    TablaComics modeloTabla = new TablaComics(listaComics);
+                    TablaComics modeloTabla = new TablaComics(listaComics, h);
                     tablaComics.setDefaultRenderer(Object.class, new TableRenderer());
                     tablaComics.setModel(modeloTabla);
 
@@ -332,7 +339,12 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
 
+        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Formato de archivos JPEG (*.JPG, *.JPEG, *.PNG)", "jpg", "jpeg", "png");
+
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(extensionFilter);
+        fileChooser.setDialogTitle("Seleccionar portada");
+
         int seleccion = fileChooser.showOpenDialog(lblPortada);
 
         if (seleccion == JFileChooser.APPROVE_OPTION) {
@@ -340,7 +352,12 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
             txtRutaImagen.setText(fichero.getPath());
 
-            imagen = toByteArray(fichero);
+            Image foto = getToolkit().getImage(txtRutaImagen.getText());
+            foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
+
+            lblFoto.setIcon(new ImageIcon(foto));
+
+            imagen = UtilMethods.toByteArray(fichero);
 
         }
     }//GEN-LAST:event_btnPortadaActionPerformed
@@ -359,7 +376,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
                 ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
-                TablaComics modeloTabla = new TablaComics(listaComics);
+                TablaComics modeloTabla = new TablaComics(listaComics, h);
                 tablaComics.setModel(modeloTabla);
 
             } else {
@@ -372,27 +389,20 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBorrarComicActionPerformed
 
     private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed
-     /*   String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
+        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
 
         Comic comic = h.solicitarGetComic(nomComic);
 
         if (comic != null) {
 
-            txtTitulo.setText(comic.getNombreComic());
-            dateChooserCombo.setSelectedDate(UtilMethods.toCalendar(comic.getFechaAdquisicion()));
-            txtTapa.setText(comic.getTapa());
-
-            int idEstado = comic.getIdEstado();
+            ModificarComicDialog modComic = new ModificarComicDialog(null, true, comic, h);
+            modComic.setVisible(true);
             
-            Estado estado = h.solicitarGetEstado(idEstado);
-            
-//            cmbEstado.setSelectedItem();
-//            cmbAutor.setSelectedItem();
         } else {
 
             JOptionPane.showMessageDialog(null, "No existe ningún cómic con ese nombre asociado");
 
-        }*/
+        }
     }//GEN-LAST:event_btnModificarComicActionPerformed
 
 
@@ -408,6 +418,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblAnhadir;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblFechaAdquisicion;
+    private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblGestionComics;
     private javax.swing.JLabel lblPortada;
     private javax.swing.JLabel lblTapa;
@@ -436,29 +447,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         }
     }
      */
-    private byte[] toByteArray(File file) {
-
-        try ( FileInputStream fis = new FileInputStream(file)) {
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
-                baos.write(buffer, 0, dataLength);
-            }
-
-            byte[] imageBytes = baos.toByteArray();
-
-            return imageBytes;
-
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
-
-        }
-
-        return null;
-
-    }
-
     private void traduccion() {
 
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
@@ -468,6 +456,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }
 
     private void activarTraduccion(ResourceBundle rb) {
+
+        lblGestionComics.setText(rb.getString("lblGestionComics"));
+        lblAnhadir.setText(rb.getString("lblAnhadirComic"));
+        lblFechaAdquisicion.setText(rb.getString("lblFechaAdquisicion"));
+        btnAnhadirComic.setText(rb.getString("btnAñadir"));
 
     }
 
