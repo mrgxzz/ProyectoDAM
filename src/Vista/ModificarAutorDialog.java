@@ -9,7 +9,12 @@ import Controlador.HiloCliente;
 import Controlador.HiloServidorCliente;
 import Modelo.Autor;
 import Utiles.UtilMethods;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -18,20 +23,32 @@ import javax.swing.JOptionPane;
 public class ModificarAutorDialog extends javax.swing.JDialog {
 
     HiloCliente h;
-    Autor autor;
+    Autor autorModificar;
+    byte[] imagen;
 
     /**
      * Creates new form ModificarAutorDialog
+     *
+     * @param parent
+     * @param modal
+     * @param autor
+     * @param h
      */
     public ModificarAutorDialog(java.awt.Frame parent, boolean modal, Autor autor, HiloCliente h) {
         super(parent, modal);
         initComponents();
 
         this.h = h;
-        this.autor = autor;
+        this.autorModificar = autor;
 
         txtNombreAutor.setText(autor.getNombre());
         dateChooserFechaNac.setSelectedDate(UtilMethods.toCalendar(autor.getFechaNac()));
+        txtFotoAutor.setText(autor.getUrlFoto());
+
+        Image foto = getToolkit().getImage(txtFotoAutor.getText());
+        foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
+
+        lblImagen.setIcon(new ImageIcon(foto));
 
     }
 
@@ -54,6 +71,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
         btnModificar = new javax.swing.JButton();
         btnSeleccionFotoActor = new javax.swing.JButton();
         dateChooserFechaNac = new datechooser.beans.DateChooserCombo();
+        lblImagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -80,6 +98,11 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
         });
 
         btnSeleccionFotoActor.setText(". . .");
+        btnSeleccionFotoActor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionFotoActorActionPerformed(evt);
+            }
+        });
 
         dateChooserFechaNac.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
             new datechooser.view.appearance.ViewAppearance("custom",
@@ -141,34 +164,39 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
                                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                                .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtFotoAutor, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtNombreAutor))))
+                                .addComponent(txtNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(btnSeleccionFotoActor)))
-            .addContainerGap(36, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+            .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(34, 34, 34))
     );
     jPanel1Layout.setVerticalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(25, 25, 25)
-            .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(29, 29, 29)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lblNombreActor)
-                .addComponent(txtNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(28, 28, 28)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblFechaNac)
-                .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lblFoto)
-                .addComponent(txtFotoAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnSeleccionFotoActor))
-            .addGap(18, 18, 18)
-            .addComponent(btnModificar)
-            .addContainerGap(50, Short.MAX_VALUE))
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNombreActor)
+                        .addComponent(txtNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(28, 28, 28)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblFechaNac)
+                        .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblFoto)
+                        .addComponent(txtFotoAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSeleccionFotoActor))
+                    .addGap(18, 18, 18)
+                    .addComponent(btnModificar)))
+            .addContainerGap(118, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,9 +215,25 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        if (autor != null) {
+        if (autorModificar != null) {
+            if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
+                JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
+            } else {
 
-            h.solicitarUpdateAutor(autor);
+                Autor autor = new Autor(autorModificar.getIdAutor(), txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime(), imagen, txtFotoAutor.getText());
+
+                int result = h.solicitarUpdateAutor(autor);
+
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(null, "El autor ha sido modificado correctamente.");
+
+                    imagen = null;
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la modificación del autor.");
+                }
+
+            }
 
         } else {
 
@@ -197,6 +241,31 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
 
         }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnSeleccionFotoActorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionFotoActorActionPerformed
+        
+        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Formato de archivos JPEG (*.JPG, *.JPEG, *.PNG)", "jpg", "jpeg", "png");
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(extensionFilter);
+        fileChooser.setDialogTitle("Seleccionar portada");
+
+        int seleccion = fileChooser.showOpenDialog(btnSeleccionFotoActor);
+
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File fichero = fileChooser.getSelectedFile();
+
+            txtFotoAutor.setText(fichero.getPath());
+
+            Image foto = getToolkit().getImage(txtFotoAutor.getText());
+            foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
+
+            lblImagen.setIcon(new ImageIcon(foto));
+
+            imagen = UtilMethods.toByteArray(fichero);
+
+        }
+    }//GEN-LAST:event_btnSeleccionFotoActorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,7 +297,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ModificarAutorDialog dialog = new ModificarAutorDialog(new javax.swing.JFrame(), true);
+                ModificarAutorDialog dialog = new ModificarAutorDialog(new javax.swing.JFrame(), true, null, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -248,6 +317,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblGestionActores;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNombreActor;
     private javax.swing.JTextField txtFotoAutor;
     private javax.swing.JTextField txtNombreAutor;
