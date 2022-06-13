@@ -5,7 +5,13 @@
  */
 package Vista;
 
+import java.net.URL;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +29,8 @@ public class SelectorLenguaje extends javax.swing.JFrame {
      */
     public SelectorLenguaje() {
         initComponents();
+        
+        activarAyuda();
 
         for (String idioma : idiomas) {
             cmbIdiomas.addItem(idioma);
@@ -201,4 +209,20 @@ public class SelectorLenguaje extends javax.swing.JFrame {
     private javax.swing.JLabel lblSeleccionaIdioma;
     // End of variables declaration//GEN-END:variables
 
+      private void activarAyuda() {
+
+        try {
+            URL url = this.getClass().getResource("/ayuda/help.hs");
+
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(null, url);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            hb.enableHelpKey(cmbIdiomas, "seleccionidioma", helpset);
+        } catch (HelpSetException ex) {
+            Logger.getLogger(PaginaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
 }
