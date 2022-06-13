@@ -16,20 +16,28 @@ public class Autor implements Serializable{
     private int idAutor;
     private String nombre;
     private java.util.Date fechaNac;
+    private byte[] foto;
+    private String urlFoto;
 
     public Autor() {
     }
 
-    public Autor(int idAutor, String nombre, Date fechaNac) {
+    public Autor(int idAutor, String nombre, Date fechaNac, byte[] foto, String urlFoto) {
         this.idAutor = idAutor;
         this.nombre = nombre;
         this.fechaNac = fechaNac;
+        this.foto = foto;
+        this.urlFoto = urlFoto;
     }
-    
-    public Autor(String nombre, Date fechaNac) {
+
+    public Autor(String nombre, Date fechaNac, byte[] foto, String urlFoto) {
         this.nombre = nombre;
         this.fechaNac = fechaNac;
+        this.foto = foto;
+        this.urlFoto = urlFoto;
     }
+
+    
 
     public int getIdAutor() {
         return idAutor;
@@ -55,6 +63,24 @@ public class Autor implements Serializable{
         this.fechaNac = fechaNac;
     }
 
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
+
+    
+    
     @Override
     public String toString() {
         return nombre;

@@ -12,36 +12,42 @@ import java.util.Date;
  *
  * @author Manu Romeo
  */
-public class Comic implements Serializable{
+public class Comic implements Serializable {
+
     private int idComic;
     private String nombreComic;
     private java.util.Date fechaAdquisicion;
     private String tapa;
-    private byte[] portada;
     private int idEstado;
     private int idAutor;
+    private byte[] portada;
+    private String urlPortada;
 
     public Comic() {
     }
 
-    public Comic(int idComic, String nombreComic, Date fechaAdquisicion, String tapa, byte[] portada, int idEstado, int idAutor) {
+    public Comic(int idComic, String nombreComic, Date fechaAdquisicion, String tapa, int idEstado, int idAutor, byte[] portada, String urlPortada) {
         this.idComic = idComic;
         this.nombreComic = nombreComic;
         this.fechaAdquisicion = fechaAdquisicion;
         this.tapa = tapa;
-        this.portada = portada;
         this.idEstado = idEstado;
         this.idAutor = idAutor;
+        this.portada = portada;
+        this.urlPortada = urlPortada;
     }
-    
-     public Comic(String nombreComic, Date fechaAdquisicion, String tapa, byte[] portada, int idEstado, int idAutor) {
+
+    public Comic(String nombreComic, Date fechaAdquisicion, String tapa, int idEstado, int idAutor, byte[] portada, String urlPortada) {
         this.nombreComic = nombreComic;
         this.fechaAdquisicion = fechaAdquisicion;
         this.tapa = tapa;
-        this.portada = portada;
         this.idEstado = idEstado;
         this.idAutor = idAutor;
+        this.portada = portada;
+        this.urlPortada = urlPortada;
     }
+
+    
 
     public int getIdComic() {
         return idComic;
@@ -98,14 +104,18 @@ public class Comic implements Serializable{
     public void setIdAutor(int idAutor) {
         this.idAutor = idAutor;
     }
-    
- 
-    
-    
+
+    public String getUrlPortada() {
+        return urlPortada;
+    }
+
+    public void setUrlPortada(String urlPortada) {
+        this.urlPortada = urlPortada;
+    }
+
     @Override
     public String toString() {
         return "Comic{" + "idComic=" + idComic + ", nombreComic=" + nombreComic + ", fechaAdquisicion=" + fechaAdquisicion + ", tapa=" + tapa + ", idEstado=" + idEstado + '}';
     }
-    
-    
+
 }
