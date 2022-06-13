@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -26,6 +27,29 @@ public class UtilMethods {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return cal;
+    }
+    
+     public static byte[] toByteArray(File file) {
+
+        try ( FileInputStream fis = new FileInputStream(file)) {
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
+                baos.write(buffer, 0, dataLength);
+            }
+
+            byte[] imageBytes = baos.toByteArray();
+
+            return imageBytes;
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+
+        }
+
+        return null;
+
     }
 
     /**
