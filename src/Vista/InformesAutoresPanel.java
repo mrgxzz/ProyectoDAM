@@ -31,11 +31,8 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
             cmbAutor.addItem(autor);
         }
         
-        
-        
-/*
         traduccion();
-*/
+
     }
 
     /**
@@ -47,7 +44,7 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        VerInformeActores = new javax.swing.JButton();
+        VerInformeAutores = new javax.swing.JButton();
         VerInformeComicsAutor = new javax.swing.JButton();
         lblAutor = new javax.swing.JLabel();
         lblGeneracionInformesAutores = new javax.swing.JLabel();
@@ -57,13 +54,13 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(518, 491));
 
-        VerInformeActores.setBackground(new java.awt.Color(204, 0, 0));
-        VerInformeActores.setForeground(new java.awt.Color(255, 255, 255));
-        VerInformeActores.setText("Ver informe de autores");
-        VerInformeActores.setBorderPainted(false);
-        VerInformeActores.addActionListener(new java.awt.event.ActionListener() {
+        VerInformeAutores.setBackground(new java.awt.Color(204, 0, 0));
+        VerInformeAutores.setForeground(new java.awt.Color(255, 255, 255));
+        VerInformeAutores.setText("Ver informe de autores");
+        VerInformeAutores.setBorderPainted(false);
+        VerInformeAutores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VerInformeActoresActionPerformed(evt);
+                VerInformeAutoresActionPerformed(evt);
             }
         });
 
@@ -86,39 +83,36 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(57, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(VerInformeActores, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(VerInformeAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(VerInformeComicsAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblAutor)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(47, 47, 47))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(lblGeneracionInformesAutores)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblGeneracionInformesAutores))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(lblGeneracionInformesAutores)
-                .addGap(48, 48, 48)
-                .addComponent(VerInformeActores)
+                .addGap(32, 32, 32)
+                .addComponent(VerInformeAutores)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(VerInformeComicsAutor)
                     .addComponent(lblAutor)
                     .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(320, Short.MAX_VALUE))
+                .addContainerGap(336, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void VerInformeActoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeActoresActionPerformed
+    private void VerInformeAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeAutoresActionPerformed
      /*   try {                                                  
             File informeFile = new File(this.getClass().getResource("/Informes/InformeActores.jrxml").getFile());
             System.out.println(informeFile.getCanonicalPath());
@@ -143,7 +137,7 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
             Logger.getLogger(InformesAutoresPanel.class.getName()).log(Level.SEVERE,null, ex);
         }
 */
-    }//GEN-LAST:event_VerInformeActoresActionPerformed
+    }//GEN-LAST:event_VerInformeAutoresActionPerformed
 
     private void VerInformeComicsAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeComicsAutorActionPerformed
       /*  String informe = "./src/Informes/InformePeliculasActor.jrxml";
@@ -177,7 +171,7 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton VerInformeActores;
+    private javax.swing.JButton VerInformeAutores;
     private javax.swing.JButton VerInformeComicsAutor;
     private javax.swing.JComboBox<Autor> cmbAutor;
     private javax.swing.JLabel lblAutor;
@@ -194,8 +188,7 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
 
     private void activarTraduccion(ResourceBundle rb) {
 
-        VerInformeActores.setText(rb.getString("VerInformeActores"));
-        VerInformeComicsAutor.setText(rb.getString("VerInformePeliculasActor"));
+        lblGeneracionInformesAutores.setText(rb.getString("lblGeneracionInformesAutores"));
 
     }
 }

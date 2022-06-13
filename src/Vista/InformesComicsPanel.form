@@ -28,7 +28,6 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblGeneracionInformesComics" min="-2" max="-2" attributes="0"/>
                   <Component id="VerInformeComics" min="-2" pref="196" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="VerInformeComicsColeccion" min="-2" pref="211" max="-2" attributes="0"/>
@@ -37,8 +36,9 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="cmbColeccion" min="-2" pref="161" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="lblGeneracionInformesComics" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="16" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -47,7 +47,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="lblGeneracionInformesComics" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="49" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="VerInformeComics" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -57,7 +57,7 @@
                   </Group>
                   <Component id="VerInformeComicsColeccion" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace pref="365" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
