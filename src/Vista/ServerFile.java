@@ -10,8 +10,12 @@ import Controlador.HiloServidor;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,6 +34,8 @@ public class ServerFile extends javax.swing.JFrame {
         initComponents();
         
         DBConnector.conectar();
+        
+        activarAyuda();
         
         SelectorLenguaje selectorLenguaje = new SelectorLenguaje();
         selectorLenguaje.setVisible(true);
@@ -223,4 +229,24 @@ public class ServerFile extends javax.swing.JFrame {
     private javax.swing.JLabel lblEstadoServidor;
     private javax.swing.JLabel lblServer;
     // End of variables declaration//GEN-END:variables
+
+
+     private void activarAyuda() {
+
+        try {
+            URL url = this.getClass().getResource("/ayuda/help.hs");
+
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(null, url);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            hb.enableHelpKey(btnConectar, "servidor", helpset);
+            hb.enableHelpKey(btnDesconectar, "servidor", helpset);
+            
+        } catch (HelpSetException ex) {
+            Logger.getLogger(PaginaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }
