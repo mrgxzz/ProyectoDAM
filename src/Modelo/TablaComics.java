@@ -5,11 +5,8 @@
  */
 package Modelo;
 
-import Controlador.GestionComics;
+import Controlador.HiloCliente;
 import java.util.ArrayList;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -21,6 +18,9 @@ public class TablaComics extends AbstractTableModel {
     public ArrayList<Comic> listaComics;
 
     private final String[] columnasTabla;
+    
+    public HiloCliente hiloCliente;
+    
 
     public TablaComics() {
         super();
@@ -35,8 +35,9 @@ public class TablaComics extends AbstractTableModel {
         this.listaComics = listaComics;
     }
 
-    public TablaComics(ArrayList<Comic> listaComics) {
+    public TablaComics(ArrayList<Comic> listaComics, HiloCliente h) {
         super();
+        this.hiloCliente = h;
         this.columnasTabla = new String[]{"Portada", "Nombre", "Tapa", "Fecha adquisición", "Estado"};
         this.listaComics = listaComics;
     }
@@ -68,11 +69,14 @@ public class TablaComics extends AbstractTableModel {
             Comic u = listaComics.get(rowIndex);
             switch (columnIndex) {
                 case 0:
-
-                    ImageIcon image = new ImageIcon(GestionComics.getImage(u.getPortada()));
-
-                    return new JLabel(image);
-
+                    
+//                        File source = new File(u.getUrlPortada());
+//                        Image foto = ImageIO.read(source);
+//                        foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
+                    
+                    // return new ImageIcon(foto);
+                    return "";
+                    
                 case 1:
                     return u.getNombreComic();
                 case 2:
@@ -80,23 +84,16 @@ public class TablaComics extends AbstractTableModel {
                 case 3:
                     return u.getFechaAdquisicion();
                 case 4:
-                    return u.getIdEstado();
-
+                    return hiloCliente.solicitarGetEstado(u.getIdEstado()).getEstado();
+                    
                 default:
                     return null;
-
+                    
             }
         } else {
             return null;
         }
+     
 
-    }
-
-    private static final int ICONS_COLUMN = 0;
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        return columnIndex == ICONS_COLUMN ? Icon.class
-                : super.getColumnClass(columnIndex);
-    }
+    }    
 }
