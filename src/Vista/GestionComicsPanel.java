@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class GestionComicsPanel extends javax.swing.JPanel {
 
     HiloCliente h;
-    byte[] imagen;
+    byte[] image = null;
 
     /**
      * Creates new form MoviesBoardPanel
@@ -307,7 +308,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
 
-            Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), estado.getIdEstado(), autor.getIdAutor(), imagen, lblPortada.getText());
+            Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), estado.getIdEstado(), autor.getIdAutor(), image, lblPortada.getText());
 
             if (h.solicitarGetComic(c.getNombreComic()) != null) {
                 JOptionPane.showMessageDialog(null, "Ya existe un comic con el mismo nombre asociado.");
@@ -318,7 +319,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                 if (result == 1) {
                     JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
 
-                    imagen = null;
+                    image = null;
 
                     ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
@@ -339,27 +340,42 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
 
-        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Formato de archivos JPEG (*.JPG, *.JPEG, *.PNG)", "jpg", "jpeg", "png");
-
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.addChoosableFileFilter(extensionFilter);
-        fileChooser.setDialogTitle("Seleccionar portada");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imágenes", "jpeg", "jpg", "png"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int result = fileChooser.showOpenDialog(null);
 
-        int seleccion = fileChooser.showOpenDialog(lblPortada);
-
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            File fichero = fileChooser.getSelectedFile();
-
-            txtRutaImagen.setText(fichero.getPath());
-
-            Image foto = getToolkit().getImage(txtRutaImagen.getText());
-            foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
-
-            lblFoto.setIcon(new ImageIcon(foto));
-
-            imagen = UtilMethods.toByteArray(fichero);
-
+        if (result != JFileChooser.APPROVE_OPTION) {
+            return;
         }
+
+        File image = fileChooser.getSelectedFile();
+        try {
+            if (ImageIO.read(image) == null) {
+                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen.");
+                return;
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            return;
+        }
+        byte[] imageBytes;
+        try ( FileInputStream fis = new FileInputStream(image)) {
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
+                baos.write(buffer, 0, dataLength);
+            }
+            imageBytes = baos.toByteArray();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            return;
+        }
+        
+        this.image = imageBytes;
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(this.image).getImage().getScaledInstance(lblFoto.getSize().width,
+                lblFoto.getSize().height, Image.SCALE_DEFAULT)));
     }//GEN-LAST:event_btnPortadaActionPerformed
 
     private void btnBorrarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarComicActionPerformed
@@ -397,7 +413,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
             ModificarComicDialog modComic = new ModificarComicDialog(null, true, comic, h);
             modComic.setVisible(true);
-            
+
         } else {
 
             JOptionPane.showMessageDialog(null, "No existe ningún cómic con ese nombre asociado");

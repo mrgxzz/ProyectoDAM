@@ -12,6 +12,7 @@ import Modelo.Estado;
 import Modelo.TablaAutores;
 import Modelo.TablaComics;
 import Utiles.UtilMethods;
+import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,8 +22,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -36,7 +41,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private String btnAñadir;
 
     HiloCliente h;
-    byte[] imagen = null;
+    byte[] image = null;
 
     /**
      * Creates new form MoviesBoardPanel
@@ -96,6 +101,11 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         lblFoto.setText("Foto");
 
         btnSeleccionFotoActor.setText(". . .");
+        btnSeleccionFotoActor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionFotoActorActionPerformed(evt);
+            }
+        });
 
         btnAnadir.setText("Añadir");
         btnAnadir.addActionListener(new java.awt.event.ActionListener() {
@@ -242,7 +252,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
 
-            Autor autor = new Autor(txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime(), imagen, txtFotoAutor.getText());
+            Autor autor = new Autor(txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime(), image, txtFotoAutor.getText());
 
             if (h.solicitarGetAutor(txtNombreAutor.getText()) != null) {
                 JOptionPane.showMessageDialog(null, "Ya existe un autor con el mismo nombre y apellidos asociado.");
@@ -253,7 +263,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 if (result == 1) {
                     JOptionPane.showMessageDialog(null, "El autor ha sido creado correctamente.");
 
-                    imagen = null;
+                    image = null;
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del autor.");
@@ -314,6 +324,45 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
         }
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnSeleccionFotoActorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionFotoActorActionPerformed
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imágenes", "jpeg", "jpg", "png"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int result = fileChooser.showOpenDialog(null);
+
+        if (result != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        File image = fileChooser.getSelectedFile();
+        try {
+            if (ImageIO.read(image) == null) {
+                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen.");
+                return;
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            return;
+        }
+        byte[] imageBytes;
+        try ( FileInputStream fis = new FileInputStream(image)) {
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
+                baos.write(buffer, 0, dataLength);
+            }
+            imageBytes = baos.toByteArray();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            return;
+        }
+        this.image = imageBytes;
+        lblFoto.setIcon(new ImageIcon(new ImageIcon(this.image).getImage().getScaledInstance(lblFoto.getSize().width,
+                lblFoto.getSize().height, Image.SCALE_DEFAULT)));
+    }//GEN-LAST:event_btnSeleccionFotoActorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
