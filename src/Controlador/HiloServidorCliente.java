@@ -6,6 +6,7 @@
 package Controlador;
 
 import Modelo.Autor;
+import Modelo.Coleccion;
 import Modelo.Comic;
 import Modelo.Estado;
 import Utiles.PeticionServidor;
@@ -64,9 +65,10 @@ public class HiloServidorCliente extends Thread {
                             flujo_salida.flush();
                         }
                         case "listarcolecciones" -> {
-                            flujo_salida.writeUTF("listacoleccionesok");
-               
+                            List<Coleccion> listaColecciones = GestionComics.getListaColecciones();
 
+                            objeto_salida.writeObject(listaColecciones);
+                            objeto_salida.flush();
                         }
                         
                         case "listarautores" -> {
@@ -81,6 +83,26 @@ public class HiloServidorCliente extends Thread {
                         case "listarcomics" -> {
 
                             List<Comic> listaComics = GestionComics.getListaComics();
+
+                            objeto_salida.writeObject(listaComics);
+                            objeto_salida.flush();
+                   
+
+                        }
+                        
+                        case "listarcomicsautor" -> {
+
+                            List<Comic> listaComics = GestionComics.getListaComicsAutor((int) orden.getObjeto());
+
+                            objeto_salida.writeObject(listaComics);
+                            objeto_salida.flush();
+                   
+
+                        }
+                        
+                         case "listarcomicscoleccion" -> {
+
+                            List<Comic> listaComics = GestionComics.getListaComicsColeccion((int) orden.getObjeto());
 
                             objeto_salida.writeObject(listaComics);
                             objeto_salida.flush();
@@ -107,9 +129,27 @@ public class HiloServidorCliente extends Thread {
                             objeto_salida.flush();
                         }
                         
+                         case "anhadircoleccion" -> {
+    
+                            int result = GestionComics.anhadirColeccion((Coleccion) orden.getObjeto());
+                            
+                            objeto_salida.writeInt(result);
+                            
+                            objeto_salida.flush();
+                        }
+                        
                         case "borrarcomic" -> {
     
                             int result = GestionComics.eliminarComic((String) orden.getObjeto());
+                            
+                            objeto_salida.writeInt(result);
+                            
+                            objeto_salida.flush();
+                        }
+                        
+                         case "borrarcoleccion" -> {
+    
+                            int result = GestionComics.eliminarColeccion((String) orden.getObjeto());
                             
                             objeto_salida.writeInt(result);
                             
@@ -166,6 +206,15 @@ public class HiloServidorCliente extends Thread {
                             Autor autor = GestionComics.getAutor((String) orden.getObjeto());
                             
                             objeto_salida.writeObject(autor);
+                            
+                            objeto_salida.flush();
+                        }
+                        
+                        case "getcoleccion" -> {
+    
+                            Coleccion coleccion = GestionComics.getColeccion((String) orden.getObjeto());
+                            
+                            objeto_salida.writeObject(coleccion);
                             
                             objeto_salida.flush();
                         }
