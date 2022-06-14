@@ -43,7 +43,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
         traduccion();
         activarAyuda();
-        
+
         if (skCliente == null || skCliente.isClosed() || !skCliente.isConnected()) {
             try {
                 skCliente = new Socket(HOST, 2000);
@@ -54,9 +54,6 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 //                Optional<byte[]> img = toBinary("C:\\Users\\Manu Romeo\\Documents\\NetBeansProjects\\ProyectoDAM\\src\\Ayuda\\imagenes\\archivo.png");
 //                
 //                h.anhadirComic(new Comic(1, "PRUEBA", new Date(), "Blanda", img.get(), 2, 1));
-                
-                
-            
             } catch (java.net.ConnectException ex) {
                 JOptionPane.showMessageDialog(null, "No se ha podido establecer conexión con el servidor.");
 
@@ -106,7 +103,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de cursos del usuario");
         setIconImages(null);
-        setPreferredSize(new java.awt.Dimension(875, 755));
+        setPreferredSize(new java.awt.Dimension(950, 550));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -314,12 +311,12 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
-       
+
     }//GEN-LAST:event_btnAyudaActionPerformed
 
     private void btnAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutoresActionPerformed
         GestionAutoresPanel boardPanel = new GestionAutoresPanel(h);
-        boardPanel.setSize(518, 491);
+        boardPanel.setSize(600, 491);
         boardPanel.setLocation(0, 0);
 
         content.removeAll();
@@ -330,7 +327,8 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
     private void btnColeccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnColeccionesActionPerformed
         GestionColeccionesPanel actorsMoviesPanel = new GestionColeccionesPanel(h);
-        actorsMoviesPanel.setSize(518, 491);
+       //518
+        actorsMoviesPanel.setSize(600, 491);
         actorsMoviesPanel.setLocation(0, 0);
 
         content.removeAll();
@@ -340,12 +338,19 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnColeccionesActionPerformed
 
     private void btnBuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscadorActionPerformed
-        // Buscador 
+        BuscadorPanel buscadorPanel = new BuscadorPanel(h);
+        buscadorPanel.setSize(600, 491);
+        buscadorPanel.setLocation(0, 0);
+
+        content.removeAll();
+        content.add(buscadorPanel, BorderLayout.CENTER);
+        content.revalidate();
+        content.repaint();
     }//GEN-LAST:event_btnBuscadorActionPerformed
 
     private void btnInformeComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeComicsActionPerformed
         InformesComicsPanel verPeliculasPanel = new InformesComicsPanel(h);
-        verPeliculasPanel.setSize(518, 491);
+        verPeliculasPanel.setSize(600, 491);
         verPeliculasPanel.setLocation(0, 0);
 
         content.removeAll();
@@ -356,7 +361,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
     private void btnInformeAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformeAutoresActionPerformed
         InformesAutoresPanel verActores = new InformesAutoresPanel(h);
-        verActores.setSize(518, 491);
+        verActores.setSize(600, 491);
         verActores.setLocation(0, 0);
 
         content.removeAll();
@@ -493,7 +498,6 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
         lblBienvenida.setText(rb.getString("lblBienvenida"));
         lblSubtitulo.setText(rb.getString("lblSubtitulo"));
-
 
     }
 
