@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Modelo.Tabla;
 
 import Controlador.HiloCliente;
+import Modelo.Coleccion;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
@@ -13,33 +14,45 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Manu Romeo
  */
-public class TablaComics extends AbstractTableModel {
+public class TablaColecciones extends AbstractTableModel {
 
-    public ArrayList<Comic> listaComics;
+    public ArrayList<Coleccion> listaColecciones;
 
     private final String[] columnasTabla;
-    
+
     public HiloCliente hiloCliente;
-    
 
-    public TablaComics() {
+    public TablaColecciones() {
         super();
-        this.columnasTabla = new String[]{"Portada", "Nombre", "Tapa", "Fecha adquisición", "Estado"};
+        this.columnasTabla = new String[]{"Nombre", "Edición"};
     }
 
-    public ArrayList<Comic> getListaComics() {
-        return listaComics;
+    public ArrayList<Coleccion> getListaColecciones() {
+        return listaColecciones;
     }
 
-    public void setListaComics(ArrayList<Comic> listaComics) {
-        this.listaComics = listaComics;
+    public void setListaColecciones(ArrayList<Coleccion> listaColecciones) {
+        this.listaColecciones = listaColecciones;
     }
 
-    public TablaComics(ArrayList<Comic> listaComics, HiloCliente h) {
+    public TablaColecciones(ArrayList<Coleccion> listaColecciones, HiloCliente h) {
         super();
         this.hiloCliente = h;
-        this.columnasTabla = new String[]{"Portada", "Nombre", "Tapa", "Fecha adquisición", "Estado"};
-        this.listaComics = listaComics;
+        this.columnasTabla = new String[]{"Nombre", "Edición"};
+        this.listaColecciones = listaColecciones;
+    }
+
+    @Override //Redefinimos el método getColumnClass
+    public Class getColumnClass(int column) {
+        switch (column) {
+            case 0:
+                return Object.class;
+            case 1:
+                return Object.class;
+         
+            default:
+                return Object.class;
+        }
     }
 
     @Override
@@ -54,7 +67,7 @@ public class TablaComics extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return listaComics.size();
+        return listaColecciones.size();
     }
 
     @Override
@@ -65,26 +78,13 @@ public class TablaComics extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         // TODO Auto-generated method stub
-        if (rowIndex != -1 && listaComics.size() > rowIndex) {
-            Comic u = listaComics.get(rowIndex);
+        if (rowIndex != -1 && listaColecciones.size() > rowIndex) {
+            Coleccion u = listaColecciones.get(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    
-//                        File source = new File(u.getUrlPortada());
-//                        Image foto = ImageIO.read(source);
-//                        foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
-                    
-                    // return new ImageIcon(foto);
-                    return "";
-                    
+                    return u.getNombre();
                 case 1:
-                    return u.getNombreComic();
-                case 2:
-                    return u.getTapa();
-                case 3:
-                    return u.getFechaAdquisicion();
-                case 4:
-                    return hiloCliente.solicitarGetEstado(u.getIdEstado()).getEstado();
+                    return u.getEdicion();
                     
                 default:
                     return null;
@@ -93,7 +93,7 @@ public class TablaComics extends AbstractTableModel {
         } else {
             return null;
         }
-     
 
-    }    
+    }
+
 }

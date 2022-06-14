@@ -3,9 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package Modelo.Tabla;
 
+import Modelo.Autor;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -20,7 +28,7 @@ public class TablaAutores extends AbstractTableModel {
 
     public TablaAutores() {
         super();
-        this.columnasTabla = new String[]{"Nombre y apellidos", "Fecha de nacimiento"};
+        this.columnasTabla = new String[]{"Nombre y apellidos", "Fecha de nacimiento", "Foto"};
     }
 
     public ArrayList<Autor> getListaAutores() {
@@ -33,7 +41,7 @@ public class TablaAutores extends AbstractTableModel {
 
     public TablaAutores(ArrayList<Autor> listaAutores) {
         super();
-        this.columnasTabla = new String[]{"Nombre y apellidos", "Fecha de nacimiento"};
+        this.columnasTabla = new String[]{"Nombre y apellidos", "Fecha de nacimiento", "Foto"};
         this.listaAutores = listaAutores;
     }
 
@@ -57,6 +65,21 @@ public class TablaAutores extends AbstractTableModel {
         return columnasTabla.length;
     }
 
+    @Override //Redefinimos el método getColumnClass
+    public Class getColumnClass(int column) {
+        switch (column) {
+            case 0:
+                return Object.class;
+            case 1:
+                return Object.class;
+            case 2:
+                return ImageIcon.class;
+
+            default:
+                return Object.class;
+        }
+    }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         // TODO Auto-generated method stub
@@ -68,7 +91,22 @@ public class TablaAutores extends AbstractTableModel {
                     return u.getNombre();
                 case 1:
                     return u.getFechaNac();
-         
+                case 2:
+                    if (u.getFoto() != null) {
+                        try {
+                            BufferedImage img = ImageIO.read(new ByteArrayInputStream(u.getFoto()));
+                            ImageIcon icon = new ImageIcon(img);
+                            return icon;
+                        } catch (IOException ex) {
+                            Logger.getLogger(TablaAutores.class.getName()).log(Level.SEVERE, null, ex);
+
+                            return null;
+                        }
+
+                    }
+
+                    return null;
+
                 default:
                     return null;
 
