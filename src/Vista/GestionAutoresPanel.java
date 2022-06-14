@@ -9,8 +9,8 @@ import Controlador.HiloCliente;
 import Modelo.Autor;
 import Modelo.Comic;
 import Modelo.Estado;
-import Modelo.TablaAutores;
-import Modelo.TablaComics;
+import Modelo.Tabla.TablaAutores;
+import Modelo.Tabla.TablaComics;
 import Utiles.UtilMethods;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
@@ -83,10 +83,11 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         btnModificar = new javax.swing.JButton();
         txtFotoAutor = new javax.swing.JTextField();
         dateChooserFechaNac = new datechooser.beans.DateChooserCombo();
+        lblImagen = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
-        setPreferredSize(new java.awt.Dimension(795, 700));
+        setPreferredSize(new java.awt.Dimension(700, 635));
 
         lblGestionAutores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblGestionAutores.setText("Gestión de autores");
@@ -132,6 +133,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaAutores.setRowHeight(45);
         jScrollPane1.setViewportView(tablaAutores);
 
         btnModificar.setText("Modificar");
@@ -140,6 +142,8 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 btnModificarActionPerformed(evt);
             }
         });
+
+        txtFotoAutor.setEditable(false);
 
         dateChooserFechaNac.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
             new datechooser.view.appearance.ViewAppearance("custom",
@@ -182,67 +186,78 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 (datechooser.view.BackRenderer)null,
                 false,
                 true)));
+    dateChooserFechaNac.setCalendarPreferredSize(new java.awt.Dimension(300, 180));
+    dateChooserFechaNac.setFormat(2);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addGap(71, 71, 71)
+            .addGap(35, 35, 35)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar))
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(btnModificar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnEliminar)))
+                    .addGap(246, 246, 246))
+                .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblGestionAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtNombreAutor)
+                                        .addComponent(txtFotoAutor)
+                                        .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnAnadir))
+                            .addGap(18, 18, 18)
+                            .addComponent(btnSeleccionFotoActor)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtNombreAutor)
-                                .addComponent(txtFotoAutor)
-                                .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)))
-                        .addComponent(btnAnadir))
-                    .addGap(18, 18, 18)
-                    .addComponent(btnSeleccionFotoActor)))
-            .addContainerGap(212, Short.MAX_VALUE))
+                            .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addGap(28, 28, 28)
-            .addComponent(lblGestionAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(btnEliminar)
-                .addComponent(btnModificar))
-            .addGap(38, 38, 38)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createSequentialGroup()
+                    .addComponent(lblGestionAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblNombreAutor)
-                        .addComponent(txtNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(28, 28, 28)
-                    .addComponent(lblFechaNac))
-                .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lblFoto)
-                .addComponent(btnSeleccionFotoActor)
-                .addComponent(txtFotoAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(31, 31, 31)
-            .addComponent(btnAnadir)
-            .addContainerGap(153, Short.MAX_VALUE))
+                        .addComponent(btnEliminar)
+                        .addComponent(btnModificar))
+                    .addGap(32, 32, 32)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblNombreAutor)
+                                .addComponent(txtNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(28, 28, 28)
+                            .addComponent(lblFechaNac))
+                        .addComponent(dateChooserFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblFoto)
+                        .addComponent(btnSeleccionFotoActor)
+                        .addComponent(txtFotoAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(btnAnadir)))
+            .addContainerGap(191, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -309,14 +324,13 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
         if (autor != null) {
 
-            txtNombreAutor.setText(nomAutor);
-            dateChooserFechaNac.setSelectedDate(UtilMethods.toCalendar(autor.getFechaNac()));
-            // Author image URL
+            ModificarAutorDialog modAutor = new ModificarAutorDialog(null, true, autor, h);
+            modAutor.setVisible(true);
 
-            JDialog modAutor = new ModificarAutorDialog(null, true, autor, h);
+            ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
 
-            h.solicitarUpdateAutor(autor);
-            // DATABASE UPDATE AUTHOR
+            TablaAutores modeloTabla = new TablaAutores(listaAutores);
+            tablaAutores.setModel(modeloTabla);
 
         } else {
 
@@ -326,7 +340,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnSeleccionFotoActorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionFotoActorActionPerformed
-        
+
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imágenes", "jpeg", "jpg", "png"));
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -359,9 +373,12 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
             return;
         }
+
+        txtFotoAutor.setText(image.getAbsolutePath());
+
         this.image = imageBytes;
-        lblFoto.setIcon(new ImageIcon(new ImageIcon(this.image).getImage().getScaledInstance(lblFoto.getSize().width,
-                lblFoto.getSize().height, Image.SCALE_DEFAULT)));
+        lblImagen.setIcon(new ImageIcon(new ImageIcon(this.image).getImage().getScaledInstance(lblImagen.getSize().width,
+                lblImagen.getSize().height, Image.SCALE_DEFAULT)));
     }//GEN-LAST:event_btnSeleccionFotoActorActionPerformed
 
 
@@ -375,6 +392,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblGestionAutores;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNombreAutor;
     private javax.swing.JTable tablaAutores;
     private javax.swing.JTextField txtFotoAutor;

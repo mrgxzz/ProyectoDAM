@@ -5,11 +5,16 @@
  */
 package Vista;
 
-
 import Controlador.HiloCliente;
+import Modelo.Autor;
+import Modelo.Coleccion;
+import Modelo.Comic;
+import Modelo.Tabla.TablaColecciones;
+import Modelo.Tabla.TablaComics;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
@@ -18,6 +23,7 @@ import javax.swing.JOptionPane;
  * @author Manu Romeo
  */
 public class GestionColeccionesPanel extends javax.swing.JPanel {
+
     private String camposObligatorios;
     private String camposMarcados;
     private String fechaFormato;
@@ -25,14 +31,25 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
     private String actorAnadido;
     private String actorBorrado;
     private String actorNoExiste;
-    
+
+    HiloCliente h;
+
     /**
      * Creates new form MoviesBoardPanel
+     *
+     * @param h
      */
     public GestionColeccionesPanel(HiloCliente h) {
         initComponents();
-        
-       // traduccion();
+
+        this.h = h;
+
+        ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
+
+        TablaColecciones modeloTabla = new TablaColecciones(listaColecciones, h);
+        tablaColecciones.setModel(modeloTabla);
+
+        //traduccion();
     }
 
     /**
@@ -44,52 +61,36 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblGestionActores = new javax.swing.JLabel();
-        lblNombreActor = new javax.swing.JLabel();
-        txtNombreActor = new javax.swing.JTextField();
-        lblApellidos = new javax.swing.JLabel();
-        txtApellidos = new javax.swing.JTextField();
-        lblFechaNac = new javax.swing.JLabel();
-        txtFechaNacimiento = new javax.swing.JTextField();
-        lblFoto = new javax.swing.JLabel();
-        btnSeleccionFotoActor = new javax.swing.JButton();
-        btnAnadir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblGestionColecciones = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaColecciones = new javax.swing.JTable();
         btnEliminar = new javax.swing.JButton();
-        lblIndicacionBorrarActor = new javax.swing.JLabel();
+        btnAnadir = new javax.swing.JButton();
+        lblNombre = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        lblEdicion = new javax.swing.JLabel();
+        cmbEdicion = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(518, 491));
 
-        lblGestionActores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblGestionActores.setText("Gestión de actores");
+        lblGestionColecciones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblGestionColecciones.setText("Gestión de colecciones");
 
-        lblNombreActor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblNombreActor.setText("Nombre");
-
-        lblApellidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblApellidos.setText("Apellidos");
-
-        lblFechaNac.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblFechaNac.setText("Fecha de nacimiento");
-
-        lblFoto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblFoto.setText("Foto");
-
-        btnSeleccionFotoActor.setText(". . .");
-
-        btnAnadir.setText("Añadir");
-        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnadirActionPerformed(evt);
+        tablaColecciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
-
-        jLabel1.setText("*");
-
-        jLabel2.setText("*");
+        ));
+        tablaColecciones.setRowHeight(45);
+        jScrollPane1.setViewportView(tablaColecciones);
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,146 +99,135 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
             }
         });
 
-        lblIndicacionBorrarActor.setText("* : Para eliminar un actor únicamente deben ser indicados los campos marcados.");
+        btnAnadir.setText("Añadir");
+        btnAnadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirActionPerformed(evt);
+            }
+        });
+
+        lblNombre.setText("Nombre");
+
+        lblEdicion.setText("Edición");
+
+        cmbEdicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Especial", "Limitada", "Coleccionista", "Básica" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEliminar)
+                .addGap(46, 46, 46))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnAnadir)
-                        .addGap(46, 46, 46))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 44, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSeleccionFotoActor)
-                                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(59, 59, 59)
-                                        .addComponent(txtNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(73, 73, 73)
-                                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblIndicacionBorrarActor))
-                        .addContainerGap(138, Short.MAX_VALUE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblNombre)
+                                .addComponent(lblEdicion))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtNombre)
+                                .addComponent(cmbEdicion, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGestionColecciones, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNombreActor)
-                            .addComponent(txtNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblApellidos)
-                            .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)))
+                .addGap(19, 19, 19)
+                .addComponent(lblGestionColecciones, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminar)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFechaNac)
-                    .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFoto)
-                    .addComponent(btnSeleccionFotoActor))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnAnadir))
-                .addGap(18, 18, 18)
-                .addComponent(lblIndicacionBorrarActor)
-                .addContainerGap(186, Short.MAX_VALUE))
+                    .addComponent(lblEdicion)
+                    .addComponent(cmbEdicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(btnAnadir)
+                .addContainerGap(95, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
-   /*     Actor actor = Controller.DBControllerMovies.getActor(txtNombreActor.getText(), txtApellidos.getText());
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
-        if (txtNombreActor.getText().isBlank() || txtApellidos.getText().isBlank() || txtFechaNacimiento.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, camposObligatorios);
+        String nomColeccion = (String) tablaColecciones.getModel().getValueAt(tablaColecciones.getSelectedRow(), 1);
+
+        int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar la "
+                + "coleccion con nombre: " + nomColeccion + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
+
+        if (opt == JOptionPane.YES_OPTION) {
+            int result = h.solicitarEliminarColeccion(nomColeccion);
+
+            if (result > 0) {
+                JOptionPane.showMessageDialog(null, "La coleccion ha sido eliminada correctamente.");
+
+                ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
+
+                TablaColecciones modeloTabla = new TablaColecciones(listaColecciones, h);
+                tablaColecciones.setModel(modeloTabla);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el borrado del autor.");
+            }
+
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
+
+        if (txtNombre.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
 
-            if (actor != null) {
-                JOptionPane.showMessageDialog(null, actorYaExiste);
+            Coleccion coleccion = new Coleccion(txtNombre.getText(), cmbEdicion.getSelectedItem().toString());
+
+            if (h.solicitarGetColeccion(txtNombre.getText()) != null) {
+                JOptionPane.showMessageDialog(null, "Ya existe una coleccion con el mismo nombre asociado.");
             } else {
 
-                String fecha = txtFechaNacimiento.getText();
+                int result = h.solicitarAnhadirColeccion(coleccion);
 
-                if (validarFecha(fecha)) {
-                    Controller.DBControllerMovies.insertActor(txtNombreActor.getText(), txtApellidos.getText(), fecha, "foto");
-                    JOptionPane.showMessageDialog(null, actorAnadido);
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(null, "La coleccion ha sido creada correctamente.");
+
+                    ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
+
+                    TablaColecciones modeloTabla = new TablaColecciones(listaColecciones, h);
+                    tablaColecciones.setModel(modeloTabla);
+
                 } else {
-                    JOptionPane.showMessageDialog(null, fechaFormato);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación de la coleccion.");
                 }
+
             }
+
         }
-*/
 
     }//GEN-LAST:event_btnAnadirActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-    /*    Actor actor = Controller.DBControllerMovies.getActor(txtNombreActor.getText(), txtApellidos.getText());
-
-        if (txtNombreActor.getText().isBlank() || txtApellidos.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, camposMarcados);
-        } else {
-            if (actor != null) {
-
-                Controller.DBControllerMovies.deleteActor(txtNombreActor.getText(), txtApellidos.getText());
-
-                JOptionPane.showMessageDialog(null, actorBorrado);
-            } else {
-                JOptionPane.showMessageDialog(null, actorNoExiste);
-            }
-        }
-*/
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnadir;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnSeleccionFotoActor;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel lblApellidos;
-    private javax.swing.JLabel lblFechaNac;
-    private javax.swing.JLabel lblFoto;
-    private javax.swing.JLabel lblGestionActores;
-    private javax.swing.JLabel lblIndicacionBorrarActor;
-    private javax.swing.JLabel lblNombreActor;
-    private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtFechaNacimiento;
-    private javax.swing.JTextField txtNombreActor;
+    private javax.swing.JComboBox<String> cmbEdicion;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblEdicion;
+    private javax.swing.JLabel lblGestionColecciones;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JTable tablaColecciones;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
     public static boolean validarFecha(String fechaIntroducida) {
@@ -252,7 +242,7 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
         }
 
     }
-    
+
     private void traduccion() {
 
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
@@ -263,17 +253,17 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
 
     private void activarTraduccion(ResourceBundle rb) {
 
-        lblGestionActores.setText(rb.getString("lblGestionActores"));
-        lblApellidos.setText(rb.getString("lblApellidos"));
-        lblFechaNac.setText(rb.getString("lblFechaNac"));
-        lblFoto.setText(rb.getString("lblFoto"));
-        lblIndicacionBorrarActor.setText(rb.getString("lblIndicacionBorrarActor"));
-        lblNombreActor.setText(rb.getString("lblNombreActor"));
-        
-        
+//        lblGestionActores.setText(rb.getString("lblGestionActores"));
+//        lblApellidos.setText(rb.getString("lblApellidos"));
+//        lblFechaNac.setText(rb.getString("lblFechaNac"));
+//        lblFoto.setText(rb.getString("lb lFoto"));
+//        lblIndicacionBorrarActor.setText(rb.getString("lblIndicacionBorrarActor"));
+//        lblNombreActor.setText(rb.getString("lblNombreActor"));
+//        
+//        
         btnAnadir.setText(rb.getString("btnAñadir"));
         btnEliminar.setText(rb.getString("btnEliminar"));
-        
+
         camposObligatorios = rb.getString("camposObligatorios");
         camposMarcados = rb.getString("camposMarcados");
         actorYaExiste = rb.getString("actorYaExiste");
@@ -281,8 +271,6 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
         fechaFormato = rb.getString("fechaFormato");
         actorNoExiste = rb.getString("actorNoExiste");
         actorBorrado = rb.getString("actorBorrado");
-        
-        
 
     }
 

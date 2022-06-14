@@ -7,19 +7,18 @@ package Vista;
 
 import Controlador.HiloCliente;
 import Modelo.Autor;
+import Modelo.Coleccion;
 import Modelo.Comic;
 import Modelo.Estado;
-import Modelo.TablaComics;
+import Modelo.Tabla.TablaComics;
 import Utiles.TableRenderer;
-import Utiles.UtilMethods;
+import java.awt.BorderLayout;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -49,7 +48,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
         TablaComics modeloTabla = new TablaComics(listaComics, h);
-        tablaComics.setDefaultRenderer(Object.class, new TableRenderer());
         tablaComics.setModel(modeloTabla);
 
         ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
@@ -63,8 +61,16 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         for (Estado estado : listaEstados) {
             cmbEstado.addItem(estado);
         }
+        
+        ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
+
+        for (Coleccion coleccion : listaColecciones) {
+            cmbColeccion.addItem(coleccion);
+        }
 
         traduccion();
+        
+        
     }
 
     /**
@@ -76,6 +82,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         lblGestionComics = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaComics = new javax.swing.JTable();
@@ -87,8 +94,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         txtTapa = new javax.swing.JTextField();
         lblTapa = new javax.swing.JLabel();
         lblEstado = new javax.swing.JLabel();
-        cmbEstado = new javax.swing.JComboBox<>();
         txtAutor = new javax.swing.JLabel();
+        cmbEstado = new javax.swing.JComboBox<>();
         cmbAutor = new javax.swing.JComboBox<>();
         lblPortada = new javax.swing.JLabel();
         btnPortada = new javax.swing.JButton();
@@ -97,10 +104,14 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         btnBorrarComic = new javax.swing.JButton();
         btnModificarComic = new javax.swing.JButton();
         lblFoto = new javax.swing.JLabel();
+        lblColeccion = new javax.swing.JLabel();
+        cmbColeccion = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(700, 635));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblGestionComics.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblGestionComics.setText("Gestión de cómics");
@@ -116,13 +127,15 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaComics.setFillsViewportHeight(true);
+        tablaComics.setRowHeight(75);
         jScrollPane2.setViewportView(tablaComics);
 
         lblAnhadir.setText("Añadir un cómic");
 
         lblTítulo.setText("Título");
 
-        dateChooserCombo.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
+        dateChooserCombo.setCurrentView(new datechooser.view.appearance.AppearancesList("Light",
             new datechooser.view.appearance.ViewAppearance("custom",
                 new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
                     new java.awt.Color(0, 0, 0),
@@ -163,7 +176,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                 (datechooser.view.BackRenderer)null,
                 false,
                 true)));
-    dateChooserCombo.setFormat(0);
+    dateChooserCombo.setCalendarPreferredSize(new java.awt.Dimension(300, 180));
+    dateChooserCombo.setFormat(2);
 
     lblFechaAdquisicion.setText("Fecha de adquisición");
 
@@ -189,6 +203,8 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         }
     });
 
+    txtRutaImagen.setEditable(false);
+
     btnBorrarComic.setText("Borrar");
     btnBorrarComic.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,31 +219,34 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         }
     });
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-    this.setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(48, 48, 48)
-                    .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(32, 32, 32)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblAnhadir)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnBorrarComic, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnModificarComic)))))
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(57, 57, 57)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnAnhadirComic)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    lblColeccion.setText("Coleccion");
+
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGap(21, 21, 21)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(lblAnhadir)
+                    .addGap(318, 318, 318)
+                    .addComponent(btnModificarComic)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(btnBorrarComic, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(25, 25, 25))
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(52, 52, 52))
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGap(8, 8, 8)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(lblColeccion)
+                            .addGap(73, 73, 73)
+                            .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblTítulo)
                                 .addComponent(lblFechaAdquisicion)
                                 .addComponent(lblTapa)
@@ -235,80 +254,153 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                                 .addComponent(txtAutor)
                                 .addComponent(lblPortada))
                             .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtTapa)
-                                .addComponent(dateChooserCombo, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                .addComponent(dateChooserCombo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtTitulo)
                                 .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtRutaImagen))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(17, 17, 17)
-                            .addComponent(btnPortada))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(43, 43, 43)
-                            .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-            .addContainerGap(119, Short.MAX_VALUE))
+                                .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAnhadirComic))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(btnPortada)
+                    .addGap(29, 29, 29)
+                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(463, Short.MAX_VALUE))
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(567, Short.MAX_VALUE)))
+    );
+    jPanel1Layout.setVerticalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGap(43, 43, 43)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(lblAnhadir, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnModificarComic)
+                    .addComponent(btnBorrarComic)))
+            .addGap(18, 18, 18)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTítulo)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(dateChooserCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFechaAdquisicion))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtTapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTapa))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEstado)
+                        .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtAutor)
+                        .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblPortada)
+                        .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPortada)))
+                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblColeccion)
+                .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(btnAnhadirComic)
+            .addContainerGap(147, Short.MAX_VALUE))
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(642, Short.MAX_VALUE)))
+    );
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+    this.setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(btnModificarComic)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btnBorrarComic)))
-            .addGap(18, 18, 18)
-            .addComponent(lblAnhadir)
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblTítulo)
-                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(dateChooserCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblFechaAdquisicion))
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTapa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblTapa))
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblEstado)
-                        .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtAutor)
-                        .addComponent(cmbAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblPortada)
-                        .addComponent(btnPortada)
-                        .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(35, 35, 35)
-                    .addComponent(btnAnhadirComic))
-                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(132, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
     );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed
+        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
+
+        Comic comic = h.solicitarGetComic(nomComic);
+
+        if (comic != null) {
+
+            ModificarComicDialog modComic = new ModificarComicDialog(null, true, comic, h);
+            modComic.setVisible(true);
+
+            ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
+
+            TablaComics modeloTabla = new TablaComics(listaComics, h);
+            tablaComics.setModel(modeloTabla);
+
+        } else {
+
+            JOptionPane.showMessageDialog(null, "No existe ningún cómic con ese nombre asociado");
+
+        }
+    }//GEN-LAST:event_btnModificarComicActionPerformed
+
+    private void btnBorrarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarComicActionPerformed
+        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
+
+        int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
+            + "cómic con título: " + nomComic + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
+
+        if (opt == JOptionPane.YES_OPTION) {
+            int result = h.solicitarEliminarComic(nomComic);
+
+            if (result > 0) {
+                JOptionPane.showMessageDialog(null, "El cómic ha sido eliminado correctamente.");
+
+                ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
+
+                TablaComics modeloTabla = new TablaComics(listaComics, h);
+                tablaComics.setModel(modeloTabla);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el borrado del cómic.");
+            }
+
+        }
+    }//GEN-LAST:event_btnBorrarComicActionPerformed
 
     private void btnAnhadirComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnhadirComicActionPerformed
 
         Autor autor = (Autor) cmbAutor.getSelectedItem();
         Estado estado = (Estado) cmbEstado.getSelectedItem();
+        Coleccion coleccion = (Coleccion) cmbColeccion.getSelectedItem();
 
-        if (txtTitulo.getText().isBlank() || txtTapa.getText().isBlank() || txtRutaImagen.getText().isBlank() || txtAutor.getText().isBlank()) {
+        if (txtTitulo.getText().isBlank() || txtTapa.getText().isBlank() || txtAutor.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
         } else {
 
-            Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), estado.getIdEstado(), autor.getIdAutor(), image, lblPortada.getText());
+            Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), estado.getIdEstado(), autor.getIdAutor(), image, lblPortada.getText(), coleccion.getIdColeccion());
 
             if (h.solicitarGetComic(c.getNombreComic()) != null) {
                 JOptionPane.showMessageDialog(null, "Ya existe un comic con el mismo nombre asociado.");
@@ -324,7 +416,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
                     ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
 
                     TablaComics modeloTabla = new TablaComics(listaComics, h);
-                    tablaComics.setDefaultRenderer(Object.class, new TableRenderer());
                     tablaComics.setModel(modeloTabla);
 
                 } else {
@@ -334,8 +425,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             }
 
         }
-
-
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
 
     private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
@@ -359,6 +448,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
             return;
         }
+
         byte[] imageBytes;
         try ( FileInputStream fis = new FileInputStream(image)) {
 
@@ -372,54 +462,13 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
             return;
         }
-        
+
+        txtRutaImagen.setText(image.getAbsolutePath());
+
         this.image = imageBytes;
         lblFoto.setIcon(new ImageIcon(new ImageIcon(this.image).getImage().getScaledInstance(lblFoto.getSize().width,
-                lblFoto.getSize().height, Image.SCALE_DEFAULT)));
+            lblFoto.getSize().height, Image.SCALE_DEFAULT)));
     }//GEN-LAST:event_btnPortadaActionPerformed
-
-    private void btnBorrarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarComicActionPerformed
-        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
-
-        int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
-                + "cómic con título: " + nomComic + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
-
-        if (opt == JOptionPane.YES_OPTION) {
-            int result = h.solicitarEliminarComic(nomComic);
-
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, "El cómic ha sido eliminado correctamente.");
-
-                ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
-
-                TablaComics modeloTabla = new TablaComics(listaComics, h);
-                tablaComics.setModel(modeloTabla);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el borrado del cómic.");
-            }
-
-        }
-
-
-    }//GEN-LAST:event_btnBorrarComicActionPerformed
-
-    private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed
-        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
-
-        Comic comic = h.solicitarGetComic(nomComic);
-
-        if (comic != null) {
-
-            ModificarComicDialog modComic = new ModificarComicDialog(null, true, comic, h);
-            modComic.setVisible(true);
-
-        } else {
-
-            JOptionPane.showMessageDialog(null, "No existe ningún cómic con ese nombre asociado");
-
-        }
-    }//GEN-LAST:event_btnModificarComicActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -428,10 +477,13 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnModificarComic;
     private javax.swing.JButton btnPortada;
     private javax.swing.JComboBox<Autor> cmbAutor;
+    private javax.swing.JComboBox<Coleccion> cmbColeccion;
     private javax.swing.JComboBox<Estado> cmbEstado;
     private datechooser.beans.DateChooserCombo dateChooserCombo;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAnhadir;
+    private javax.swing.JLabel lblColeccion;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblFechaAdquisicion;
     private javax.swing.JLabel lblFoto;
