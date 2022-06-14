@@ -63,13 +63,78 @@ public class GestionComics {
             rs = sentencia.executeQuery();
 
             while (rs.next()) {
-                
-                java.sql.Blob blob = rs.getBlob(5);
-                
-                int blobLength = (int) blob.length();
-                byte[] blobAsBytes = blob.getBytes(1, blobLength);
-                
-                Comic comic = new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6), blobAsBytes, rs.getString(8));
+
+                Comic comic = new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getBytes(7), rs.getString(8), rs.getInt(9));
+                listaComics.add(comic);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de cómics", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+
+            }
+        }
+        return listaComics;
+    }
+    
+    public static List<Comic> getListaComicsAutor(int idAutor) {
+
+        Connection con;
+        ResultSet rs = null;
+
+        List<Comic> listaComics = new ArrayList();
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "Select * from comic WHERE idAutor = ?";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setInt(1, idAutor);
+            
+            rs = sentencia.executeQuery();
+
+            while (rs.next()) {
+
+                Comic comic = new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getBytes(7), rs.getString(8), rs.getInt(9));
+                listaComics.add(comic);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Obtener listado de cómics", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+
+            }
+        }
+        return listaComics;
+    }
+    
+     public static List<Comic> getListaComicsColeccion(int idColeccion) {
+
+        Connection con;
+        ResultSet rs = null;
+
+        List<Comic> listaComics = new ArrayList();
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "Select * from comic WHERE idColeccion = ?";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setInt(1, idColeccion);
+            
+            rs = sentencia.executeQuery();
+
+            while (rs.next()) {
+
+                Comic comic = new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getBytes(7), rs.getString(8), rs.getInt(9));
                 listaComics.add(comic);
             }
 
@@ -107,7 +172,7 @@ public class GestionComics {
             rs = sentencia.executeQuery();
 
             while (rs.next()) {
-                listaColecciones.add(new Coleccion(rs.getInt(1), rs.getString(2)));
+                listaColecciones.add(new Coleccion(rs.getInt(1), rs.getString(2), rs.getString(3)));
             }
 
         } catch (SQLException e) {
@@ -202,12 +267,7 @@ public class GestionComics {
 
             if (rs.next()) {
 
-                java.sql.Blob blob = rs.getBlob(5);
-                
-                int blobLength = (int) blob.length();
-                byte[] blobAsBytes = blob.getBytes(1, blobLength);
-
-                return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6), blobAsBytes, rs.getString(8));
+                return new Comic(rs.getInt(1), rs.getString(2), rs.getDate(3), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getBytes(7), rs.getString(8), rs.getInt(9));
             }
 
         } catch (SQLException e) {
@@ -254,7 +314,39 @@ public class GestionComics {
         return null;
     }
     
-     public static Estado getEstado(int idEstado) {
+    public static Coleccion getColeccion(String nomColeccion) {
+
+        Connection con;
+        ResultSet rs = null;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "SELECT * FROM coleccion WHERE nombre = ?";
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setString(1, nomColeccion);
+
+            rs = sentencia.executeQuery();
+
+            if (rs.next()) {
+                return new Coleccion(rs.getInt(1), rs.getString(2), rs.getString(3));
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Buscar una coleccion", JOptionPane.OK_OPTION);
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+
+            }
+        }
+        return null;
+    }
+
+    public static Estado getEstado(int idEstado) {
 
         Connection con;
         ResultSet rs = null;
@@ -294,30 +386,53 @@ public class GestionComics {
 
             con = DBConnector.getConexion();
 
-            String consulta = "INSERT INTO comic (nombre, fechaAdquisicion, tapa, idEstado, idAutor, portada, urlPortada)"
-                    + "VALUES (?,?,?,?,?,?,?)";
+            String consulta = "INSERT INTO comic (nombre, fechaAdquisicion, tapa, idEstado, idAutor, portada, urlPortada, idColeccion)"
+                    + "VALUES (?,?,?,?,?,?,?,?)";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
-            FileInputStream archivoPortada;
-            
             sentencia.setString(1, comic.getNombreComic());
             sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()));
             sentencia.setString(3, comic.getTapa());
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
-            
-            archivoPortada = new FileInputStream(comic.getUrlPortada());
-            
-            sentencia.setBinaryStream(6, archivoPortada);
+            sentencia.setBytes(6, comic.getPortada());
+
             sentencia.setString(7, comic.getUrlPortada());
+            sentencia.setInt(8, comic.getIdColeccion());
 
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(GestionComics.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return -1;
+    }
+    
+    public static int anhadirColeccion(Coleccion coleccion) {
+
+        Connection con;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "INSERT INTO coleccion (nombre, edicion)"
+                    + "VALUES (?,?)";
+
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setString(1, coleccion.getNombre());
+            sentencia.setString(2, coleccion.getEdicion());
+
+
+            return sentencia.executeUpdate();
+
+        } catch (SQLException e) {
+             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
         }
 
         return -1;
@@ -331,23 +446,26 @@ public class GestionComics {
 
             con = DBConnector.getConexion();
 
-            String consulta = "INSERT INTO autor (nombre, fechaNac)"
-                    + "VALUES (?, ?)";
+            String consulta = "INSERT INTO autor (nombre, fechaNac, foto, urlFoto)"
+                    + "VALUES (?, ?, ?, ?)";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, autor.getNombre());
             sentencia.setDate(2, new java.sql.Date(autor.getFechaNac().getTime()));
+            sentencia.setBytes(3, autor.getFoto());
+            sentencia.setString(4, autor.getUrlFoto());
 
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
+             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir autor", JOptionPane.OK_OPTION);
         }
 
         return 0;
     }
-    
+
     public static int updateAutor(Autor autor) {
 
         Connection con;
@@ -356,25 +474,29 @@ public class GestionComics {
 
             con = DBConnector.getConexion();
 
-            String consulta = "UPDATE autor SET nombre = ?, fechaNac = ? "
+            String consulta = "UPDATE autor SET nombre = ?, fechaNac = ?, foto = ?, urlFoto = ? "
                     + "WHERE idAutor = ?";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setString(1, autor.getNombre());
             sentencia.setDate(2, new java.sql.Date(autor.getFechaNac().getTime()));
-            
-            sentencia.setInt(3, autor.getIdAutor());
 
+            sentencia.setBytes(3, autor.getFoto());
+            sentencia.setString(4, autor.getUrlFoto());
+            
+            sentencia.setInt(5, autor.getIdAutor());
+            
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
+             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar autor", JOptionPane.OK_OPTION);
         }
 
         return 0;
     }
-    
+
     public static int updateComic(Comic comic) {
 
         Connection con;
@@ -384,29 +506,27 @@ public class GestionComics {
             con = DBConnector.getConexion();
 
             String consulta = "UPDATE comic SET nombre = ?, fechaAdquisicion = ?,"
-                    + "tapa = ?, idEstado = ?, isAutor = ?, portada = ?, urlPortada = ? "
+                    + "tapa = ?, idEstado = ?, idAutor = ?, portada = ?, urlPortada = ? "
                     + "WHERE idComic = ?";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
-            FileInputStream archivoPortada;
-            
             sentencia.setString(1, comic.getNombreComic());
             sentencia.setDate(2, new java.sql.Date(comic.getFechaAdquisicion().getTime()));
             sentencia.setString(3, comic.getTapa());
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
-            archivoPortada = new FileInputStream(comic.getUrlPortada());
             
-            sentencia.setBinaryStream(6, archivoPortada);
+            sentencia.setBytes(6, comic.getPortada());
             sentencia.setString(7, comic.getUrlPortada());
+            
+            sentencia.setInt(8, comic.getIdComic());
 
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
+             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar comic", JOptionPane.OK_OPTION);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(GestionComics.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return 0;
@@ -429,6 +549,32 @@ public class GestionComics {
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
+             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Eliminar comic", JOptionPane.OK_OPTION);
+        }
+
+        return 0;
+    }
+    
+    
+     public static int eliminarColeccion(String nomColeccion) {
+
+        Connection con;
+
+        try {
+
+            con = DBConnector.getConexion();
+
+            String consulta = "DELETE FROM coleccion WHERE nombre = ?";
+
+            PreparedStatement sentencia = con.prepareStatement(consulta);
+
+            sentencia.setString(1, nomColeccion);
+
+            return sentencia.executeUpdate();
+
+        } catch (SQLException e) {
+             System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, e.getMessage(), "Eliminar comic", JOptionPane.OK_OPTION);
         }
 
