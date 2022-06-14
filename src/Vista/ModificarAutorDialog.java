@@ -6,11 +6,18 @@
 package Vista;
 
 import Controlador.HiloCliente;
-import Controlador.HiloServidorCliente;
 import Modelo.Autor;
 import Utiles.UtilMethods;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -36,19 +43,27 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
      */
     public ModificarAutorDialog(java.awt.Frame parent, boolean modal, Autor autor, HiloCliente h) {
         super(parent, modal);
-        initComponents();
+        try {
+            initComponents();
 
-        this.h = h;
-        this.autorModificar = autor;
+            this.h = h;
+            this.autorModificar = autor;
 
-        txtNombreAutor.setText(autor.getNombre());
-        dateChooserFechaNac.setSelectedDate(UtilMethods.toCalendar(autor.getFechaNac()));
-        txtFotoAutor.setText(autor.getUrlFoto());
+            txtNombreAutor.setText(autor.getNombre());
+            dateChooserFechaNac.setSelectedDate(UtilMethods.toCalendar(autor.getFechaNac()));
+            txtFotoAutor.setText(autor.getUrlFoto());
 
-        Image foto = getToolkit().getImage(txtFotoAutor.getText());
-        foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
+            if (autor.getFoto() != null) {
 
-        lblImagen.setIcon(new ImageIcon(foto));
+                BufferedImage img = ImageIO.read(new ByteArrayInputStream(autor.getFoto()));
+
+                lblImagen.setIcon(new ImageIcon(img));
+
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(ModificarAutorDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -90,6 +105,8 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
         lblFoto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblFoto.setText("Foto");
 
+        txtFotoAutor.setEditable(false);
+
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,7 +121,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
             }
         });
 
-        dateChooserFechaNac.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
+        dateChooserFechaNac.setCurrentView(new datechooser.view.appearance.AppearancesList("Light",
             new datechooser.view.appearance.ViewAppearance("custom",
                 new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
                     new java.awt.Color(0, 0, 0),
@@ -145,6 +162,8 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
                 (datechooser.view.BackRenderer)null,
                 false,
                 true)));
+    dateChooserFechaNac.setCalendarPreferredSize(new java.awt.Dimension(300, 180));
+    dateChooserFechaNac.setFormat(2);
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
@@ -220,7 +239,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
             } else {
 
-                Autor autor = new Autor(autorModificar.getIdAutor(), txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime(), imagen, txtFotoAutor.getText());
+                Autor autor = new Autor(autorModificar.getIdAutor(), txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime(), autorModificar.getFoto(), txtFotoAutor.getText());
 
                 int result = h.solicitarUpdateAutor(autor);
 
@@ -243,28 +262,45 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnSeleccionFotoActorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionFotoActorActionPerformed
-        
-        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Formato de archivos JPEG (*.JPG, *.JPEG, *.PNG)", "jpg", "jpeg", "png");
 
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.addChoosableFileFilter(extensionFilter);
-        fileChooser.setDialogTitle("Seleccionar portada");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imágenes", "jpeg", "jpg", "png"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int result = fileChooser.showOpenDialog(null);
 
-        int seleccion = fileChooser.showOpenDialog(btnSeleccionFotoActor);
-
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-            File fichero = fileChooser.getSelectedFile();
-
-            txtFotoAutor.setText(fichero.getPath());
-
-            Image foto = getToolkit().getImage(txtFotoAutor.getText());
-            foto = foto.getScaledInstance(110, 110, Image.SCALE_DEFAULT);
-
-            lblImagen.setIcon(new ImageIcon(foto));
-
-            imagen = UtilMethods.toByteArray(fichero);
-
+        if (result != JFileChooser.APPROVE_OPTION) {
+            return;
         }
+
+        File image = fileChooser.getSelectedFile();
+        try {
+            if (ImageIO.read(image) == null) {
+                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen.");
+                return;
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            return;
+        }
+        byte[] imageBytes;
+        try ( FileInputStream fis = new FileInputStream(image)) {
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
+                baos.write(buffer, 0, dataLength);
+            }
+            imageBytes = baos.toByteArray();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            return;
+        }
+        this.imagen = imageBytes;
+        
+        autorModificar.setFoto(imagen);
+        
+        lblImagen.setIcon(new ImageIcon(new ImageIcon(this.imagen).getImage().getScaledInstance(lblImagen.getSize().width,
+                lblImagen.getSize().height, Image.SCALE_DEFAULT)));
     }//GEN-LAST:event_btnSeleccionFotoActorActionPerformed
 
     /**
