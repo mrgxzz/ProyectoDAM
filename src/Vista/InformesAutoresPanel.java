@@ -6,10 +6,24 @@
 package Vista;
 
 
+import Controlador.DBConnector;
 import Controlador.HiloCliente;
 import Modelo.Autor;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 /**
@@ -113,49 +127,46 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerInformeAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeAutoresActionPerformed
-     /*   try {                                                  
-            File informeFile = new File(this.getClass().getResource("/Informes/InformeActores.jrxml").getFile());
-            System.out.println(informeFile.getCanonicalPath());
-            try {
-                
-                Statement st = Controller.DBConnector.getConexion().createStatement();
-                ResultSet rs = st.executeQuery("SELECT * FROM peliculas.actor");
-                
-                JRResultSetDataSource dataSource = new JRResultSetDataSource(rs);
-                
-                JasperReport report = JasperCompileManager.compileReport(informeFile.toString());
-                
-                JasperPrint visor = JasperFillManager.fillReport(report, null, dataSource);
-                
-                JasperViewer.viewReport(visor, false);
-                
-            } catch (SQLException | JRException e) {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la generación del informe.");
-            }
-            
-        } catch (IOException ex) {
-            Logger.getLogger(InformesAutoresPanel.class.getName()).log(Level.SEVERE,null, ex);
+     String informe = "./src/Informes/InformeAutores.jrxml";
+
+        try {
+
+            Statement st = DBConnector.getConexion().createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM comics.autor");
+
+            JRResultSetDataSource dataSource = new JRResultSetDataSource(rs);
+
+            JasperReport report = JasperCompileManager.compileReport(informe);
+
+            JasperPrint visor = JasperFillManager.fillReport(report, null, dataSource);
+
+            JasperViewer.viewReport(visor, false);
+
+        } catch (SQLException | JRException e) {
+            System.out.println(e.getMessage());
         }
-*/
+
     }//GEN-LAST:event_VerInformeAutoresActionPerformed
 
     private void VerInformeComicsAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeComicsAutorActionPerformed
-      /*  String informe = "./src/Informes/InformePeliculasActor.jrxml";
+        String informe = "./src/Informes/InformeComicsAutor.jrxml";
 
         try {
-            Actor actor = (Actor) cmbActor.getSelectedItem();
+            Autor autor = (Autor) cmbAutor.getSelectedItem();
 
-            PreparedStatement st = Controller.DBConnector.getConexion().prepareStatement("SELECT DISTINCT pelicula.* FROM pelicula INNER JOIN pelicula_actor\n"
-                    + "	ON pelicula_actor.idPelicula = pelicula.idPelicula\n"
-                    + "	WHERE pelicula_actor.idActor =  ? ");
-            st.setInt(1, actor.getIdActor());
+            PreparedStatement st = DBConnector.getConexion().prepareStatement("SELECT comic.nombre, comic.fechaAdquisicion, comic.tapa, comic.portada, autor.nombre AS \"nombreAutor\", coleccion.nombre AS \"nombreColeccion\", estado.descripcion AS \"estado\" FROM comic\n" +
+                "INNER JOIN autor ON comic.idAutor = autor.idAutor\n" +
+                "INNER JOIN coleccion ON comic.idEstado = coleccion.idColeccion\n" +
+                "INNER JOIN estado ON comic.idEstado = estado.idEstado\n" +
+                    "	WHERE comic.idAutor =  ? ");
+            st.setInt(1, autor.getIdAutor());
 
             ResultSet rs = st.executeQuery();
 
             JRResultSetDataSource dataSource = new JRResultSetDataSource(rs);
 
             HashMap<String, Object> parametros = new HashMap<>();
-            parametros.put("ID_ACTOR", actor.getIdActor());
+            parametros.put("idAutor", autor.getIdAutor());
 
             JasperReport report = JasperCompileManager.compileReport(informe);
 
@@ -165,7 +176,7 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
 
         } catch (SQLException | JRException e) {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error en la generación del informe.");
-        }*/
+        }
 
     }//GEN-LAST:event_VerInformeComicsAutorActionPerformed
 

@@ -5,16 +5,24 @@
  */
 package Vista;
 
-
+import Controlador.DBConnector;
 import Controlador.HiloCliente;
 import Modelo.Autor;
+import Modelo.Coleccion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -28,22 +36,14 @@ public class InformesComicsPanel extends javax.swing.JPanel {
     public InformesComicsPanel(HiloCliente h) {
         initComponents();
 
-        /*
-        ArrayList<Movie> listaPeliculas = Controller.DBControllerMovies.getMovieList();
-        ArrayList<Genre> listaGeneros = Controller.DBControllerMovies.getGenreList();
-        txtVerPeliculas.setText("");
+        ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
 
-        for (Movie pelicula : listaPeliculas) {
-            txtVerPeliculas.append(pelicula.toString() + "\n");
+        for (Coleccion coleccion : listaColecciones) {
+            cmbColeccion.addItem(coleccion);
         }
 
-        for (Genre genero : listaGeneros) {
-            cmbGenero.addItem(genero);
-        }
-        */
-        
         traduccion();
-        
+
     }
 
     /**
@@ -97,15 +97,18 @@ public class InformesComicsPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(VerInformeComics, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(VerInformeComicsColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(VerInformeComics, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGeneracionInformesComics))
+                        .addContainerGap(292, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(VerInformeComicsColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblColeccion)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblGeneracionInformesComics))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,22 +118,25 @@ public class InformesComicsPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(VerInformeComics)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(VerInformeComicsColeccion)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblColeccion)
-                        .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(VerInformeComicsColeccion))
+                        .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(365, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerInformeComicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeComicsActionPerformed
-       /* String informe = "./src/Informes/InformePeliculas.jrxml";
+        String informe = "./src/Informes/InformeComics.jrxml";
 
         try {
 
-            Statement st = Controller.DBConnector.getConexion().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM peliculas.pelicula");
+            Statement st = DBConnector.getConexion().createStatement();
+            ResultSet rs = st.executeQuery("SELECT comic.nombre, comic.fechaAdquisicion, comic.tapa, comic.portada, autor.nombre AS \"nombreAutor\", coleccion.nombre AS \"nombreColeccion\", estado.descripcion AS \"estado\" FROM comic\n"
+                    + "	INNER JOIN autor ON comic.idAutor = autor.idAutor\n"
+                    + "	INNER JOIN coleccion ON comic.idEstado = coleccion.idColeccion\n"
+                    + "	INNER JOIN estado ON comic.idEstado = estado.idEstado");
 
             JRResultSetDataSource dataSource = new JRResultSetDataSource(rs);
 
@@ -140,54 +146,58 @@ public class InformesComicsPanel extends javax.swing.JPanel {
 
             JasperViewer.viewReport(visor, false);
 
-        } catch (Exception e) {
+        } catch (SQLException | JRException e) {
+            System.out.println(e.getMessage());
         }
-*/
+
     }//GEN-LAST:event_VerInformeComicsActionPerformed
 
     private void VerInformeComicsColeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInformeComicsColeccionActionPerformed
-       /* String informe = "./src/Informes/InformePeliculasGenero.jrxml";
+        String informe = "./src/Informes/InformeComicsColeccion.jrxml";
 
         try {
 
-            Genre genero = (Genre) cmbGenero.getSelectedItem();
+            Coleccion coleccion = (Coleccion) cmbColeccion.getSelectedItem();
 
-            PreparedStatement st = Controller.DBConnector.getConexion().prepareStatement("SELECT * FROM peliculas.pelicula WHERE pelicula.idGenero = ?");
-            st.setInt(1, genero.getIdGenre());
+            PreparedStatement st = DBConnector.getConexion().prepareStatement("SELECT comic.nombre, comic.fechaAdquisicion, comic.tapa, comic.portada, \n" +
+                                        "autor.nombre AS \"nombreAutor\",\n" +
+                                        "coleccion.nombre AS \"nombreColeccion\",\n" +
+                                        "estado.descripcion AS \"estado\"\n" +
+                                        " 	FROM comic INNER JOIN autor ON comic.idAutor = autor.idAutor\n" +
+                                        "						INNER JOIN coleccion ON comic.idEstado = coleccion.idColeccion\n" +
+                                        "						INNER JOIN estado ON comic.idEstado = estado.idEstado \n" +
+                                        "                    	WHERE comic.idColeccion =  ? ");
+            st.setInt(1, coleccion.getIdColeccion());
 
             ResultSet rs = st.executeQuery();
 
-           
-                JRResultSetDataSource dataSource = new JRResultSetDataSource(rs);
+            JRResultSetDataSource dataSource = new JRResultSetDataSource(rs);
 
-                HashMap<String, Object> parametros = new HashMap<>();
-                parametros.put("idGenero", genero.getIdGenre());         
-                
-                System.out.println(parametros.get("idGenero"));
-                System.out.println(genero.getIdGenre());
-                
-                JasperReport report = JasperCompileManager.compileReport(informe);
+            HashMap<String, Object> parametros = new HashMap<>();
+            parametros.put("idColeccion", coleccion.getIdColeccion());
 
-                JasperPrint visor = JasperFillManager.fillReport(report, parametros, dataSource);
+            JasperReport report = JasperCompileManager.compileReport(informe);
 
-                JasperViewer.viewReport(visor, false);
-            
+            JasperPrint visor = JasperFillManager.fillReport(report, parametros, dataSource);
 
-        } catch (Exception e) {
+            JasperViewer.viewReport(visor, false);
+
+        } catch (SQLException | JRException e) {
+            System.out.println(e.getMessage());
         }
-*/
+
     }//GEN-LAST:event_VerInformeComicsColeccionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton VerInformeComics;
     private javax.swing.JButton VerInformeComicsColeccion;
-    private javax.swing.JComboBox<Autor> cmbColeccion;
+    private javax.swing.JComboBox<Coleccion> cmbColeccion;
     private javax.swing.JLabel lblColeccion;
     private javax.swing.JLabel lblGeneracionInformesComics;
     // End of variables declaration//GEN-END:variables
 
-     private void traduccion() {
+    private void traduccion() {
 
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
 
@@ -198,7 +208,6 @@ public class InformesComicsPanel extends javax.swing.JPanel {
     private void activarTraduccion(ResourceBundle rb) {
 
         lblGeneracionInformesComics.setText(rb.getString("lblGeneracionInformesComics"));
-        
 
     }
 }
