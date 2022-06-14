@@ -6,6 +6,7 @@
 package Controlador;
 
 import Modelo.Autor;
+import Modelo.Coleccion;
 import Modelo.Comic;
 import Modelo.Estado;
 import Utiles.PeticionServidor;
@@ -69,6 +70,34 @@ public class HiloCliente {
         }
         return null;
     }
+    
+    public List<Comic> solicitarListaComicAutor(int idAutor) {
+
+        try {
+
+            objectOutputStream.writeObject(new PeticionServidor("listarcomicsautor", idAutor));
+
+            return (List<Comic>) objectInputStream.readObject();
+
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public List<Comic> solicitarListaComicColeccion(int idColeccion) {
+
+        try {
+
+            objectOutputStream.writeObject(new PeticionServidor("listarcomicscoleccion", idColeccion));
+
+            return (List<Comic>) objectInputStream.readObject();
+
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public int solicitarAnhadirComic(Comic comic) {
 
@@ -84,11 +113,24 @@ public class HiloCliente {
         return 0;
     }
     
+    public int solicitarAnhadirColeccion(Coleccion coleccion) {
+
+        try {
+
+            objectOutputStream.writeObject(new PeticionServidor("anhadircoleccion", coleccion));
+            return objectInputStream.readInt();
+
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
       public int solicitarUpdateComic(Comic comic) {
 
         try {
 
-            objectOutputStream.writeObject(new PeticionServidor("updateComic", comic));
+            objectOutputStream.writeObject(new PeticionServidor("updatecomic", comic));
             return objectInputStream.readInt();
 
         } catch (IOException ex) {
@@ -102,6 +144,22 @@ public class HiloCliente {
         try {
 
             objectOutputStream.writeObject(new PeticionServidor("borrarcomic", nomComic));
+
+            return objectInputStream.readInt();
+
+        } catch (IOException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
+
+    }
+    
+    public int solicitarEliminarColeccion(String nomColeccion) {
+
+        try {
+
+            objectOutputStream.writeObject(new PeticionServidor("borrarcoleccion", nomColeccion));
 
             return objectInputStream.readInt();
 
@@ -234,4 +292,32 @@ public class HiloCliente {
         
     }
 
+    public List<Coleccion> solicitarListaColecciones() {
+
+        try {
+
+            objectOutputStream.writeObject(new PeticionServidor("listarcolecciones", null));
+
+            return (List<Coleccion>) objectInputStream.readObject();
+
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+     public Coleccion solicitarGetColeccion(String nomColeccion) {
+
+        try {
+
+            objectOutputStream.writeObject(new PeticionServidor("getcoleccion", nomColeccion));
+
+            return (Coleccion) objectInputStream.readObject();
+
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(HiloCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
 }
