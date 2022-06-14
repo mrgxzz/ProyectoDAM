@@ -14,14 +14,22 @@ import java.io.Serializable;
 public class Coleccion implements Serializable{
     private int idColeccion;
     private String nombre;
+    private String edicion;
 
     public Coleccion() {
     }
 
-    public Coleccion(int idColeccion, String nombre) {
+    public Coleccion(int idColeccion, String nombre, String edicion) {
         this.idColeccion = idColeccion;
         this.nombre = nombre;
+        this.edicion = edicion;
     }
+
+    public Coleccion(String nombre, String edicion) {
+        this.nombre = nombre;
+        this.edicion = edicion;
+    }
+
 
     public int getIdColeccion() {
         return idColeccion;
@@ -39,9 +47,18 @@ public class Coleccion implements Serializable{
         this.nombre = nombre;
     }
 
+    public String getEdicion() {
+        return edicion;
+    }
+
+    public void setEdicion(String edicion) {
+        this.edicion = edicion;
+    }
+    
+
     @Override
     public String toString() {
-        return "Coleccion{" + "idColeccion=" + idColeccion + ", nombre=" + nombre + '}';
+        return nombre;
     }
     
     

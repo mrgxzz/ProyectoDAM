@@ -22,11 +22,12 @@ public class Comic implements Serializable {
     private int idAutor;
     private byte[] portada;
     private String urlPortada;
+    private int idColeccion;
 
     public Comic() {
     }
 
-    public Comic(int idComic, String nombreComic, Date fechaAdquisicion, String tapa, int idEstado, int idAutor, byte[] portada, String urlPortada) {
+    public Comic(int idComic, String nombreComic, Date fechaAdquisicion, String tapa, int idEstado, int idAutor, byte[] portada, String urlPortada, int idColeccion) {
         this.idComic = idComic;
         this.nombreComic = nombreComic;
         this.fechaAdquisicion = fechaAdquisicion;
@@ -35,9 +36,10 @@ public class Comic implements Serializable {
         this.idAutor = idAutor;
         this.portada = portada;
         this.urlPortada = urlPortada;
+        this.idColeccion = idColeccion;
     }
 
-    public Comic(String nombreComic, Date fechaAdquisicion, String tapa, int idEstado, int idAutor, byte[] portada, String urlPortada) {
+    public Comic(String nombreComic, Date fechaAdquisicion, String tapa, int idEstado, int idAutor, byte[] portada, String urlPortada, int idColeccion) {
         this.nombreComic = nombreComic;
         this.fechaAdquisicion = fechaAdquisicion;
         this.tapa = tapa;
@@ -45,9 +47,8 @@ public class Comic implements Serializable {
         this.idAutor = idAutor;
         this.portada = portada;
         this.urlPortada = urlPortada;
-    }
-
-    
+        this.idColeccion = idColeccion;
+    } 
 
     public int getIdComic() {
         return idComic;
@@ -112,6 +113,16 @@ public class Comic implements Serializable {
     public void setUrlPortada(String urlPortada) {
         this.urlPortada = urlPortada;
     }
+
+    public int getIdColeccion() {
+        return idColeccion;
+    }
+
+    public void setIdColeccion(int idColeccion) {
+        this.idColeccion = idColeccion;
+    }
+    
+    
 
     @Override
     public String toString() {
