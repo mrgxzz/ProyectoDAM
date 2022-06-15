@@ -210,9 +210,8 @@ public class SelectorLenguaje extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
       private void activarAyuda() {
-
         try {
-            URL url = this.getClass().getResource("/ayuda/help.hs");
+            URL url = this.getClass().getResource("/ayuda/esp/help.hs");
 
             // Crea el HelpSet y el HelpBroker
             HelpSet helpset = new HelpSet(null, url);

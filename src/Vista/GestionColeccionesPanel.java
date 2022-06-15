@@ -11,11 +11,18 @@ import Modelo.Coleccion;
 import Modelo.Comic;
 import Modelo.Tabla.TablaColecciones;
 import Modelo.Tabla.TablaComics;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,15 +31,14 @@ import javax.swing.JOptionPane;
  */
 public class GestionColeccionesPanel extends javax.swing.JPanel {
 
-    private String camposObligatorios;
-    private String camposMarcados;
-    private String fechaFormato;
-    private String actorYaExiste;
-    private String actorAnadido;
-    private String actorBorrado;
-    private String actorNoExiste;
 
     HiloCliente h;
+    private String coleccionEliminada;
+    private String errorBorradoColeccion;
+    private String existeColeccion;
+    private String coleccionCreada;
+    private String errorCreadoColeccion;
+    private Object camposObligatorios;
 
     /**
      * Creates new form MoviesBoardPanel
@@ -44,12 +50,10 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
 
         this.h = h;
 
-        ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
+        refrescarTabla();
 
-        TablaColecciones modeloTabla = new TablaColecciones(listaColecciones, h);
-        tablaColecciones.setModel(modeloTabla);
-
-        //traduccion();
+        activarAyuda();
+        traduccion();
     }
 
     /**
@@ -171,15 +175,12 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
             int result = h.solicitarEliminarColeccion(nomColeccion);
 
             if (result > 0) {
-                JOptionPane.showMessageDialog(null, "La coleccion ha sido eliminada correctamente.");
+                JOptionPane.showMessageDialog(null, coleccionEliminada);
 
-                ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
-
-                TablaColecciones modeloTabla = new TablaColecciones(listaColecciones, h);
-                tablaColecciones.setModel(modeloTabla);
+                refrescarTabla();
 
             } else {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el borrado del autor.");
+                JOptionPane.showMessageDialog(null, errorBorradoColeccion);
             }
 
         }
@@ -188,27 +189,26 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
 
         if (txtNombre.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
+            JOptionPane.showMessageDialog(null, camposObligatorios);
         } else {
 
             Coleccion coleccion = new Coleccion(txtNombre.getText(), cmbEdicion.getSelectedItem().toString());
 
             if (h.solicitarGetColeccion(txtNombre.getText()) != null) {
-                JOptionPane.showMessageDialog(null, "Ya existe una coleccion con el mismo nombre asociado.");
+                JOptionPane.showMessageDialog(null, existeColeccion);
             } else {
 
                 int result = h.solicitarAnhadirColeccion(coleccion);
 
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(null, "La coleccion ha sido creada correctamente.");
+                    JOptionPane.showMessageDialog(null, coleccionCreada);
 
-                    ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
+                    txtNombre.setText("");
 
-                    TablaColecciones modeloTabla = new TablaColecciones(listaColecciones, h);
-                    tablaColecciones.setModel(modeloTabla);
+                    refrescarTabla();
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación de la coleccion.");
+                    JOptionPane.showMessageDialog(null, errorCreadoColeccion);
                 }
 
             }
@@ -229,6 +229,15 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
     private javax.swing.JTable tablaColecciones;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+    private void refrescarTabla() {
+
+        ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
+
+        TablaColecciones modeloTabla = new TablaColecciones(listaColecciones, h);
+        tablaColecciones.setModel(modeloTabla);
+
+    }
 
     public static boolean validarFecha(String fechaIntroducida) {
 
@@ -253,25 +262,40 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
 
     private void activarTraduccion(ResourceBundle rb) {
 
-//        lblGestionActores.setText(rb.getString("lblGestionActores"));
-//        lblApellidos.setText(rb.getString("lblApellidos"));
-//        lblFechaNac.setText(rb.getString("lblFechaNac"));
-//        lblFoto.setText(rb.getString("lb lFoto"));
-//        lblIndicacionBorrarActor.setText(rb.getString("lblIndicacionBorrarActor"));
-//        lblNombreActor.setText(rb.getString("lblNombreActor"));
-//        
-//        
         btnAnadir.setText(rb.getString("btnAñadir"));
-        btnEliminar.setText(rb.getString("btnEliminar"));
 
         camposObligatorios = rb.getString("camposObligatorios");
-        camposMarcados = rb.getString("camposMarcados");
-        actorYaExiste = rb.getString("actorYaExiste");
-        actorAnadido = rb.getString("actorAnadido");
-        fechaFormato = rb.getString("fechaFormato");
-        actorNoExiste = rb.getString("actorNoExiste");
-        actorBorrado = rb.getString("actorBorrado");
+        coleccionEliminada = rb.getString("coleccionEliminada");
+        errorBorradoColeccion = rb.getString("errorBorradoColeccion");
+        existeColeccion = rb.getString("existeColeccion");
+        coleccionCreada = rb.getString("coleccionCreada");
+        errorCreadoColeccion = rb.getString("errorCreadoColeccion");
+        
 
     }
 
+    private void activarAyuda() {
+
+        try {
+
+            URL url;
+
+            if (Locale.getDefault().getLanguage().equalsIgnoreCase("gl")) {
+                url = this.getClass().getResource("/ayuda/gal/help.hs");
+            } else {
+                url = this.getClass().getResource("/ayuda/esp/help.hs");
+
+            }
+
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(null, url);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            hb.enableHelpKey(txtNombre, "panelcolecciones", helpset);
+        } catch (HelpSetException ex) {
+            Logger.getLogger(PaginaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
 }

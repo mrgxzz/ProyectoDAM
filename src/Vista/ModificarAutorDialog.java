@@ -15,6 +15,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -32,6 +33,12 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
     HiloCliente h;
     Autor autorModificar;
     byte[] imagen;
+    private String huboProblema;
+    private String noImagen;
+    private String noExisteAutor;
+    private String errorModificacionAutor;
+    private String autorModificado;
+    private String camposObligatorios;
 
     /**
      * Creates new form ModificarAutorDialog
@@ -45,6 +52,8 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
         super(parent, modal);
         try {
             initComponents();
+            
+            traduccion();
 
             this.h = h;
             this.autorModificar = autor;
@@ -78,7 +87,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         lblGestionActores = new javax.swing.JLabel();
-        lblNombreActor = new javax.swing.JLabel();
+        lblNombreAutor = new javax.swing.JLabel();
         txtNombreAutor = new javax.swing.JTextField();
         lblFechaNac = new javax.swing.JLabel();
         lblFoto = new javax.swing.JLabel();
@@ -96,8 +105,8 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
         lblGestionActores.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblGestionActores.setText("Modificación de autores");
 
-        lblNombreActor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lblNombreActor.setText("Nombre y apellidos");
+        lblNombreAutor.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNombreAutor.setText("Nombre y apellidos");
 
         lblFechaNac.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblFechaNac.setText("Fecha de nacimiento");
@@ -179,7 +188,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblNombreActor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -202,7 +211,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
                     .addComponent(lblGestionActores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblNombreActor)
+                        .addComponent(lblNombreAutor)
                         .addComponent(txtNombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(28, 28, 28)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,8 +244,8 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
         if (autorModificar != null) {
-            if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
-                JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
+            if (txtNombreAutor.getText().isBlank()) {
+                JOptionPane.showMessageDialog(null, camposObligatorios);
             } else {
 
                 Autor autor = new Autor(autorModificar.getIdAutor(), txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime(), autorModificar.getFoto(), txtFotoAutor.getText());
@@ -244,19 +253,20 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
                 int result = h.solicitarUpdateAutor(autor);
 
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(null, "El autor ha sido modificado correctamente.");
+                    JOptionPane.showMessageDialog(null, autorModificado);
 
+                    this.dispose();
                     imagen = null;
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la modificación del autor.");
+                    JOptionPane.showMessageDialog(null, errorModificacionAutor);
                 }
 
             }
 
         } else {
 
-            JOptionPane.showMessageDialog(null, "No existe ningún autor con ese nombre asociado");
+            JOptionPane.showMessageDialog(null, noExisteAutor);
 
         }
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -275,11 +285,11 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
         File image = fileChooser.getSelectedFile();
         try {
             if (ImageIO.read(image) == null) {
-                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen.");
+                JOptionPane.showMessageDialog(null, noImagen);
                 return;
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            JOptionPane.showMessageDialog(null, huboProblema);
             return;
         }
         byte[] imageBytes;
@@ -292,7 +302,7 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
             }
             imageBytes = baos.toByteArray();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            JOptionPane.showMessageDialog(null, huboProblema);
             return;
         }
         this.imagen = imageBytes;
@@ -354,8 +364,32 @@ public class ModificarAutorDialog extends javax.swing.JDialog {
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblGestionActores;
     private javax.swing.JLabel lblImagen;
-    private javax.swing.JLabel lblNombreActor;
+    private javax.swing.JLabel lblNombreAutor;
     private javax.swing.JTextField txtFotoAutor;
     private javax.swing.JTextField txtNombreAutor;
     // End of variables declaration//GEN-END:variables
+
+
+     private void traduccion() {
+
+        ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
+
+        activarTraduccion(rb);
+
+    }
+
+    private void activarTraduccion(ResourceBundle rb) {
+
+        lblNombreAutor.setText(rb.getString("lblNombreAutor"));
+        lblFechaNac.setText(rb.getString("lblFechaNac"));
+        
+        noExisteAutor = rb.getString("noExisteAutor");
+        noImagen = rb.getString("noImagen");
+        huboProblema = rb.getString("huboProblema");
+        autorModificado = rb.getString("autorModificado");
+        camposObligatorios = rb.getString("camposObligatorios");
+        errorModificacionAutor = rb.getString("errorModificacionAutor");
+    }
+    
+    
 }

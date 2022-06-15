@@ -11,15 +11,20 @@ import Modelo.Coleccion;
 import Modelo.Comic;
 import Modelo.Estado;
 import Modelo.Tabla.TablaComics;
-import Utiles.TableRenderer;
-import java.awt.BorderLayout;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -34,6 +39,15 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     HiloCliente h;
     byte[] image = null;
+    private String noImagen;
+    private String huboProblema;
+    private String camposObligatorios;
+    private String errorCreadoComic;
+    private String comicCreado;
+    private String existeComic;
+    private String errorBorradoComic;
+    private String comicEliminado;
+    private String noExisteComic;
 
     /**
      * Creates new form MoviesBoardPanel
@@ -45,32 +59,13 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
         this.h = h;
 
-        ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
-
-        TablaComics modeloTabla = new TablaComics(listaComics, h);
-        tablaComics.setModel(modeloTabla);
-
-        ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
-
-        for (Autor autor : listaAutores) {
-            cmbAutor.addItem(autor);
-        }
-
-        ArrayList<Estado> listaEstados = (ArrayList<Estado>) h.solicitarListaEstado();
-
-        for (Estado estado : listaEstados) {
-            cmbEstado.addItem(estado);
-        }
+        cargarCmb();
+        refrescarTabla();
         
-        ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
-
-        for (Coleccion coleccion : listaColecciones) {
-            cmbColeccion.addItem(coleccion);
-        }
+        activarAyuda();
 
         traduccion();
-        
-        
+
     }
 
     /**
@@ -227,56 +222,55 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(21, 21, 21)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addComponent(lblAnhadir)
-                    .addGap(318, 318, 318)
-                    .addComponent(btnModificarComic)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(btnBorrarComic, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(25, 25, 25))
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(52, 52, 52))
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                    .addGap(8, 8, 8)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(lblColeccion)
-                            .addGap(73, 73, 73)
-                            .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblTítulo)
-                                .addComponent(lblFechaAdquisicion)
-                                .addComponent(lblTapa)
-                                .addComponent(lblEstado)
-                                .addComponent(txtAutor)
-                                .addComponent(lblPortada))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtTapa)
-                                .addComponent(dateChooserCombo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtTitulo)
-                                .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(btnAnhadirComic))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(btnPortada)
-                    .addGap(29, 29, 29)
-                    .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblAnhadir)
+                        .addGap(318, 318, 318)
+                        .addComponent(btnModificarComic)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBorrarComic, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblColeccion)
+                                .addGap(73, 73, 73)
+                                .addComponent(cmbColeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTítulo)
+                                    .addComponent(lblFechaAdquisicion)
+                                    .addComponent(lblTapa)
+                                    .addComponent(lblEstado)
+                                    .addComponent(txtAutor)
+                                    .addComponent(lblPortada))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtTapa)
+                                    .addComponent(dateChooserCombo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtTitulo)
+                                    .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbAutor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtRutaImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnAnhadirComic))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPortada)
+                        .addGap(29, 29, 29)
+                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addContainerGap(463, Short.MAX_VALUE))
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(567, Short.MAX_VALUE)))
     );
     jPanel1Layout.setVerticalGroup(
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addGap(43, 43, 43)
+            .addContainerGap()
+            .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(9, 9, 9)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,11 +313,6 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             .addGap(18, 18, 18)
             .addComponent(btnAnhadirComic)
             .addContainerGap(147, Short.MAX_VALUE))
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblGestionComics, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(642, Short.MAX_VALUE)))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -354,14 +343,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             ModificarComicDialog modComic = new ModificarComicDialog(null, true, comic, h);
             modComic.setVisible(true);
 
-            ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
-
-            TablaComics modeloTabla = new TablaComics(listaComics, h);
-            tablaComics.setModel(modeloTabla);
+            refrescarTabla();
 
         } else {
 
-            JOptionPane.showMessageDialog(null, "No existe ningún cómic con ese nombre asociado");
+            JOptionPane.showMessageDialog(null, noExisteComic);
 
         }
     }//GEN-LAST:event_btnModificarComicActionPerformed
@@ -370,21 +356,18 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
 
         int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
-            + "cómic con título: " + nomComic + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
+                + "cómic con título: " + nomComic + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
 
         if (opt == JOptionPane.YES_OPTION) {
             int result = h.solicitarEliminarComic(nomComic);
 
             if (result > 0) {
-                JOptionPane.showMessageDialog(null, "El cómic ha sido eliminado correctamente.");
+                JOptionPane.showMessageDialog(null, comicEliminado);
 
-                ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
-
-                TablaComics modeloTabla = new TablaComics(listaComics, h);
-                tablaComics.setModel(modeloTabla);
+                refrescarTabla();
 
             } else {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el borrado del cómic.");
+                JOptionPane.showMessageDialog(null, errorBorradoComic);
             }
 
         }
@@ -397,29 +380,31 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         Coleccion coleccion = (Coleccion) cmbColeccion.getSelectedItem();
 
         if (txtTitulo.getText().isBlank() || txtTapa.getText().isBlank() || txtAutor.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
+            JOptionPane.showMessageDialog(null, camposObligatorios);
         } else {
 
             Comic c = new Comic(txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), estado.getIdEstado(), autor.getIdAutor(), image, lblPortada.getText(), coleccion.getIdColeccion());
 
             if (h.solicitarGetComic(c.getNombreComic()) != null) {
-                JOptionPane.showMessageDialog(null, "Ya existe un comic con el mismo nombre asociado.");
+                JOptionPane.showMessageDialog(null, existeComic);
             } else {
 
                 int result = h.solicitarAnhadirComic(c);
 
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(null, "El comic ha sido creado correctamente.");
+                    JOptionPane.showMessageDialog(null, comicCreado);
+
+                    txtTitulo.setText("");
+                    txtTapa.setText("");
+                    txtRutaImagen.setText("");
+                    lblFoto.setText("");
 
                     image = null;
 
-                    ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
-
-                    TablaComics modeloTabla = new TablaComics(listaComics, h);
-                    tablaComics.setModel(modeloTabla);
+                    refrescarTabla();
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del cómic.");
+                    JOptionPane.showMessageDialog(null, errorCreadoComic);
                 }
 
             }
@@ -441,11 +426,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         File image = fileChooser.getSelectedFile();
         try {
             if (ImageIO.read(image) == null) {
-                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen.");
+                JOptionPane.showMessageDialog(null, noImagen);
                 return;
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            JOptionPane.showMessageDialog(null, huboProblema);
             return;
         }
 
@@ -459,7 +444,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
             }
             imageBytes = baos.toByteArray();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            JOptionPane.showMessageDialog(null, huboProblema);
             return;
         }
 
@@ -467,7 +452,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
         this.image = imageBytes;
         lblFoto.setIcon(new ImageIcon(new ImageIcon(this.image).getImage().getScaledInstance(lblFoto.getSize().width,
-            lblFoto.getSize().height, Image.SCALE_DEFAULT)));
+                lblFoto.getSize().height, Image.SCALE_DEFAULT)));
     }//GEN-LAST:event_btnPortadaActionPerformed
 
 
@@ -498,23 +483,61 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 
-    /*
-    private void activarAyuda() {
+    private void cargarCmb() {
+
+        ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
+
+        for (Autor autor : listaAutores) {
+            cmbAutor.addItem(autor);
+        }
+
+        ArrayList<Estado> listaEstados = (ArrayList<Estado>) h.solicitarListaEstado();
+
+        for (Estado estado : listaEstados) {
+            cmbEstado.addItem(estado);
+        }
+
+        ArrayList<Coleccion> listaColecciones = (ArrayList<Coleccion>) h.solicitarListaColecciones();
+
+        for (Coleccion coleccion : listaColecciones) {
+            cmbColeccion.addItem(coleccion);
+        }
+
+    }
+
+    private void refrescarTabla() {
+
+        ArrayList<Comic> listaComics = (ArrayList<Comic>) h.solicitarListaComic();
+
+        TablaComics modeloTabla = new TablaComics(listaComics, h);
+        tablaComics.setModel(modeloTabla);
+
+    }
+
+      private void activarAyuda() {
+
         try {
 
-            URL url = this.getClass().getResource("/ayuda/help.hs");
+            URL url;
+
+            if (Locale.getDefault().getLanguage().equalsIgnoreCase("gl")) {
+                url = this.getClass().getResource("/ayuda/gal/help.hs");
+            } else {
+                url = this.getClass().getResource("/ayuda/esp/help.hs");
+
+            }
 
             // Crea el HelpSet y el HelpBroker
             HelpSet helpset = new HelpSet(null, url);
             HelpBroker hb = helpset.createHelpBroker();
 
-            hb.enableHelpKey(lblTitulo, "gestionpeliculas", helpset);
-
+            hb.enableHelpKey(txtTitulo, "panelcomics", helpset);
         } catch (HelpSetException ex) {
-            Logger.getLogger(Welcome.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PaginaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
-     */
+      
     private void traduccion() {
 
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
@@ -529,6 +552,17 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         lblAnhadir.setText(rb.getString("lblAnhadirComic"));
         lblFechaAdquisicion.setText(rb.getString("lblFechaAdquisicion"));
         btnAnhadirComic.setText(rb.getString("btnAñadir"));
+        
+        noImagen = rb.getString("noImagen");
+        huboProblema = rb.getString("huboProblema");
+        camposObligatorios = rb.getString("camposObligatorios");
+        
+        errorCreadoComic = rb.getString("errorCreadoComic");
+        comicCreado = rb.getString("comicCreado");
+        existeComic = rb.getString("existeComic");
+        errorBorradoComic = rb.getString("errorBorradoComic");
+        comicEliminado = rb.getString("comicEliminado");
+        noExisteComic = rb.getString("noExisteComic");
 
     }
 

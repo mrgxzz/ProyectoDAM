@@ -17,9 +17,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -35,6 +41,12 @@ public class ModificarComicDialog extends javax.swing.JDialog {
     HiloCliente h;
     byte[] imagen;
     Comic comicModificar;
+    
+    private String noImagen;
+    private String huboProblema;
+    private String comicModificado;
+    private String camposObligatorios;
+    private String errorModificacion;
 
     /**
      * Creates new form ModificarAutorDialog
@@ -51,18 +63,12 @@ public class ModificarComicDialog extends javax.swing.JDialog {
             this.h = h;
             this.comicModificar = comic;
 
-            ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
-
-            for (Autor autor : listaAutores) {
-                cmbAutor.addItem(autor);
-            }
-
-            ArrayList<Estado> listaEstados = (ArrayList<Estado>) h.solicitarListaEstado();
-
-            for (Estado estado : listaEstados) {
-                cmbEstado.addItem(estado);
-            }
-
+            traduccion();
+            
+            cargarCmb();
+            
+            activarAyuda();
+            
             txtTitulo.setText(comic.getNombreComic());
             txtTapa.setText(comic.getTapa());
             txtRutaImagen.setText(comic.getUrlPortada());
@@ -303,11 +309,11 @@ public class ModificarComicDialog extends javax.swing.JDialog {
         File image = fileChooser.getSelectedFile();
         try {
             if (ImageIO.read(image) == null) {
-                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen.");
+                JOptionPane.showMessageDialog(null, noImagen);
                 return;
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            JOptionPane.showMessageDialog(null, huboProblema);
             return;
         }
         byte[] imageBytes;
@@ -320,7 +326,7 @@ public class ModificarComicDialog extends javax.swing.JDialog {
             }
             imageBytes = baos.toByteArray();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            JOptionPane.showMessageDialog(null, huboProblema);
             return;
         }
 
@@ -339,8 +345,8 @@ public class ModificarComicDialog extends javax.swing.JDialog {
         Autor autor = (Autor) cmbAutor.getSelectedItem();
         Estado estado = (Estado) cmbEstado.getSelectedItem();
 
-        if (txtTitulo.getText().isBlank() || txtTapa.getText().isBlank() || txtRutaImagen.getText().isBlank() || txtAutor.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
+        if (txtTitulo.getText().isBlank() || txtTapa.getText().isBlank() || txtAutor.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, camposObligatorios );
         } else {
 
             Comic c = new Comic(comicModificar.getIdComic(), txtTitulo.getText(), dateChooserCombo.getSelectedDate().getTime(), txtTapa.getText(), estado.getIdEstado(), autor.getIdAutor(), comicModificar.getPortada(), lblPortada.getText(), comicModificar.getIdColeccion());
@@ -348,12 +354,13 @@ public class ModificarComicDialog extends javax.swing.JDialog {
             int result = h.solicitarUpdateComic(c);
 
             if (result == 1) {
-                JOptionPane.showMessageDialog(null, "El comic ha sido modificado correctamente.");
+                JOptionPane.showMessageDialog(null, comicModificado);
 
                 imagen = null;
+                this.dispose();
 
             } else {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la modificación del cómic.");
+                JOptionPane.showMessageDialog(null, errorModificacion);
             }
 
         }
@@ -430,4 +437,66 @@ public class ModificarComicDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtTapa;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarCmb() {
+
+        ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
+
+        for (Autor autor : listaAutores) {
+            cmbAutor.addItem(autor);
+        }
+
+        ArrayList<Estado> listaEstados = (ArrayList<Estado>) h.solicitarListaEstado();
+
+        for (Estado estado : listaEstados) {
+            cmbEstado.addItem(estado);
+        }
+
+    }
+    
+    private void traduccion() {
+
+        ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
+
+        activarTraduccion(rb);
+
+    }
+
+    private void activarTraduccion(ResourceBundle rb) {
+ 
+        noImagen = rb.getString("noImagen");
+        huboProblema = rb.getString("huboProblema");
+        comicModificado = rb.getString("comicModificado");
+        camposObligatorios = rb.getString("camposObligatorios");
+        errorModificacion = rb.getString("errorModificacionComic");
+
+        lblFechaAdquisicion.setText(rb.getString("lblFechaAdquisicion"));
+
+
+    }
+    
+    private void activarAyuda() {
+
+        try {
+
+            URL url;
+
+            if (Locale.getDefault().getLanguage().equalsIgnoreCase("gl")) {
+                url = this.getClass().getResource("/ayuda/gal/help.hs");
+            } else {
+                url = this.getClass().getResource("/ayuda/esp/help.hs");
+
+            }
+
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(null, url);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            hb.enableHelpKey(txtTitulo, "panelcomics", helpset);
+        } catch (HelpSetException ex) {
+            Logger.getLogger(PaginaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }

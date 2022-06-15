@@ -33,7 +33,7 @@
                           <Component id="VerInformeComics" min="-2" pref="196" max="-2" attributes="0"/>
                           <Component id="lblGeneracionInformesComics" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="292" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="VerInformeComicsColeccion" min="-2" pref="225" max="-2" attributes="0"/>
@@ -55,12 +55,12 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="VerInformeComics" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="VerInformeComicsColeccion" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="lblColeccion" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cmbColeccion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="VerInformeComicsColeccion" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="365" max="32767" attributes="0"/>
           </Group>

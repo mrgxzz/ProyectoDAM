@@ -7,24 +7,23 @@ package Vista;
 
 import Controlador.HiloCliente;
 import Modelo.Autor;
-import Modelo.Comic;
-import Modelo.Estado;
 import Modelo.Tabla.TablaAutores;
-import Modelo.Tabla.TablaComics;
-import Utiles.UtilMethods;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -35,13 +34,17 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class GestionAutoresPanel extends javax.swing.JPanel {
 
-    private String lblGestion;
-    private String lblNombre;
-    private String lblFechaNacimiento;
-    private String btnAñadir;
-
     HiloCliente h;
     byte[] image = null;
+    private String huboProblema;
+    private String noImagen;
+    private String noExisteAutor;
+    private String errorBorradoAutor;
+    private String autorEliminado;
+    private String errorCreadoAutor;
+    private String autorCreado;
+    private String existeAutor;
+    private String camposObligatorios;
 
     /**
      * Creates new form MoviesBoardPanel
@@ -53,10 +56,9 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
         this.h = h;
 
-        ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
-
-        TablaAutores modeloTabla = new TablaAutores(listaAutores);
-        tablaAutores.setModel(modeloTabla);
+        refrescarTabla();
+        
+        activarAyuda();
 
         traduccion();
     }
@@ -264,24 +266,30 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
 
         if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
-            JOptionPane.showMessageDialog(null, "Todos los campos deben estar cubiertos.");
+            JOptionPane.showMessageDialog(null, camposObligatorios);
         } else {
 
             Autor autor = new Autor(txtNombreAutor.getText(), dateChooserFechaNac.getSelectedDate().getTime(), image, txtFotoAutor.getText());
 
             if (h.solicitarGetAutor(txtNombreAutor.getText()) != null) {
-                JOptionPane.showMessageDialog(null, "Ya existe un autor con el mismo nombre y apellidos asociado.");
+                JOptionPane.showMessageDialog(null, existeAutor);
             } else {
 
                 int result = h.solicitarAnhadirAutor(autor);
 
                 if (result == 1) {
-                    JOptionPane.showMessageDialog(null, "El autor ha sido creado correctamente.");
+                    JOptionPane.showMessageDialog(null, autorCreado);
+
+                    txtNombreAutor.setText("");
+                    txtFotoAutor.setText("");
+                    lblImagen.setText("");
 
                     image = null;
+                    
+                    refrescarTabla();
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante la creación del autor.");
+                    JOptionPane.showMessageDialog(null, errorCreadoAutor);
                 }
 
             }
@@ -293,7 +301,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
-        String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 1);
+        String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 0);
 
         int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
                 + "autor con nombre: " + nomAutor + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
@@ -302,15 +310,12 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             int result = h.solicitarEliminarAutor(nomAutor);
 
             if (result > 0) {
-                JOptionPane.showMessageDialog(null, "El autor ha sido eliminado correctamente.");
+                JOptionPane.showMessageDialog(null, autorEliminado);
 
-                ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
-
-                TablaAutores modeloTabla = new TablaAutores(listaAutores);
-                tablaAutores.setModel(modeloTabla);
+                refrescarTabla();
 
             } else {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error durante el borrado del autor.");
+                JOptionPane.showMessageDialog(null, errorBorradoAutor);
             }
 
         }
@@ -318,7 +323,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 1);
+        String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 0);
 
         Autor autor = h.solicitarGetAutor(nomAutor);
 
@@ -327,14 +332,11 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             ModificarAutorDialog modAutor = new ModificarAutorDialog(null, true, autor, h);
             modAutor.setVisible(true);
 
-            ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
-
-            TablaAutores modeloTabla = new TablaAutores(listaAutores);
-            tablaAutores.setModel(modeloTabla);
+            refrescarTabla();
 
         } else {
 
-            JOptionPane.showMessageDialog(null, "No existe ningún autor con ese nombre asociado");
+            JOptionPane.showMessageDialog(null, noExisteAutor);
 
         }
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -353,11 +355,11 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         File image = fileChooser.getSelectedFile();
         try {
             if (ImageIO.read(image) == null) {
-                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es una imagen.");
+                JOptionPane.showMessageDialog(null, noImagen);
                 return;
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            JOptionPane.showMessageDialog(null, huboProblema);
             return;
         }
         byte[] imageBytes;
@@ -370,7 +372,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
             }
             imageBytes = baos.toByteArray();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
+            JOptionPane.showMessageDialog(null, huboProblema);
             return;
         }
 
@@ -399,16 +401,12 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtNombreAutor;
     // End of variables declaration//GEN-END:variables
 
-    public static boolean validarFecha(String fechaIntroducida) {
+    private void refrescarTabla() {
 
-        try {
+        ArrayList<Autor> listaAutores = (ArrayList<Autor>) h.solicitarListaAutores();
 
-            LocalDate fecha = LocalDate.parse(fechaIntroducida, DateTimeFormatter.ISO_LOCAL_DATE);
-            return true;
-
-        } catch (DateTimeParseException ex) {
-            return false;
-        }
+        TablaAutores modeloTabla = new TablaAutores(listaAutores);
+        tablaAutores.setModel(modeloTabla);
 
     }
 
@@ -420,44 +418,49 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
     }
 
-    private byte[] toByteArray(File file) {
-
-        try ( FileInputStream fis = new FileInputStream(file)) {
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            for (int dataLength; (dataLength = fis.read(buffer)) != -1;) {
-                baos.write(buffer, 0, dataLength);
-            }
-
-            byte[] imageBytes = baos.toByteArray();
-
-            return imageBytes;
-
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Hubo un problema con el archivo seleccionado.");
-
-        }
-
-        return null;
-
-    }
-
     private void activarTraduccion(ResourceBundle rb) {
+
 
         lblGestionAutores.setText(rb.getString("lblGestionAutores"));
         lblNombreAutor.setText(rb.getString("lblNombreAutor"));
         lblFechaNac.setText(rb.getString("lblFechaNac"));
 
         btnAnadir.setText(rb.getString("btnAñadir"));
+        
+        huboProblema = rb.getString("huboProblema");
+        noImagen = rb.getString("noImagen");
+        noExisteAutor = rb.getString("noExisteAutor");
+        errorBorradoAutor = rb.getString("errorBorradoAutor");
+        autorEliminado = rb.getString("autorEliminado");
+        errorCreadoAutor = rb.getString("errorCreadoAutor");
+        autorCreado = rb.getString("autorCreado");
+        existeAutor = rb.getString("existeAutor");
+        camposObligatorios = rb.getString("camposObligatorios");
 
-//        camposObligatorios = rb.getString("camposObligatorios");
-//        camposMarcados = rb.getString("camposMarcados");
-//        actorYaExiste = rb.getString("actorYaExiste");
-//        actorAnadido = rb.getString("actorAnadido");
-//        fechaFormato = rb.getString("fechaFormato");
-//        actorNoExiste = rb.getString("actorNoExiste");
-//        actorBorrado = rb.getString("actorBorrado");
+    }
+    
+        private void activarAyuda() {
+
+        try {
+
+            URL url;
+
+            if (Locale.getDefault().getLanguage().equalsIgnoreCase("gl")) {
+                url = this.getClass().getResource("/ayuda/gal/help.hs");
+            } else {
+                url = this.getClass().getResource("/ayuda/esp/help.hs");
+
+            }
+
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(null, url);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            hb.enableHelpKey(txtNombreAutor, "panelautores", helpset);
+        } catch (HelpSetException ex) {
+            Logger.getLogger(PaginaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
