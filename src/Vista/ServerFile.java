@@ -26,6 +26,7 @@ public class ServerFile extends javax.swing.JFrame {
 
     ServerSocket skServidor;
     HiloServidor hs = null;
+    
 
     /**
      * Creates new form ServerFile
@@ -39,6 +40,7 @@ public class ServerFile extends javax.swing.JFrame {
         
         SelectorLenguaje selectorLenguaje = new SelectorLenguaje();
         selectorLenguaje.setVisible(true);
+        
         
     }
 
@@ -234,7 +236,7 @@ public class ServerFile extends javax.swing.JFrame {
      private void activarAyuda() {
 
         try {
-            URL url = this.getClass().getResource("/ayuda/help.hs");
+            URL url = this.getClass().getResource("/ayuda/esp/help.hs");
 
             // Crea el HelpSet y el HelpBroker
             HelpSet helpset = new HelpSet(null, url);
