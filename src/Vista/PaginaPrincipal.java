@@ -97,6 +97,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de cursos del usuario");
         setIconImages(null);
+        setMinimumSize(new java.awt.Dimension(1100, 800));
         setPreferredSize(new java.awt.Dimension(950, 550));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
