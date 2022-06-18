@@ -79,7 +79,7 @@ public class GestionComics {
         }
         return listaComics;
     }
-    
+
     public static List<Comic> getListaComicsAutor(int idAutor) {
 
         Connection con;
@@ -94,7 +94,7 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setInt(1, idAutor);
-            
+
             rs = sentencia.executeQuery();
 
             while (rs.next()) {
@@ -114,8 +114,8 @@ public class GestionComics {
         }
         return listaComics;
     }
-    
-     public static List<Comic> getListaComicsColeccion(int idColeccion) {
+
+    public static List<Comic> getListaComicsColeccion(int idColeccion) {
 
         Connection con;
         ResultSet rs = null;
@@ -129,7 +129,7 @@ public class GestionComics {
             PreparedStatement sentencia = con.prepareStatement(consulta);
 
             sentencia.setInt(1, idColeccion);
-            
+
             rs = sentencia.executeQuery();
 
             while (rs.next()) {
@@ -313,7 +313,7 @@ public class GestionComics {
         }
         return null;
     }
-    
+
     public static Coleccion getColeccion(String nomColeccion) {
 
         Connection con;
@@ -410,7 +410,7 @@ public class GestionComics {
 
         return -1;
     }
-    
+
     public static int anhadirColeccion(Coleccion coleccion) {
 
         Connection con;
@@ -427,11 +427,10 @@ public class GestionComics {
             sentencia.setString(1, coleccion.getNombre());
             sentencia.setString(2, coleccion.getEdicion());
 
-
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-             System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir comic", JOptionPane.OK_OPTION);
         }
 
@@ -459,7 +458,7 @@ public class GestionComics {
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-             System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, e.getMessage(), "Añadir autor", JOptionPane.OK_OPTION);
         }
 
@@ -484,17 +483,15 @@ public class GestionComics {
 
             sentencia.setBytes(3, autor.getFoto());
             sentencia.setString(4, autor.getUrlFoto());
-            
+
             sentencia.setInt(5, autor.getIdAutor());
-            
+
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar autor", JOptionPane.OK_OPTION);
+            return -1;
         }
 
-        return 0;
     }
 
     public static int updateComic(Comic comic) {
@@ -506,7 +503,7 @@ public class GestionComics {
             con = DBConnector.getConexion();
 
             String consulta = "UPDATE comic SET nombre = ?, fechaAdquisicion = ?,"
-                    + "tapa = ?, idEstado = ?, idAutor = ?, portada = ?, urlPortada = ? "
+                    + "tapa = ?, idEstado = ?, idAutor = ?, portada = ?, urlPortada = ?"
                     + "WHERE idComic = ?";
 
             PreparedStatement sentencia = con.prepareStatement(consulta);
@@ -516,20 +513,19 @@ public class GestionComics {
             sentencia.setString(3, comic.getTapa());
             sentencia.setInt(4, comic.getIdEstado());
             sentencia.setInt(5, comic.getIdAutor());
-            
+
             sentencia.setBytes(6, comic.getPortada());
             sentencia.setString(7, comic.getUrlPortada());
-            
+           
             sentencia.setInt(8, comic.getIdComic());
 
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Modificar comic", JOptionPane.OK_OPTION);
+            System.out.println(e.getMessage());
+            return -1;
         }
 
-        return 0;
     }
 
     public static int eliminarComic(String nomComic) {
@@ -549,15 +545,14 @@ public class GestionComics {
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-             System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
             JOptionPane.showMessageDialog(null, e.getMessage(), "Eliminar comic", JOptionPane.OK_OPTION);
         }
 
         return 0;
     }
-    
-    
-     public static int eliminarColeccion(String nomColeccion) {
+
+    public static int eliminarColeccion(String nomColeccion) {
 
         Connection con;
 
@@ -574,11 +569,9 @@ public class GestionComics {
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Eliminar comic", JOptionPane.OK_OPTION);
+            return -1;
         }
 
-        return 0;
     }
 
     public static int eliminarAutor(String nomAutor) {
@@ -598,10 +591,9 @@ public class GestionComics {
             return sentencia.executeUpdate();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Eliminar autor", JOptionPane.OK_OPTION);
+            return -1;
         }
 
-        return 0;
     }
 
     public static BufferedImage getImage(byte[] bytes) {
