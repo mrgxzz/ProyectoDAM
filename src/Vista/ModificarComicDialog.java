@@ -353,14 +353,19 @@ public class ModificarComicDialog extends javax.swing.JDialog {
 
             int result = h.solicitarUpdateComic(c);
 
-            if (result == 1) {
-                JOptionPane.showMessageDialog(null, comicModificado);
-
-                imagen = null;
-                this.dispose();
-
-            } else {
-                JOptionPane.showMessageDialog(null, errorModificacion);
+            switch (result) {
+                case 1:
+                    JOptionPane.showMessageDialog(null, comicModificado);
+                    imagen = null;
+                    this.dispose();
+                    break;
+                case -1:
+                    imagen = null;
+                    JOptionPane.showMessageDialog(null, "La imagen seleccionada es demasiado pesada. Intentalo de nuevo con otra imagen.");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, errorModificacion);
+                    break;
             }
 
         }

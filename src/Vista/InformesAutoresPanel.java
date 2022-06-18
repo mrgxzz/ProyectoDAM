@@ -156,7 +156,7 @@ public class InformesAutoresPanel extends javax.swing.JPanel {
 
             PreparedStatement st = DBConnector.getConexion().prepareStatement("SELECT comic.nombre, comic.fechaAdquisicion, comic.tapa, comic.portada, autor.nombre AS \"nombreAutor\", coleccion.nombre AS \"nombreColeccion\", estado.descripcion AS \"estado\" FROM comic\n" +
                 "INNER JOIN autor ON comic.idAutor = autor.idAutor\n" +
-                "INNER JOIN coleccion ON comic.idEstado = coleccion.idColeccion\n" +
+                "INNER JOIN coleccion ON comic.idColeccion = coleccion.idColeccion\n" +
                 "INNER JOIN estado ON comic.idEstado = estado.idEstado\n" +
                     "	WHERE comic.idAutor =  ? ");
             st.setInt(1, autor.getIdAutor());

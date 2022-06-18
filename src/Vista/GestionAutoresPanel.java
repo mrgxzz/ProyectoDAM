@@ -370,13 +370,18 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         if (opt == JOptionPane.YES_OPTION) {
             int result = h.solicitarEliminarAutor(nomAutor);
 
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, autorEliminado);
-
-                refrescarTabla();
-
-            } else {
-                JOptionPane.showMessageDialog(null, errorBorradoAutor);
+            switch (result) {
+                case 1:
+                    JOptionPane.showMessageDialog(null, autorEliminado);
+                    refrescarTabla();
+                    break;
+                case -1:
+                    JOptionPane.showMessageDialog(null, "No es posible borrar el autor seleccionado."
+                            + "Por seguridad debes borrar antes los cómics en los que participa.");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, errorBorradoAutor);
+                    break;
             }
 
         }

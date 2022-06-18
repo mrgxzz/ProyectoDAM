@@ -197,13 +197,18 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
         if (opt == JOptionPane.YES_OPTION) {
             int result = h.solicitarEliminarColeccion(nomColeccion);
 
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, coleccionEliminada);
-
-                refrescarTabla();
-
-            } else {
-                JOptionPane.showMessageDialog(null, errorBorradoColeccion);
+            switch (result) {
+                case 1:
+                    JOptionPane.showMessageDialog(null, coleccionEliminada);
+                    refrescarTabla();
+                    break;
+                case -1:
+                    JOptionPane.showMessageDialog(null, "No es posible borrar la colección seleccionada."
+                            + "Por seguridad debes borrar antes los cómics asociados.");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, errorBorradoColeccion);
+                    break;
             }
 
         }

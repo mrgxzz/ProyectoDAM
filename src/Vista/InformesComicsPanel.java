@@ -135,7 +135,7 @@ public class InformesComicsPanel extends javax.swing.JPanel {
             Statement st = DBConnector.getConexion().createStatement();
             ResultSet rs = st.executeQuery("SELECT comic.nombre, comic.fechaAdquisicion, comic.tapa, comic.portada, autor.nombre AS \"nombreAutor\", coleccion.nombre AS \"nombreColeccion\", estado.descripcion AS \"estado\" FROM comic\n"
                     + "	INNER JOIN autor ON comic.idAutor = autor.idAutor\n"
-                    + "	INNER JOIN coleccion ON comic.idEstado = coleccion.idColeccion\n"
+                    + "	INNER JOIN coleccion ON comic.idColeccion = coleccion.idColeccion\n"
                     + "	INNER JOIN estado ON comic.idEstado = estado.idEstado");
 
             JRResultSetDataSource dataSource = new JRResultSetDataSource(rs);
@@ -164,7 +164,7 @@ public class InformesComicsPanel extends javax.swing.JPanel {
                                         "coleccion.nombre AS \"nombreColeccion\",\n" +
                                         "estado.descripcion AS \"estado\"\n" +
                                         " 	FROM comic INNER JOIN autor ON comic.idAutor = autor.idAutor\n" +
-                                        "						INNER JOIN coleccion ON comic.idEstado = coleccion.idColeccion\n" +
+                                        "						INNER JOIN coleccion ON comic.idColeccion = coleccion.idColeccion\n" +
                                         "						INNER JOIN estado ON comic.idEstado = estado.idEstado \n" +
                                         "                    	WHERE comic.idColeccion =  ? ");
             st.setInt(1, coleccion.getIdColeccion());
