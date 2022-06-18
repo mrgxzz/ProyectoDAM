@@ -486,6 +486,9 @@ public class PaginaPrincipal extends javax.swing.JFrame {
 
         lblBienvenida.setText(rb.getString("lblBienvenida"));
         lblSubtitulo.setText(rb.getString("lblSubtitulo"));
+        btnInformeComics.setText(rb.getString("btnInformeComics"));
+        btnColecciones.setText(rb.getString("btnColecciones"));
+        btnComics.setText(rb.getString("btnComics"));
 
         errorConexion = rb.getString("dialogErrorConexion");
 
