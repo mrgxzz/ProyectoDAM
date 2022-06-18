@@ -6,6 +6,7 @@
 package Modelo.Tabla;
 
 import Modelo.Autor;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -96,7 +97,13 @@ public class TablaAutores extends AbstractTableModel {
                         try {
                             BufferedImage img = ImageIO.read(new ByteArrayInputStream(u.getFoto()));
                             ImageIcon icon = new ImageIcon(img);
-                            return icon;
+                            
+                            Image image = icon.getImage(); // transform it 
+                            Image newimg = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+                            ImageIcon imageIcon = new ImageIcon(newimg);  // transform it back
+
+                            return imageIcon;
+                            
                         } catch (IOException ex) {
                             Logger.getLogger(TablaAutores.class.getName()).log(Level.SEVERE, null, ex);
 

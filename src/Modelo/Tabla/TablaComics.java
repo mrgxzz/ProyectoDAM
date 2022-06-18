@@ -7,6 +7,7 @@ package Modelo.Tabla;
 
 import Controlador.HiloCliente;
 import Modelo.Comic;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -100,7 +101,12 @@ public class TablaComics extends AbstractTableModel {
                         } else {
                             BufferedImage img = ImageIO.read(new ByteArrayInputStream(u.getPortada()));
                             ImageIcon icon = new ImageIcon(img);
-                            return icon;
+
+                            Image image = icon.getImage(); // transform it 
+                            Image newimg = image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+                            ImageIcon imageIcon = new ImageIcon(newimg);  // transform it back
+
+                            return imageIcon;
 
                         }
 
