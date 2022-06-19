@@ -3,14 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/GestionComicsPanel.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Controlador/GestionComics.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/ModificarAutorDialog.java</file>
             <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/InformesAutoresPanel.java</file>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Idiomas/idioma.properties</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/Tabla/TablaComics.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/GestionColeccionesPanel.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/InformesComicsPanel.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Controlador/HiloCliente.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Controlador/HiloServidorCliente.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/Tabla/TablaAutores.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/GestionComicsPanel.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Modelo/Comic.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/GestionAutoresPanel.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/ModificarComicDialog.java</file>
             <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/ServerFile.java</file>
             <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/PaginaPrincipal.java</file>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/InformesComicsPanel.java</file>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Ayuda/paginas/gal/Servidor_gal.html</file>
-            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/SelectorLenguaje.java</file>
+            <file>file:/C:/Users/Manu%20Romeo/Documents/NetBeansProjects/ProyectoDAM/src/Vista/BuscadorPanel.java</file>
         </group>
     </open-files>
 </project-private>
