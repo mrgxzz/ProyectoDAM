@@ -95,10 +95,10 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         lblSubtitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestión de cursos del usuario");
+        setTitle("Comic manager");
         setIconImages(null);
         setMinimumSize(new java.awt.Dimension(1100, 800));
-        setPreferredSize(new java.awt.Dimension(950, 550));
+        setPreferredSize(new java.awt.Dimension(450, 350));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
