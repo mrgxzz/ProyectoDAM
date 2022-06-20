@@ -61,7 +61,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
         cargarCmb();
         refrescarTabla();
-        
+
         activarAyuda();
 
         traduccion();
@@ -372,7 +372,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPortadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPortadaActionPerformed
-        
+
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imágenes", "jpeg", "jpg", "png"));
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -415,7 +415,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPortadaActionPerformed
 
     private void btnAnhadirComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnhadirComicActionPerformed
-        
+
         Autor autor = (Autor) cmbAutor.getSelectedItem();
         Estado estado = (Estado) cmbEstado.getSelectedItem();
         Coleccion coleccion = (Coleccion) cmbColeccion.getSelectedItem();
@@ -454,28 +454,34 @@ public class GestionComicsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAnhadirComicActionPerformed
 
     private void btnBorrarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarComicActionPerformed
-         String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
 
-        int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
-                + "cómic con título: " + nomComic + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
+        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
 
-        if (opt == JOptionPane.YES_OPTION) {
-            int result = h.solicitarEliminarComic(nomComic);
+        if (nomComic == null) {
+            JOptionPane.showMessageDialog(null, "No hay un cómic seleccionado.");
+        } else {
+            int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
+                    + "cómic con título: " + nomComic + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
 
-            if (result > 0) {
-                JOptionPane.showMessageDialog(null, comicEliminado);
+            if (opt == JOptionPane.YES_OPTION) {
+                int result = h.solicitarEliminarComic(nomComic);
 
-                refrescarTabla();
+                if (result > 0) {
+                    JOptionPane.showMessageDialog(null, comicEliminado);
 
-            } else {
-                JOptionPane.showMessageDialog(null, errorBorradoComic);
+                    refrescarTabla();
+
+                } else {
+                    JOptionPane.showMessageDialog(null, errorBorradoComic);
+                }
+
             }
-
         }
+
     }//GEN-LAST:event_btnBorrarComicActionPerformed
 
     private void btnModificarComicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarComicActionPerformed
-         String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
+        String nomComic = (String) tablaComics.getModel().getValueAt(tablaComics.getSelectedRow(), 1);
 
         Comic comic = h.solicitarGetComic(nomComic);
 
@@ -555,7 +561,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
 
     }
 
-      private void activarAyuda() {
+    private void activarAyuda() {
 
         try {
 
@@ -578,7 +584,7 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         }
 
     }
-      
+
     private void traduccion() {
 
         ResourceBundle rb = ResourceBundle.getBundle("Idiomas.idioma");
@@ -593,11 +599,11 @@ public class GestionComicsPanel extends javax.swing.JPanel {
         lblAnhadir.setText(rb.getString("lblAnhadirComic"));
         lblFechaAdquisicion.setText(rb.getString("lblFechaAdquisicion"));
         btnAnhadirComic.setText(rb.getString("btnAñadir"));
-        
+
         noImagen = rb.getString("noImagen");
         huboProblema = rb.getString("huboProblema");
         camposObligatorios = rb.getString("camposObligatorios");
-        
+
         errorCreadoComic = rb.getString("errorCreadoComic");
         comicCreado = rb.getString("comicCreado");
         existeComic = rb.getString("existeComic");

@@ -191,7 +191,11 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
         
         String nomColeccion = (String) tablaColecciones.getModel().getValueAt(tablaColecciones.getSelectedRow(), 0);
 
-        int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar la "
+        if (nomColeccion == null) {
+            JOptionPane.showMessageDialog(null, "No hay una colección seleccionada");
+        } else {
+        
+            int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar la "
             + "coleccion con nombre: " + nomColeccion + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
 
         if (opt == JOptionPane.YES_OPTION) {
@@ -212,6 +216,9 @@ public class GestionColeccionesPanel extends javax.swing.JPanel {
             }
 
         }
+            
+        }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed

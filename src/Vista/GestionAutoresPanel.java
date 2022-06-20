@@ -57,7 +57,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         this.h = h;
 
         refrescarTabla();
-        
+
         activarAyuda();
 
         traduccion();
@@ -153,7 +153,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
         txtFotoAutor.setEditable(false);
 
-        dateChooserFechaNac.setCurrentView(new datechooser.view.appearance.AppearancesList("Swing",
+        dateChooserFechaNac.setCurrentView(new datechooser.view.appearance.AppearancesList("Light",
             new datechooser.view.appearance.ViewAppearance("custom",
                 new datechooser.view.appearance.swing.SwingCellAppearance(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 11),
                     new java.awt.Color(0, 0, 0),
@@ -194,7 +194,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
                 (datechooser.view.BackRenderer)null,
                 false,
                 true)));
-    dateChooserFechaNac.setCalendarPreferredSize(new java.awt.Dimension(300, 180));
+    dateChooserFechaNac.setCalendarPreferredSize(new java.awt.Dimension(400, 200));
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
@@ -284,7 +284,7 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSeleccionFotoActorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionFotoActorActionPerformed
-       
+
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Imágenes", "jpeg", "jpg", "png"));
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -322,11 +322,11 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
         this.image = imageBytes;
         lblImagen.setIcon(new ImageIcon(new ImageIcon(this.image).getImage().getScaledInstance(lblImagen.getSize().width,
-            lblImagen.getSize().height, Image.SCALE_DEFAULT)));
+                lblImagen.getSize().height, Image.SCALE_DEFAULT)));
     }//GEN-LAST:event_btnSeleccionFotoActorActionPerformed
 
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
-        
+
         if (txtNombreAutor.getText().isBlank() || txtFotoAutor.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, camposObligatorios);
         } else {
@@ -361,34 +361,40 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       
+
         String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 0);
 
-        int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
-            + "autor con nombre: " + nomAutor + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
+        if (nomAutor == null) {
+            JOptionPane.showMessageDialog(null, "No hay un autor seleccionado.");
+        } else {
+            int opt = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el "
+                    + "autor con nombre: " + nomAutor + " ? Los cambios realizados son permanentes", "Eliminar un cómic", JOptionPane.YES_NO_OPTION);
 
-        if (opt == JOptionPane.YES_OPTION) {
-            int result = h.solicitarEliminarAutor(nomAutor);
+            if (opt == JOptionPane.YES_OPTION) {
+                int result = h.solicitarEliminarAutor(nomAutor);
 
-            switch (result) {
-                case 1:
-                    JOptionPane.showMessageDialog(null, autorEliminado);
-                    refrescarTabla();
-                    break;
-                case -1:
-                    JOptionPane.showMessageDialog(null, "No es posible borrar el autor seleccionado."
-                            + "Por seguridad debes borrar antes los cómics en los que participa.");
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, errorBorradoAutor);
-                    break;
+                switch (result) {
+                    case 1:
+                        JOptionPane.showMessageDialog(null, autorEliminado);
+                        refrescarTabla();
+                        break;
+                    case -1:
+                        JOptionPane.showMessageDialog(null, "No es posible borrar el autor seleccionado."
+                                + "Por seguridad debes borrar antes los cómics en los que participa.");
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, errorBorradoAutor);
+                        break;
+                }
+
             }
-
         }
+
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-         String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 0);
+        String nomAutor = (String) tablaAutores.getModel().getValueAt(tablaAutores.getSelectedRow(), 0);
 
         Autor autor = h.solicitarGetAutor(nomAutor);
 
@@ -445,13 +451,12 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
 
     private void activarTraduccion(ResourceBundle rb) {
 
-
         lblGestionAutores.setText(rb.getString("lblGestionAutores"));
         lblNombreAutor.setText(rb.getString("lblNombreAutor"));
         lblFechaNac.setText(rb.getString("lblFechaNac"));
 
         btnAnadir.setText(rb.getString("btnAñadir"));
-        
+
         huboProblema = rb.getString("huboProblema");
         noImagen = rb.getString("noImagen");
         noExisteAutor = rb.getString("noExisteAutor");
@@ -463,8 +468,8 @@ public class GestionAutoresPanel extends javax.swing.JPanel {
         camposObligatorios = rb.getString("camposObligatorios");
 
     }
-    
-        private void activarAyuda() {
+
+    private void activarAyuda() {
 
         try {
 
